@@ -4,19 +4,13 @@
     <meta charset="utf-8">
     <title>Registration Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Load static files in Django -->
     {% load static %}
-
-    <!-- MATERIAL DESIGN ICONIC FONT -->
     <link rel="stylesheet" href="{% static 'assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
-    
-    <!-- STYLE CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
 
 <body>
-    <div class="wrapper" style="background-image: url('{% static 'assets/images/bg-registration-form-2.jpg' %}');">
+    <div class="wrapper" style="background-color: rgba(208, 208, 206, 1);">
         <div class="inner">
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
@@ -35,6 +29,10 @@
                     <label for="email">Email</label>
                     <input type="email" id="email" class="form-control" name="email">
                 </div>
+                <div class="form-wrapper">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" id="phone_number" class="form-control" name="phone_number">
+                </div>                
                 <div class="form-wrapper">
                     <label for="password">Password</label>
                     <input type="password" id="password" class="form-control" name="password">
