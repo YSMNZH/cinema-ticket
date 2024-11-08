@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 from .models import User  # Assuming you have a custom User model
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from .forms import RegistrationForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -28,3 +32,18 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'users/login.html', {'form': form})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  # Hash the password
+            user.save()
+            login(request, user)  # Automatically log in the user after registration
+            return redirect('home')  # Redirect to a home page or user dashboard after registration
+    else:
+        form = RegistrationForm()
+    
+    return render(request, 'users/register.html', {'form': form})

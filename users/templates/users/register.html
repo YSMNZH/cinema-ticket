@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Load static files in Django -->
+    {% load static %}
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="{% static 'assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+    
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+
+<body>
+    <div class="wrapper" style="background-image: url('{% static 'assets/images/bg-registration-form-2.jpg' %}');">
+        <div class="inner">
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <h3>Registration Form</h3>
+                <div class="form-group">
+                    <div class="form-wrapper">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" class="form-control" name="first_name">
+                    </div>
+                    <div class="form-wrapper">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" class="form-control" name="last_name">
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" name="email">
+                </div>
+                <div class="form-wrapper">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" name="password">
+                </div>
+                <div class="form-wrapper">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" class="form-control" name="confirm_password">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="terms"> I accept the Terms of Use & Privacy Policy.
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <button type="submit">Register Now</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
