@@ -1,32 +1,33 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!---font icon CDN----->
-{% load static %}
- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<!----carousel cdn--->
-<link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-<!----movie site template---->
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %} 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cinema Ticket</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+</head>
 <header>
     <nav>
     <p class="logo">
-      multi<span>flex<span>
+      cinema<span>ticket<span>
     </p>
-      
-      <i class="fa fa-bars" id="menu"></i>
-      
+      <i class="fa fa-bars" id="menu"></i> 
     <ul id="menu-box">
       <div class="marker"></div>
-      <li>main</li>
-      <li>schedlues</li>
-      <li>tickets</li>
+      <li>home</li>
       <li>news</li>
       <li>contact</li>
-      <li><span>mr.john doe <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"> <i class="fa fa-angle-down"></i></span></li>
-      <li><b>sign out</b></li>
+      <ul>
+        <li><a href="{% url 'register' %}" class="styled-link">sign up</a></li>
+        <li><a href="{% url 'login' %}" class="styled-link">sign in</a></li>
+    </ul>    
     </ul>
-      
   </nav>
   
     <div class="popular-movie-slider">
@@ -46,7 +47,8 @@
         <div class="movie-info">
           <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
           <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
-          <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
+          <i class="fa fa-circle"
+          +> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
         </div>
         
         <div class="movie-btns">
@@ -63,100 +65,23 @@
 
 <section>
   
-  <div class="movie-ticket-book">
-    <div class="choose-date">
-      <p class="heading">
-        choose date:
-      </p>
-       <div class="wrapper">
-       <div class="carousel owl-carousel">
-
-        <div class="card card-1">
-          <p>JUN 1t</p>
-          <p>MON</p>
-        </div>
-        <div class="card card-2">
-          <p>JUN 2nd</p>
-          <p>TUE</p>
-        </div>
-        <div class="card card-3">
-          <p>JUN 3nd</p>
-          <p>wed</p>
-        </div>
-        <div class="card card-4">
-          <p>JUN 4nd</p>
-          <p>thu</p>
-        </div>
-         </div>
-       <div class="marker"></div>
-      </div>
-    </div>
-    <div class="choose-time">
-     <p class="heading">
-        avalible times:
-      </p>
-       <div class="wrapper">
-       <div class="carousel owl-carousel">
-
-        <div class="card card-1">
-          <p>3D</p>
-          <p>14:45</p>
-        </div>
-        <div class="card card-2">
-          <p>3D</p>
-          <p>11:45</p>
-        </div>
-        <div class="card card-3">
-          <p>2D</p>
-          <p>12:15</p>
-        </div>
-        <div class="card card-4">
-          <p>3D</p>
-          <p>13:00</p>
-        </div>
-         </div>
-       <div class="marker"></div>
-      </div>
-    </div>
-    <button>Buy ticket</button>
-  </div>
-  <!---movie-ticket-book-->
-  
   
   <div class="filter-search-box">
-    
     <div class="filters-box">
-      
       <div class="all-filters filters">
-        All formats <i class="fa fa-angle-down"></i>
+        city <i class="fa fa-angle-down"></i>
       </div> 
-      
-      <div class="date-filters filters">
-       By Date <i class="fa fa-angle-down"></i>
-      </div> 
-      
-      <div class="category-filters filters">
-        By category <i class="fa fa-angle-down"></i>
-      </div> 
-      
-      <div class="category-filters filters">
-        Coming soon
-      </div> 
-      
     </div>
-    
-    <div class="search-filters">
-        <input type="text" placeholder="Search by name...">
-        <i class="fa fa-search"></i>
-      </div> 
+     <div class="search-filters">
+         <input type="text" placeholder="search by movie, cinema, director, actor...">
+         <i class="fa fa-search"></i>
+     </div>
     
     <div class="search-bar">
       <div class="bar"></div>
     </div>
     
   </div>
-  <!----filter-search-box---->
-  
   
   <div class="movie-card-section">
     
@@ -275,24 +200,20 @@
     </div>
      <button>Show more</button>
   </div>
-    <!---bar--->
-  
-  
+
 </section>
 
 <footer>
   
   <div class="logo-box">
     <p class="logo">
-      multi<span>flex</span>
+      cinema<span>ticket</span>
     </p>
-    <p><i class="fa fa-copyright"></i> 2001-2017, SIA Multiflex</p>
+    <p><i class="fa fa-copyright"></i> 2024-2025, YHN</p>
   </div>
   
   <ul>
-    <li>main</li>
-    <li>schedlues</li>
-    <li>tickets</li>
+    <li>home</li>
     <li>news</li>
     <li>contact</li>
   </ul>
@@ -306,3 +227,11 @@
   
 </footer>
 <script src="{% static 'assets/js/main.js' %}"></script>
+</html>
+
+<style>
+    .styled-link {
+        text-decoration: none;
+        color: inherit; /* Keeps the color the same as the list item */
+        font-weight: bold;
+    }

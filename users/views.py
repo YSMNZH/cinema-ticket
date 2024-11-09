@@ -63,3 +63,6 @@ from django.shortcuts import render
 
 def main_view(request):
     return render(request, 'users/main.html')
+
+def edit_view(request):
+    return render(request, 'users/edit.html')
