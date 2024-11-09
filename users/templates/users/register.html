@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="wrapper" style="background-color: rgba(208, 208, 206, 1);">
+    <div class="wrapper" style="background-image: url('https://i.redd.it/xm7k71pyvgh81.jpg');">
         <div class="inner">
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
@@ -41,13 +41,10 @@
                     <label for="confirm_password">Confirm Password</label>
                     <input type="password" id="confirm_password" class="form-control" name="confirm_password">
                 </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="terms"> I accept the Terms of Use & Privacy Policy.
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <button type="submit">Register Now</button>
+                <p class="login-card-footer-text">
+                    Already have an account? <a href="{% url 'login' %}" class="text-reset">Login here</a>
+                </p>
+                <button type="submit">Register</button>
             </form>
         </div>
     </div>

@@ -1,49 +1,65 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password 
+from .models import User
 from .forms import LoginForm
-from .models import User  # Assuming you have a custom User model
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth import login
 from .forms import RegistrationForm
+from django.contrib import messages
 
 def login_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            identifier = form.cleaned_data['identifier']
-            password = form.cleaned_data['password']
+            identifier = form.cleaned_data.get("identifier")
+            password = form.cleaned_data.get("password")
+            user = (
+                User.objects.filter(phone=identifier).first() or
+                User.objects.filter(email=identifier).first() or
+                User.objects.filter(username=identifier).first()
+            )
 
-            # Determine if identifier is email, phone, or username
-            if '@' in identifier:
-                user = authenticate(request, email=identifier, password=password)
-            elif identifier.isdigit():
-                user = authenticate(request, phone=identifier, password=password)
-            else:
-                user = authenticate(request, username=identifier, password=password)
+            if user and check_password(password, user.password):
 
-            if user is not None:
                 login(request, user)
-                return redirect('home')  # Change 'home' to your target page
+                return redirect('dashboard')
             else:
-                form.add_error(None, "Invalid credentials or verification needed.")
+                form.add_error(None, "Invalid Login Credentials. Please Try Again.")
+
     else:
         form = LoginForm()
 
-    return render(request, 'users/login.html', {'form': form})
+    return render(request, 'users/login.html')
 
 
-def register(request):
-    if request.method == 'POST':
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import RegistrationForm
+from django.contrib.auth import login
+from .models import User
+
+def register_view(request):
+    if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            # Save the user to the database
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Hash the password
+            user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)  # Automatically log in the user after registration
-            return redirect('home')  # Redirect to a home page or user dashboard after registration
+            login(request, user)  # Log the user in automatically after registration
+            messages.success(request, "You have registered successfully!")
+            return redirect("dashboard")  # Redirect to the dashboard
+        else:
+            # If the form is invalid, display the errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     else:
         form = RegistrationForm()
     
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, "users/register.html", {"form": form})
+
+
+from django.shortcuts import render
+
+def main_view(request):
+    return render(request, 'users/main.html')
