@@ -1,0 +1,15 @@
+INSERT INTO Cities (CityID, CityName, ProvinceID) VALUES
+(1, 'Tehran', 1),
+(2, 'Ray', 1),
+(3, 'Shemiranat', 1),
+(4, 'Shahr-e Qods', 1),
+(5, 'Pakdasht', 1),
+(6, 'Varamin', 1),
+(7, 'Eslamshahr', 1),
+(8, 'Shahre Rey', 1),
+(9, 'Malard', 1),
+(10, 'Robat Karim', 1),
+(11, 'Damavand', 1),
+(12, 'Pardis', 1),
+(13, 'Firoozkooh', 1),
+(14, 'Bumehen', 1);
