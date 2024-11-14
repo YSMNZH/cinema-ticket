@@ -148,3 +148,12 @@ class Review(models.Model):
 
     class Meta:
         db_table = 'Reviews'
+
+class Hall(models.Model):
+    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name="halls")
+    name = models.CharField(max_length=100)
+    seat_count = models.PositiveIntegerField()
+class Showtime(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    showtime = models.DateTimeField()
