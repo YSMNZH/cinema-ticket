@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.timezone import now
+from datetime import timedelta
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
@@ -57,3 +60,19 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"Ticket for {self.showtime.movie.title} on {self.showtime.showtime} - Seat {self.seat}"
+    
+class Users(models.Model):
+    email = models.EmailField(unique=True)
+    password_hash = models.CharField(max_length=255)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(default=now)
+    updated_at = models.DateTimeField(default=now)
+
+def get_expiration_time():
+    return now() + timedelta(hours=1)
+
+class PasswordResetTokens(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    token = models.CharField(max_length=255, unique=True)
+    expires_at = models.DateTimeField(default=get_expiration_time)
+    created_at = models.DateTimeField(default=now)
