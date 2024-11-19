@@ -39,13 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'main',
+    'WolApi'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'CINEMA_TICKET_DB',  # Replace with your database name
         'USER': 'root',  # Replace with your MySQL username
-        'PASSWORD': 'a14020205Y',   # Replace with your MySQL password
+        'PASSWORD': 'Hoom@n1382',   # Replace with your MySQL password
         'HOST': 'localhost',           # Use the database host, e.g., '127.0.0.1'
         'PORT': '3306',                # Default MySQL port
     }
