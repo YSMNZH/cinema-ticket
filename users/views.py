@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
@@ -10,6 +9,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 from .forms import RegisterForm
+from django.shortcuts import render
+from django.http import JsonResponse
 
 
 
@@ -25,8 +26,8 @@ def login(request):
         else:
             messages.error(request, 'Invalid credentials')
             return render(request, 'users/login.html')
-    else:
-        return render(request, 'users/login.html')
+        
+    return render(request, 'users/login.html')
 
 def register(request):
     if request.method == 'POST':
@@ -34,15 +35,14 @@ def register(request):
         if form.is_valid():
             try:
                 user = form.save(commit=False)
-                user.password = form.cleaned_data['password']  # Hashing handled in form
+                user.password = make_password(form.cleaned_data['password'])
                 user.save()
 
                 messages.success(request, "Registration successful!")
-                return redirect('login')  # Replace 'login' with the name of your login route
+                return redirect('login')
             except Exception as e:
                 messages.error(request, f"Error: {str(e)}")
-        else:
-            messages.error(request, "Please correct the errors below.")
+
     else:
         form = RegisterForm()
 
@@ -51,21 +51,10 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
-
-
-
-
-from django.shortcuts import render
-from django.http import JsonResponse
-
 def ForgotPassword(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-
         customer = CustomUser.objects.filter(email=email).first() 
-
-        
-
         if customer :
             print("-----------------")
             print(customer)   
@@ -77,11 +66,7 @@ def ForgotPassword(request):
 
 
         else :
-            print("user not found")    
-
-
-
-
+            print("user not found")
         return JsonResponse({'status': 'success', 'message': f'Password reset email sent to {email}'})
 
 

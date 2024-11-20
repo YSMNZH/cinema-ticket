@@ -56,8 +56,5 @@ class CustomUserLoginForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get("username")
-        password = cleaned_data.get("password")
-        
-        # Optional: You can add custom validation logic here (e.g., checking for a specific type of username)
-        
+        password = cleaned_data.get("password")        
         return cleaned_data

@@ -5,76 +5,96 @@
     <title>Registration Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-        <style>
-    .required-label::after {
-        content: ' *'; /* Adds the asterisk */
-        color: red; /* Makes the asterisk red */
-        font-weight: bold; /* Optional: Makes it bold for emphasis */
-    }
-
+    <style>
+        .required-label::after {
+            content: ' *'; /* Adds the asterisk */
+            color: red; /* Makes the asterisk red */
+            font-weight: bold; /* Optional: Makes it bold for emphasis */
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .form-control.error {
+            border-color: red;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
 
 <body>
-    <div class="wrapper" style="background-image: url('https://iredd..it/xm7k71pyvgh81.jpg');">
+    <div class="wrapper" style="background-image: url('https://iredd.it/xm7k71pyvgh81.jpg');">
         <div class="inner">
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
                 <h3>Registration Form</h3>
 
+                <!-- Display general form errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <!-- Display field-specific errors -->
+                <div class="form-group">
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="error-message">{{ field.label }}: {{ field.errors|join:", " }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
                 <!-- First and Last Name -->
                 <div class="form-group">
-                    {% if messages %}
-  <div class="alert alert-danger" role="alert">
-    {% for message in messages %}
-      {{ message }}
-    {% endfor %}
-  </div>
-{% endif %} 
                     <div class="form-wrapper">
                         <label for="name">First Name</label>
-                        <input type="text" id="name" class="form-control" name="name" required>
+                        <input type="text" id="name" class="form-control {% if form.name.errors %}error{% endif %}" name="name" value="{{ form.name.value|default:'' }}" required>
                     </div>
                     <div class="form-wrapper">
                         <label for="family_name">Last Name</label>
-                        <input type="text" id="family_name" class="form-control" name="family_name" required>
+                        <input type="text" id="family_name" class="form-control {% if form.family_name.errors %}error{% endif %}" name="family_name" value="{{ form.family_name.value|default:'' }}" required>
                     </div>
                 </div>
 
                 <!-- Username -->
                 <div class="form-wrapper">
                     <label for="username" class="required-label">Username</label>
-                    <input type="text" id="username" class="form-control" name="username" required>
+                    <input type="text" id="username" class="form-control {% if form.username.errors %}error{% endif %}" name="username" value="{{ form.username.value|default:'' }}" required>
                 </div>
 
                 <!-- Email -->
                 <div class="form-wrapper">
                     <label for="email" class="required-label">Email</label>
-                    <input type="email" id="email" class="form-control" name="email" required>
+                    <input type="email" id="email" class="form-control {% if form.email.errors %}error{% endif %}" name="email" value="{{ form.email.value|default:'' }}" required>
                 </div>
 
                 <!-- Phone Number -->
                 <div class="form-wrapper">
                     <label for="phone_number" class="required-label">Phone Number</label>
-                    <input type="tel" id="phone_number" class="form-control" name="phone_number" required>
+                    <input type="tel" id="phone_number" class="form-control {% if form.phone_number.errors %}error{% endif %}" name="phone_number" value="{{ form.phone_number.value|default:'' }}" required>
                 </div>
 
                 <!-- Date of Birth -->
                 <div class="form-wrapper">
                     <label for="date_birth">Date of Birth</label>
-                    <input type="date" id="date_birth" class="form-control" name="date_birth" required>
+                    <input type="date" id="date_birth" class="form-control {% if form.date_birth.errors %}error{% endif %}" name="date_birth" value="{{ form.date_birth.value|default:'' }}" required>
                 </div>
 
                 <!-- Password and Confirm Password -->
                 <div class="form-wrapper">
                     <label for="password" class="required-label">Password</label>
-                    <input type="password" id="password" class="form-control" name="password" required>
+                    <input type="password" id="password" class="form-control {% if form.password.errors %}error{% endif %}" name="password" required>
                 </div>
                 <div class="form-wrapper">
-                    <label for="confirm_password" class="required-label">Confirm Password</label>
-                    <input type="password" id="confirm_password" class="form-control" name="confirm_password" required>
+                    <label for="password_confirm" class="required-label">Confirm Password</label>
+                    <input type="password" id="password_confirm" class="form-control {% if form.password_confirm.errors %}error{% endif %}" name="password_confirm" required>
                 </div>
 
                 <!-- Login Link -->
