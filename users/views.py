@@ -1,16 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from .models import CustomUser 
-from django.contrib.auth import login as auth_login  # Make sure to import it like this
+from django.contrib.auth import login as auth_login
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 from .forms import RegisterForm
 from django.shortcuts import render
-from django.http import JsonResponse
+from .models import CustomUser, PasswordResetToken
+from django.core.mail import send_mail
+
 
 
 
@@ -51,79 +53,48 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
-def ForgotPassword(request):
+def request_password_reset(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        customer = CustomUser.objects.filter(email=email).first() 
-        if customer :
-            print("-----------------")
-            print(customer)   
-            print("-----------------")
+        user = CustomUser.objects.filter(email=email).first()
+        if user:
             token = get_random_string(64)
+            PasswordResetToken.objects.create(user=user, token=token)
 
-            print(token)
-            # expires_at = now() + timedelta(hours=1)
+            reset_link = f"http://127.0.0.1:8000/users/reset-password/{token}/"
 
+            subject = "Password Reset Request"
+            message = f"Click the link below to reset your password:\n{reset_link}"
+            send_mail(subject, message, 'abhooman344@gmail.com', [user.email])
 
-        else :
-            print("user not found")
-        return JsonResponse({'status': 'success', 'message': f'Password reset email sent to {email}'})
-
-
-
-
-
-
-
-
-
-
-
-
-# # -------------------------------------    
-# def request_password_reset(request):
-
-
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-
-#         print(email)
-
-#         user = Users.objects.filter(email=email).first()
-#         print(user)
-
-#         if user:
-#             token = get_random_string(64)
-#             expires_at = now() + timedelta(hours=1)
-            
-#             PasswordResetTokens.objects.create(user_id=user.id, token=token, expires_at=expires_at)
-            
-#             reset_link = f"http://localhost:8000/reset-password/{token}"  # لینک بازنشانی رمز عبور
-#             # send_mail(
-#             #     'Password Reset Request',
-#             #     f'Use the following link to reset your password: {reset_link}',
-#             #     'no-reply@yourdomain.com', 
-#             #     [email],
-#             # )
-#             return JsonResponse({'status': 'success', 'message': 'Password reset email sent.'})
-#         return JsonResponse({'status': 'error', 'message': 'Email not found.'})
+            messages.success(request, "Password reset link has been sent to your email.")
+        else:
+            messages.error(request, "Email address not found.")
     
+    return render(request, 'users/request_password_reset.html')
 
+def reset_password(request, token):
+    reset_token = get_object_or_404(PasswordResetToken, token=token)
 
-# def reset_password(request, token):
-#     if request.method == 'POST':
-#         new_password = request.POST.get('password')
-#         reset_token = get_object_or_404(PasswordResetTokens, token=token)
-        
-#         if reset_token.expires_at < now():
-#             return JsonResponse({'status': 'error', 'message': 'Token has expired.'})
-        
-#         user = reset_token.user
-#         user.password_hash = new_password 
-#         user.save()
-        
-#         reset_token.delete()
-        
-#         return JsonResponse({'status': 'success', 'message': 'Password updated successfully.'})
-        
-#     return render(request, 'reset_password_form.html', {'token': token})
+    if not reset_token.is_valid():
+        messages.error(request, "This reset link has expired.")
+        return render(request, 'users/reset_password_expired.html')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('password')
+        confirm_password = request.POST.get('password_confirm')
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, 'users/reset_password.html', {'token': token})
+
+        user = reset_token.user
+        user.password = make_password(new_password)
+        user.save()
+
+        reset_token.delete()
+
+        messages.success(request, "Your password has been reset successfully.")
+        return redirect('login')
+
+    return render(request, 'users/reset_password.html', {'token': token})

@@ -5,8 +5,22 @@ from django.db import models
 from django.db import models
 from datetime import timedelta
 
+from django.db import models
+from django.utils.timezone import now
+from datetime import timedelta
+from django.conf import settings
+
 def get_expiration_time():
-    return now() + timedelta(hours=1)
+    return now() + timedelta(minutes=20)
+
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    token = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(default=get_expiration_time)
+
+    def is_valid(self):
+        return now() < self.expires_at
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, phone_number, password=None, **extra_fields):
