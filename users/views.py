@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from .models import CustomUser 
@@ -12,8 +12,7 @@ from .forms import RegisterForm
 from django.shortcuts import render
 from .models import CustomUser, PasswordResetToken
 from django.core.mail import send_mail
-
-
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -51,6 +50,30 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 def profile(request):
+    return render(request, 'users/profile.html')
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user.name = request.POST.get('name', user.name)
+        user.family_name = request.POST.get('family_name', user.family_name)
+        user.email = request.POST.get('email', user.email)
+        user.phone_number = request.POST.get('phone_number', user.phone_number)
+        user.date_birth = request.POST.get('date_birth', user.date_birth)
+
+        password = request.POST.get('password', None)
+        if password:
+            user.set_password(password)
+
+        try:
+            user.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+        except Exception as e:
+            messages.error(request, f"Error updating profile: {e}")
+
+        return redirect('profile')  # بازگشت به صفحه پروفایل
+
     return render(request, 'users/profile.html')
 
 def request_password_reset(request):
