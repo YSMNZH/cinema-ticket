@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Movie, Cinema, Hall, Showtime, Seat, Ticket
+from .models import Movie,Showtime,Seat,Ticket
 from django.contrib.auth.models import User
-from .serializers import MovieSerializer, CinemaSerializer, HallSerializer, ShowtimeSerializer, SeatSerializer, TicketSerializer
+from .serializers import MovieSerializer
 
 class MovieListView(APIView):
     def get(self, request):
