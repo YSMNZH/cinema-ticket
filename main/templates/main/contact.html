@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="{% static 'assets/fonts/contact/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Contact Us!</title>
   </head>
-  <body>
-  
 
+  <body>
   <div class="content">
     <div class="container">
       <div class="row align-items-stretch no-gutters contact-wrap">
@@ -30,18 +30,6 @@
                   <input type="text" class="form-control" name="email" id="email"  placeholder="Your email">
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-md-6 form-group mb-5">
-                  <label for="" class="col-form-label">Phone</label>
-                  <input type="text" class="form-control" name="phone" id="phone"  placeholder="Phone #">
-                </div>
-                <div class="col-md-6 form-group mb-5">
-                  <label for="" class="col-form-label">Company</label>
-                  <input type="text" class="form-control" name="company" id="company"  placeholder="Company  name">
-                </div>
-              </div>
-
               <div class="row">
                 <div class="col-md-12 form-group mb-5">
                   <label for="message" class="col-form-label">Message *</label>
@@ -66,35 +54,31 @@
         <div class="col-md-4">
           <div class="contact-info h-100">
             <h3>Contact Information</h3>
-            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, magnam!</p>
+            <p class="mb-5">Have questions, need support, or want to share your ideas for improvement? We’re here for you! Reach out to us anytime for inquiries about tickets, reservations, or general support. Contact us via phone, email, or our online form, and we'll get back to you as soon as possible.</p>
             <ul class="list-unstyled">
               <li class="d-flex">
-                <span class="wrap-icon icon-room mr-3"></span>
+                <span class="wrap-icon fa fa-map-marker mr-3" style="font-size:20px;color:red"></span>
                 <span class="text">9757 Aspen Lane South Richmond Hill, NY 11419</span>
               </li>
               <li class="d-flex">
-                <span class="wrap-icon icon-phone mr-3"></span>
+                <span class="wrap-icon fa fa-phone mr-3" style="font-size:20px;color:red"></span>
                 <span class="text">+1 (291) 939 9321</span>
               </li>
               <li class="d-flex">
-                <span class="wrap-icon icon-envelope mr-3"></span>
-                <span class="text">info@mywebsite.com</span>
+                <span class="wrap-icon fa fa-envelope mr-3" style="font-size:20px;color:red"></span>
+                <span class="text">info@cinematicket.com</span>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-    
-
 
     <script src="{% static 'assets/js/contact/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/contact/popper.min.js' %}"></script>
     <script src="{% static 'assets/js/contact/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/contact/jquery.validate.min.js' %}"></script>
     <script src="{% static 'assets/js/contact/main.js' %}"></script>
-
   </body>
 </html>
