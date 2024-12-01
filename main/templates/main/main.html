@@ -7,17 +7,44 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Cinema Ticket</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+  <style>
+    .movie {
+      display: inline-block;
+      text-align: center;
+      margin: 10px;
+    }
+    .movie img {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+    }
+    #show-more {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #730000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .styled-link {
+      text-decoration: none;
+      color: inherit; 
+      font-weight: bold;
+    }
+  </style>
 </head>
 <header>
-    <nav>
+  <nav>
     <p class="logo">
       cinema<span>ticket<span>
     </p>
-      <i class="fa fa-bars" id="menu"></i> 
+    <i class="fa fa-bars" id="menu"></i> 
     <ul id="menu-box">
       <div class="marker"></div>
       <li>home</li>
@@ -26,48 +53,43 @@
       <ul>
         <li><a href="{% url 'register' %}" class="styled-link">sign up</a></li>
         <li><a href="{% url 'login' %}" class="styled-link">sign in</a></li>
-    </ul>    
+      </ul>    
     </ul>
   </nav>
   
-    <div class="popular-movie-slider">
-      <img src="{% static 'assets/images/poster.jpg' %}" class="poster">
+  <div class="popular-movie-slider">
+    <img src="{% static 'assets/images/poster.jpg' %}" class="poster">
+    
+    <div class="popular-movie-slider-content">
+      <p class="release">2017</p>
+      <h2 class="movie-name">Interstellar</h2>
+      <ul class="category">
+        <p>Science fiction</p>
+        <li>drama</li>
+        <li>action</li>
+      </ul>
+      <p class="desc">Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan. It stars Matthew McConaughey, Anne Hathaway, Jessica Chastain, Bill Irwin, Ellen Burstyn, Matt Damon, and Michael Caine...</p>
       
-      <div class="popular-movie-slider-content">
-        <p class="release">2017</p>
-        <h2 class="movie-name">Interstellar</h2>
-        <ul class="category">
-          <p>Science fiction</p>
-          <li>drama</li>
-          <li>action</li>
-        </ul>
-        <p class="desc">Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan. It stars Matthew McConaughey, Anne Hathaway, Jessica Chastain, Bill Irwin, Ellen Burstyn, Matt Damon, and Michael Caine. Set in a dystopian future where humanity is embroiled in a catastrophic blight and famine, the film follows a group of astronauts who travel through a wormhole near Saturn in search of a new home for humankind.</p>
-        
-        <div class="movie-info">
-          <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
-          <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
-          <i class="fa fa-circle"
-          +> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
-        </div>
-        
-        <div class="movie-btns">
-          <button><i class="fa fa-play"></i> &nbsp; Watch trailer</button>
-          <button class="read-more"><i class="fa fa-circle"></i> <i class="fa fa-circle"></i> <i class="fa fa-circle"></i>&nbsp; Read more</button>
-        </div>
+      <div class="movie-info">
+        <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
+        <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
+        <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
+      </div>
+      
+      <div class="movie-btns">
+        <button><i class="fa fa-play"></i> &nbsp; Watch trailer</button>
+        <button class="read-more"><i class="fa fa-circle"></i> <i class="fa fa-circle"></i> <i class="fa fa-circle"></i>&nbsp; Read more</button>
       </div>
     </div>
-    <!---slider--->
-    
+  </div> 
 </header>
 
 <section>
-  
-  
   <div class="filter-search-box">
-     <div class="search-filters">
-         <input type="text" placeholder="search">
-         <i class="fa fa-search"></i>
-     </div>
+    <div class="search-filters">
+      <input type="text" placeholder="search">
+      <i class="fa fa-search"></i>
+    </div>
     
     <div class="search-bar">
       <div class="bar"></div>
@@ -75,17 +97,17 @@
   </div>
   
   <div class="movie-card-section">
-  <div class="show">
-    <div class="show-bar">
-      <div class="bar"></div>
+    <div class="show">
+      <div class="show-bar">
+        <div class="bar"></div>
+      </div>
+      <div id="movies-container"></div>
+      <button id="show-more" style="display: none;">Show More</button>
     </div>
-     <button>Show more</button>
   </div>
-
 </section>
 
 <footer>
-  
   <div class="logo-box">
     <p class="logo">
       cinema<span>ticket</span>
@@ -99,21 +121,49 @@
     <li>contact</li>
   </ul>
 
-
-<div class="socail-box">
-  <i class="fa fa-telegram"></i>
-  <i class="fa fa-twitter"></i>
-  <i class="fa fa-instagram"></i>
-</div>
-  
+  <div class="socail-box">
+    <i class="fa fa-telegram"></i>
+    <i class="fa fa-twitter"></i>
+    <i class="fa fa-instagram"></i>
+  </div>
 </footer>
+
+<script>
+  let currentPage = 1; // Track the current page
+
+  function loadMovies() {
+    fetch(`/api/movies?page=${currentPage}`) // Adjust the endpoint to match your backend
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('movies-container');
+        data.movies.forEach(movie => {
+          const movieElement = document.createElement('div');
+          movieElement.className = 'movie';
+          movieElement.innerHTML = `
+            <img src="${movie.image}" alt="${movie.name}">
+            <p>${movie.name}</p>
+          `;
+          container.appendChild(movieElement);
+        });
+
+        // Show or hide the "Show More" button
+        const showMoreButton = document.getElementById('show-more');
+        if (data.has_more) {
+          showMoreButton.style.display = 'block';
+        } else {
+          showMoreButton.style.display = 'none';
+        }
+      })
+      .catch(error => console.error('Error fetching movies:', error));
+  }
+
+  document.getElementById('show-more').addEventListener('click', () => {
+    currentPage++; // Increment the page
+    loadMovies(); // Load more movies
+  });
+
+  // Load the first page on initial load
+  loadMovies();
+</script>
 <script src="{% static 'assets/js/main.js' %}"></script>
 </html>
-
-<style>
-    .styled-link {
-        text-decoration: none;
-        color: inherit; 
-        font-weight: bold;
-    }
-</style>
