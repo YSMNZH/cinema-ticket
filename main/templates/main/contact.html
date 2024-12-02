@@ -1,91 +1,90 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {% load static %} 
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <style>
-    .required-label::after {
-        content: ' *'; 
-        color: red; 
-        font-weight: bold;
-    }
-</style>
+    <title>Contact Us!</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/fonts/contact/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Contact Us!</title>
+    <style>
+      .required-label::after {
+          content: ' *';
+          color: red;
+          font-weight: bold;
+      }
+      textarea.form-control {
+          box-shadow: none;
+          border: 1px solid #ced4da;
+          border-radius: 0;
+      }
+    </style>
   </head>
 
   <body>
-  <div class="content">
-    <div class="container">
-      <div class="row align-items-stretch no-gutters contact-wrap">
-        <div class="col-md-8">
-          <div class="form h-100">
-            <h3>Send us a message</h3>
-            <form class="mb-5" method="post" id="contactForm" name="contactForm">
-              <div class="row">
-                <div class="col-md-6 form-group mb-5">
-                  <label class="col-form-label required-label">Name</label>
-                  <input type="text" class="form-control" name="name" id="name">
+    <div class="content">
+      <div class="container">
+        <div class="row align-items-stretch no-gutters contact-wrap">
+          <div class="col-md-8">
+            <div class="form h-100 p-5">
+              <h3>Send us a message</h3>
+              {% if messages %}
+                <ul class="list-group mb-3">
+                  {% for message in messages %}
+                    <li class="list-group-item list-group-item-{{ message.tags }}">{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              <form method="post" id="contactForm" name="contactForm">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label for="name" class="required-label">Name</label>
+                    {{ form.name }}
+                  </div>
+                  <div class="col-md-6 form-group">
+                    <label for="email" class="required-label">Email</label>
+                    {{ form.email }}
+                  </div>
                 </div>
-                <div class="col-md-6 form-group mb-5">
-                  <label for="" class="col-form-label required-label">Email</label>
-                  <input type="text" class="form-control" name="email" id="email">
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <label for="message" class="required-label">Message</label>
+                    {{ form.message }}
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 form-group mb-5">
-                  <label for="message" class="col-form-label required-label">Message</label>
-                  <textarea class="form-control" name="message" id="message" cols="30" rows="4"></textarea>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary py-2 px-4">Send Message</button>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 form-group">
-                  <input type="submit" value="Send Message" class="btn btn-primary rounded-0 py-2 px-4">
-                  <span class="submitting"></span>
-                </div>
-              </div>
-            </form>
-
-            <div id="form-message-warning mt-4"></div> 
-            <div id="form-message-success">
-              Your message was sent, thank you!
+              </form>
             </div>
-
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="contact-info h-100">
-            <h3>Contact Information</h3>
-            <p class="mb-5">Have questions, need support, or want to share your ideas for improvement? We’re here for you! Reach out to us anytime for inquiries about tickets, reservations, or general support. Contact us via phone, email, or our online form, and we'll get back to you as soon as possible.</p>
-            <ul class="list-unstyled">
-              <li class="d-flex">
-                <span class="wrap-icon fa fa-map-marker mr-3" style="font-size:20px;color:red"></span>
-                <span class="text">9757 Aspen Lane South Richmond Hill, NY 11419</span>
-              </li>
-              <li class="d-flex">
-                <span class="wrap-icon fa fa-phone mr-3" style="font-size:20px;color:red"></span>
-                <span class="text">+1 (291) 939 9321</span>
-              </li>
-              <li class="d-flex">
-                <span class="wrap-icon fa fa-envelope mr-3" style="font-size:20px;color:red"></span>
-                <span class="text">info@cinematicket.com</span>
-              </li>
-            </ul>
+          <div class="col-md-4">
+            <div class="contact-info h-100 p-5">
+              <h3>Contact Information</h3>
+              <p>Reach out to us anytime for inquiries about tickets, reservations, or support. We’ll get back to you as soon as possible.</p>
+              <ul class="list-unstyled">
+                <li class="d-flex mb-2">
+                  <span class="wrap-icon fa fa-map-marker mr-3"></span>
+                  <span>9757 Aspen Lane South Richmond Hill, NY 11419</span>
+                </li>
+                <li class="d-flex mb-2">
+                  <span class="wrap-icon fa fa-phone mr-3"></span>
+                  <span>+1 (291) 939 9321</span>
+                </li>
+                <li class="d-flex mb-2">
+                  <span class="wrap-icon fa fa-envelope mr-3"></span>
+                  <span>info@cinematicket.com</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-    <script src="{% static 'assets/js/contact/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'assets/js/contact/popper.min.js' %}"></script>
-    <script src="{% static 'assets/js/contact/bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/contact/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'assets/js/contact/main.js' %}"></script>
   </body>
 </html>
