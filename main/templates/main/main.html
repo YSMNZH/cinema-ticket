@@ -37,6 +37,7 @@
       color: inherit; 
       font-weight: bold;
     }
+    
   </style>
 </head>
 <header>
@@ -85,17 +86,48 @@
 </header>
 
 <section>
+
   <div class="filter-search-box">
+    <div class="filters-box">
+      <div class="all-filters filters">
+        <label for="genre-select">Genre:</label>
+        <select id="genre-select" name="genre">
+          <option value="" disabled selected>Select a genre</option>
+          <option value="action">Action</option>
+          <option value="comedy">Comedy</option>
+          <option value="romance">Romance</option>
+          <option value="drama">Drama</option>
+        </select>
+      </div>
+      <div class="all-filters filters">
+        <label for="year-select">Year:</label>
+        <select id="year-select" name="year">
+          <option value="" disabled selected>Select a year</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div>
+      <div class="all-filters filters">
+        <label for="score-select">Score:</label>
+        <select id="score-select" name="score">
+          <option value="" disabled selected>Select a score range</option>
+          <option value="5-6">5 - 6</option>
+          <option value="6-7">6 - 7</option>
+          <option value="7-8">7 - 8</option>
+          <option value="8-9">8 - 9</option>
+        </select>
+      </div>
+    </div>
     <div class="search-filters">
-      <input type="text" placeholder="search">
+      <input type="text" placeholder="Search by movie, cinema, director, actor...">
       <i class="fa fa-search"></i>
     </div>
     
     <div class="search-bar">
       <div class="bar"></div>
     </div>
+    
   </div>
-  
   <div class="movie-card-section">
     <div class="show">
       <div class="show-bar">
@@ -129,7 +161,7 @@
 </footer>
 
 <script>
-  let currentPage = 1; // Track the current page
+  let currentPage = 1;
 
   function loadMovies() {
     fetch(`/api/movies?page=${currentPage}`) // Adjust the endpoint to match your backend
