@@ -8,3 +8,6 @@ def contact(request):
 
 def news(request):
     return render(request, "main/news.html")
+
+def movie(request):
+    return render(request, "main/movie.html")
