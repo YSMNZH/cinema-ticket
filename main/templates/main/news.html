@@ -1,114 +1,262 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        {% load static %} 
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="{% static 'assets/css/news/style.css' %}" />
-		<link rel="stylesheet" href="{% static 'assets/css/news/nivo-slider.css' %}" type="text/css" media="screen" />
-		<link rel="stylesheet" href="        {% static 'assets/css/news/default.css' %}" type="text/css" media="screen" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-		<script src="{% static 'assets/js/news/jquery.nivo.slider.pack.js' %}" type="text/javascript"></script>
-        <title>Source X SRT</title>
-    </head>
-	<body id="home">
-		<div id="wrapper">
-			<header>
-				<div id="logo">
-				<h1>Source X <span id="iisrt"><span id="ii">II</span>  <span id="srt">SRT</span></span></h1>
-				<div id="tagline">
-					<h2>News</h2>
-				</div>
-				</div>
-				<nav>
-					<ul>
-						<li><a href="index.html" id="homenav">Home</a></li>
-						<li><a href="blog.html" id="blognav">Blog</a></li>
-						<li><a href="fullwidth.html" id="fullwidthnav">Full width</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<li><a href="#">About</a></li>
-					</ul>
-				</nav>
-			</header>
-			<div class="slider-wrapper theme-default">
-				<div id="slider" class="nivoSlider">
-					<img src="images/slide1.jpg" alt="" />
-					<a href="http://geeksband.com"><img src="images/slide2.jpg" alt="" title="This is an example of a caption with a link" /></a>
-					<img src="images/slide3.jpg" alt="" title="This is an example of a caption" />
-					<img src="images/slide4.jpg" alt="" />
-				</div>
-			</div>
-			<script type="text/javascript">
-			$(window).load(function() {
-				$('#slider').nivoSlider({pauseTime: 6000,});
-			});
-			</script>
-
-			<section>
-				<div id="line">
-					<div class="dline"></div>
-					<h1>Our Services</h1>
-					<div class="dline"></div>
-				</div>
-				<div id="ourserv">
-					<article>
-						<h1>Web Design</h1>
-						<img src="images/1.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet.</p>
-						<a href="fullwidth.html" class="rm">Read More</a>
-					</article>
-					<article>
-						<h1>Graphic Design</h1>
-						<img src="images/2.jpg" alt="" />
-						<p>Consectetuer adipiscing elit. Suspendisse enim elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit.</p>
-						<a href="fullwidth.html" class="rm">Read More</a>
-					</article>
-					<article class="lastarticle">
-						<h1>Web Development</h1>
-						<img src="images/3.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit enim.</p>
-						<a href="fullwidth.html" class="rm">Read More</a>
-					</article>
-				</div>
-				<div id="sline">
-					<div class="sdline"></div>
-					<h1>Latest Projects</h1>
-					<div class="sdline"></div>
-				</div>
-				<div id="latestp">
-					<article>
-						<h1>Lorem Ipsum Dolor Sit</h1>
-						<img src="images/1s.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.</p>
-						<a href="singlepost.html" class="rm">Read More</a>
-					</article>
-					<article>
-						<h1>Lorem Ipsum Dolor Sit</h1>
-						<img src="images/2s.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.</p>
-						<a href="singlepost.html" class="rm">Read More</a>
-					</article>
-					<article>
-						<h1>Lorem Ipsum Dolor Sit</h1>
-						<img src="images/3s.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.</p>
-						<a href="singlepost.html" class="rm">Read More</a>
-					</article>
-					<article class="lastarticle">
-						<h1>Lorem Ipsum Dolor Sit</h1>
-						<img src="images/4s.jpg" alt="" />
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.</p>
-						<a href="singlepost.html" class="rm">Read More</a>
-					</article>
-				</div>
-			</section>				
-			<footer>
-				<p>Copyright &copy 2013 Source X by Youssef Nassim and Zakariya Lhamri, design from <a href="http://geeksband.com">Geeksband.com</a>. All Rights Reserved.</p>
-			</footer>
-		</div>			
-	</body>
-</html>
-		
-		
-			
+<html style="font-size: 16px;" lang="en"><head>
+	<% load static %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="ALL NEWS">
+    <meta name="description" content="">
+    <title>Page 5</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Page-5.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 7.0.3, nicepage.com">
+    <meta name="referrer" content="origin">
+    
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
     
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/default-logo.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Page 5">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-1dd4"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <a href="#" class="u-image u-logo u-image-1">
+          <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-hamburger-link u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="./" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="About.html" style="padding: 10px 20px;">About</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Contact.html" style="padding: 10px 20px;">Contact</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-1.html" style="padding: 10px 20px;">Page 1</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-2.html" style="padding: 10px 20px;">Page 2</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-3.html" style="padding: 10px 20px;">Page 3</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-4.html" style="padding: 10px 20px;">Page 4</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-5.html" style="padding: 10px 20px;">Page 5</a>
+</li></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html">Contact</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-1.html">Page 1</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-2.html">Page 2</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-3.html">Page 3</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-4.html">Page 4</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-5.html">Page 5</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-gradient u-section-1" id="carousel_c102">
+      <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <div id="carousel-9fe1" data-interval="5000" data-u-ride="carousel" class="u-carousel u-expanded-width u-slider u-slider-1">
+          <ol class="u-absolute-hcenter u-carousel-indicators u-carousel-indicators-1">
+            <li data-u-target="#carousel-9fe1" class="u-active u-active-custom-color-1 u-black u-hover-custom-color-1 u-shape-circle" data-u-slide-to="0" style="width: 22px; height: 22px;"></li>
+            <li data-u-target="#carousel-9fe1" class="u-active-custom-color-1 u-black u-hover-custom-color-1 u-shape-circle" data-u-slide-to="1" style="width: 22px; height: 22px;"></li>
+            <li data-u-target="#carousel-9fe1" class="u-active-custom-color-1 u-black u-hover-custom-color-1 u-shape-circle" data-u-slide-to="2" style="width: 22px; height: 22px;"></li>
+            <li data-u-target="#carousel-9fe1" class="u-active-custom-color-1 u-black u-hover-custom-color-1 u-shape-circle" data-u-slide-to="3" style="width: 22px; height: 22px;"></li>
+            <li data-u-target="#carousel-9fe1" class="u-active-custom-color-1 u-black u-hover-custom-color-1 u-shape-circle" data-u-slide-to="4" style="width: 22px; height: 22px;"></li>
+          </ol>
+          <div class="u-carousel-inner" role="listbox">
+            <div class="u-active u-carousel-item u-container-style u-slide">
+              <div class="u-container-layout u-container-layout-1">
+                <div class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-radius-20 u-shape-round u-white u-group-1">
+                  <div class="u-container-layout u-valign-middle u-container-layout-2">
+                    <h3 class="u-text u-text-palette-1-base u-text-1"> '<span class="u-text-custom-color-1">Smile 2' - A bigger, scarier, superior sequel</span>
+                    </h3>
+                    <p class="u-text u-text-2"> “Lights, camera, bitch, smile / Even when you wanna die..." The sequel to 2022's 'Smile' may have taken Taylor Swift's lyrics a little too literally. But for its faults, this follow-up works.</p>
+                  </div>
+                </div>
+                <img src="images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" data-image-width="1920" data-image-height="1080">
+              </div>
+            </div>
+            <div class="custom-expanded u-carousel-item u-container-style u-slide">
+              <div class="u-container-layout u-container-layout-3">
+                <div class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-radius-20 u-shape-round u-white u-group-2">
+                  <div class="u-container-layout u-valign-middle u-container-layout-4">
+                    <h3 class="u-text u-text-custom-color-1 u-text-3"> Non merci! France issues rare ban for horror film 'Terrifier 3'</h3>
+                    <p class="u-text u-text-4"> France’s classification body has slapped an -18 ban on ‘Terrifier 3’, which is out in cinemas today. It’s the first ruling of its kind for a horror film in nearly 20 years.</p>
+                  </div>
+                </div>
+                <img src="images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-2" data-image-width="1920" data-image-height="1080">
+              </div>
+            </div>
+            <div class="u-carousel-item u-container-style u-slide">
+              <div class="u-container-layout u-container-layout-5">
+                <div class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-radius-20 u-shape-round u-white u-group-3">
+                  <div class="u-container-layout u-valign-middle u-container-layout-6">
+                    <h3 class="u-text u-text-custom-color-1 u-text-5"> Celebrated British actress Maggie Smith dies aged 89</h3>
+                    <p class="u-text u-text-6"> Legendary British actress Dame Maggie Smith,&nbsp;who won new fans in the 21st century as Professor Minerva McGonagall in the Harry Potter films and the dowager Countess of Grantham in the hit ITV series Downton Abbey, has died aged 89.</p>
+                  </div>
+                </div>
+                <img src="images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-3" data-image-width="828" data-image-height="466">
+              </div>
+            </div>
+            <div class="u-carousel-item u-container-style u-slide">
+              <div class="u-container-layout u-container-layout-7">
+                <div class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-radius-20 u-shape-round u-white u-group-4">
+                  <div class="u-container-layout u-valign-middle u-container-layout-8">
+                    <h3 class="u-text u-text-custom-color-1 u-text-7"> Venice 2024: Lady Gaga, Joaquin Phoenix and Todd Phillips discuss 'Joker: Folie à Deux'</h3>
+                    <p class="u-text u-text-8"> Premiering on the Lido this evening, 'Joker: Folie à Deux' is the highly anticipated sequel to 2019's controversial 'Joker'. Stars Lady Gaga and Joaquin Phoenix discuss making it - and why the latter suddenly quit Todd Haynes' gay romance film recently.</p>
+                  </div>
+                </div>
+                <img src="images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-4" data-image-width="1920" data-image-height="1080">
+              </div>
+            </div>
+            <div class="u-carousel-item u-container-style u-slide">
+              <div class="u-container-layout u-container-layout-9">
+                <div class="u-align-center-md u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-xl u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-radius-20 u-shape-round u-white u-group-5">
+                  <div class="u-container-layout u-valign-middle u-container-layout-10">
+                    <h3 class="u-text u-text-custom-color-1 u-text-9"> Turin National Cinema Museum displays iconic objects that make Hollywood movie magic</h3>
+                    <p class="u-text u-text-10"> From props to icons, a new exhibition at Turin's National Cinema Museum is celebrating the crucial designs and items used on Hollywood film sets that help create the magic of movies</p>
+                  </div>
+                </div>
+                <img src="images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-5" data-image-width="1920" data-image-height="1080">
+              </div>
+            </div>
+          </div>
+          <a class="u-absolute-vcenter u-carousel-control u-carousel-control-prev u-spacing-5 u-text-custom-color-1 u-carousel-control-1" href="#carousel-9fe1" role="button" data-u-slide="prev">
+            <span aria-hidden="true">
+              <svg viewBox="0 0 256 256"><g><polygon points="207.093,30.187 176.907,0 48.907,128 176.907,256 207.093,225.813 109.28,128"></polygon>
+</g></svg>
+            </span>
+            <span class="sr-only">
+              <svg viewBox="0 0 256 256"><g><polygon points="207.093,30.187 176.907,0 48.907,128 176.907,256 207.093,225.813 109.28,128"></polygon>
+</g></svg>
+            </span>
+          </a>
+          <a class="u-absolute-vcenter u-carousel-control u-carousel-control-next u-spacing-5 u-text-custom-color-1 u-carousel-control-2" href="#carousel-9fe1" role="button" data-u-slide="next">
+            <span aria-hidden="true">
+              <svg viewBox="0 0 306 306"><g id="chevron-right"><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"></polygon>
+</g></svg>
+            </span>
+            <span class="sr-only">
+              <svg viewBox="0 0 306 306"><g id="chevron-right"><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"></polygon>
+</g></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-grey-10 u-section-2" id="sec-302d">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-absolute-hcenter u-expanded-height u-form u-form-1">
+          <form action="https://forms.nicepagesrv.com/v2/form/process" class="u-clearfix u-form-horizontal u-form-spacing-10 u-inner-form" source="email" name="form" style="padding: 10px;">
+            <div class="u-form-group">
+              <label for="email-2a7f" class="u-label"></label>
+              <input type="text" placeholder="ENTER A KEYWORD..." id="email-2a7f" name="search" class="u-input u-input-rectangle" required="required">
+            </div>
+            <div class="u-align-left u-form-group u-form-submit">
+              <a href="#" class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-1 u-btn-1">SEARCH</a>
+              <input type="submit" value="submit" class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-container-align-center-xs u-grey-10 u-section-3" id="carousel_e486">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="marquee_text u-align-center u-text u-text-default u-text-1" data-animation-name="customAnimationIn" data-animation-duration="1200" data-animation-delay="0">ALL NEWS</h2>
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+                <img src="images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-1" data-image-width="1920" data-image-height="1080">
+                <h5 class="u-align-center u-text u-text-2"> Venice 2024: Lady Gaga, Joaquin Phoenix and Todd Phillips discuss 'Joker: Folie à Deux'</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-3"> CULTURE NEWS</h4>
+                <p class="u-align-center u-text u-text-4"> Premiering on the Lido this evening, 'Joker: Folie à Deux' is the highly anticipated sequel to 2019's controversial 'Joker'. Stars Lady Gaga and Joaquin Phoenix discuss making it - and why the latter suddenly quit Todd Haynes' gay romance film recently.</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">SHOW More </a>
+              </div>
+            </div>
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
+              <div class="u-container-layout u-similar-container u-container-layout-2">
+                <img src="images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-2" data-image-width="1920" data-image-height="1080">
+                <h5 class="u-align-center u-text u-text-5"> Turin National Cinema Museum displays iconic objects that make Hollywood movie magic</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-6">ART</h4>
+                <p class="u-align-center u-text u-text-7"> From props to icons, a new exhibition at Turin's National Cinema Museum is celebrating the crucial designs and items used on Hollywood film sets that help create the magic of movies</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">show More </a>
+              </div>
+            </div>
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
+              <div class="u-container-layout u-similar-container u-container-layout-3">
+                <img src="images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-3" data-image-width="828" data-image-height="466">
+                <h5 class="u-align-center u-text u-text-8"> Celebrated British actress Maggie Smith dies aged 89</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-9"> CULTURE NEWS</h4>
+                <p class="u-align-center u-text u-text-10"> Legendary British actress Dame Maggie Smith,&nbsp;who won new fans in the 21st century as Professor Minerva McGonagall in the Harry Potter films and the dowager Countess of Grantham in the hit ITV series Downton Abbey, has died aged 89.</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-3" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">show More </a>
+              </div>
+            </div>
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
+              <div class="u-container-layout u-similar-container u-container-layout-4">
+                <img src="images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-4" data-image-width="1920" data-image-height="1080">
+                <h5 class="u-align-center u-text u-text-11"> Non merci! France issues rare ban for horror film 'Terrifier 3'</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-12">CINEMA</h4>
+                <p class="u-align-center u-text u-text-13"> France’s classification body has slapped an -18 ban on ‘Terrifier 3’, which is out in cinemas today. It’s the first ruling of its kind for a horror film in nearly 20 years.</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-4" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">show More </a>
+              </div>
+            </div>
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-5" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
+              <div class="u-container-layout u-similar-container u-container-layout-5">
+                <img src="images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-5" data-image-width="1920" data-image-height="1080">
+                <h5 class="u-align-center u-text u-text-14"> 'Smile 2' - A bigger, scarier, superior sequel</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-15">CINEMA </h4>
+                <p class="u-align-center u-text u-text-16"> “Lights, camera, bitch, smile / Even when you wanna die..." The sequel to 2022's 'Smile' may have taken Taylor Swift's lyrics a little too literally. But for its faults, this follow-up works.</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-5" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">Learn More </a>
+              </div>
+            </div>
+            <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-6" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
+              <div class="u-container-layout u-similar-container u-container-layout-6">
+                <img src="images/beautiful-car-washing-service_231.jpg" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-6" data-image-width="1380" data-image-height="920">
+                <h5 class="u-align-center u-text u-text-17"> Wicked: How cinema re-invented the witch and restored her powers</h5>
+                <h4 class="u-align-center u-text u-text-custom-color-1 u-text-18">CINEMA</h4>
+                <p class="u-align-center u-text u-text-19"> As 'Wicked' prepares to cast its spell over the box office, we look at how portrayals of witches on screen have evolved to become symbols of female empowerment and an embracement of otherness.</p>
+                <a href="#" class="u-active-white u-align-center u-border-2 u-border-active-black u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-1 u-hover-white u-radius u-text-active-black u-text-body-alt-color u-text-hover-black u-btn-6" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">Learn More </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="u-black u-border-2 u-border-black u-btn u-button-style u-hover-custom-color-1 u-text-white u-btn-7">Show more&nbsp;<span class="u-icon u-text-palette-1-dark-2"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M441.156,322.876l-48.666-47.386c-3.319-3.243-8.619-3.234-11.93,0.017l-81.894,80.299V8.533 c0-4.71-3.823-8.533-8.533-8.533h-68.267c-4.71,0-8.533,3.823-8.533,8.533v347.273l-81.894-80.299    c-3.311-3.243-8.602-3.251-11.921-0.017l-48.666,47.386c-1.655,1.604-2.586,3.806-2.586,6.11c0,2.304,0.939,4.506,2.586,6.11 l179.2,174.481c1.655,1.613,3.806,2.423,5.948,2.423c2.15,0,4.292-0.811,5.956-2.423l179.2-174.481 c1.647-1.604,2.577-3.806,2.577-6.11C443.733,326.682,442.803,324.48,441.156,322.876z"></path></svg></span>
+        </a>
+      </div>
+    </section>
+    
+    
+    
+    
+    <section class="u-backlink u-clearfix u-grey-80">
+      <p class="u-text">
+        <span>This site was created with the </span>
+        <a class="u-link" href="https://nicepage.com/" target="_blank" rel="nofollow">
+          <span>Nicepage</span>
+        </a>
+      </p>
+    </section>
+  
+</body></html>

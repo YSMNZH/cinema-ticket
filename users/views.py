@@ -72,7 +72,7 @@ def update_profile(request):
         except Exception as e:
             messages.error(request, f"Error updating profile: {e}")
 
-        return redirect('profile')  # بازگشت به صفحه پروفایل
+        return redirect('profile')  
 
     return render(request, 'users/profile.html')
 
