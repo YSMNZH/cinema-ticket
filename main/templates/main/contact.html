@@ -4,6 +4,13 @@
     {% load static %} 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <style>
+    .required-label::after {
+        content: ' *'; 
+        color: red; 
+        font-weight: bold;
+    }
+</style>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'assets/fonts/contact/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/bootstrap.min.css' %}">
@@ -22,18 +29,18 @@
             <form class="mb-5" method="post" id="contactForm" name="contactForm">
               <div class="row">
                 <div class="col-md-6 form-group mb-5">
-                  <label for="" class="col-form-label">Name *</label>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Your name">
+                  <label class="col-form-label required-label">Name</label>
+                  <input type="text" class="form-control" name="name" id="name">
                 </div>
                 <div class="col-md-6 form-group mb-5">
-                  <label for="" class="col-form-label">Email *</label>
-                  <input type="text" class="form-control" name="email" id="email"  placeholder="Your email">
+                  <label for="" class="col-form-label required-label">Email</label>
+                  <input type="text" class="form-control" name="email" id="email">
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12 form-group mb-5">
-                  <label for="message" class="col-form-label">Message *</label>
-                  <textarea class="form-control" name="message" id="message" cols="30" rows="4"  placeholder="Write your message"></textarea>
+                  <label for="message" class="col-form-label required-label">Message</label>
+                  <textarea class="form-control" name="message" id="message" cols="30" rows="4"></textarea>
                 </div>
               </div>
               <div class="row">

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +8,55 @@
   <title>Edit Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <link rel="stylesheet" href="{% static 'assets/css/material-dashboard.css' %}">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .bg {
+      animation: slide 3s ease-in-out infinite alternate;
+      background-image: linear-gradient(-60deg, rgb(0, 0, 0) 50%, rgb(255, 0, 0) 50%);
+      bottom: 0;
+      left: -50%;
+      opacity: .5;
+      position: fixed;
+      right: -50%;
+      top: 0;
+      z-index: -1;
+    }
+
+    .bg2 {
+      animation-direction: alternate-reverse;
+      animation-duration: 4s;
+    }
+
+    .bg3 {
+      animation-duration: 5s;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateX(-25%);
+      }
+
+      100% {
+        transform: translateX(25%);
+      }
+    }
+  </style>
 </head>
 
-<body style="background-color: #000;">
+<body>
+  <!-- Sliding Diagonal Background -->
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+
+  <!-- Main Content -->
   <div class="wrapper">
     <div class="sidebar" data-color="danger" data-background-color="black">
       <div class="logo"><a class="simple-text logo-normal">CinemaTicket</a></div>
@@ -19,19 +64,19 @@
         <ul class="nav">
           <li class="nav-item active">
             <a class="nav-link" href="#">
-              <i class="material-icons">person</i>
+              <i class="material-icons"></i>
               <p>Edit Information</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <i class="material-icons">content_paste</i>
+              <i class="material-icons"></i>
               <p>Reservation List</p>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <i class="material-icons">wallet</i>
+              <i class="material-icons"></i>
               <p>Wallet</p>
             </a>
           </li>
@@ -60,7 +105,7 @@
                 </div>
                 <div class="card-body">
 
-                  <!-- نمایش پیام‌های موفقیت یا خطا -->
+                  <!-- Success or Error Messages -->
                   {% if messages %}
                   <div class="alert alert-dismissible">
                     {% for message in messages %}
