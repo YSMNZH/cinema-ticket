@@ -7,54 +7,235 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Cinema Ticket</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .advanced {
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .btn-secondary,
+    .btn-secondary:focus,
+    .btn-secondary:active {
+      color: #fff;
+      background-color: red !important;
+      border-color: black !important;
+      box-shadow: none;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+      border: 1px solid #00838f;
+    }
+
+    .cinema-list {
+      background-color: #222;
+      margin-top: 30px;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .cinema-item {
+      background-color: #333;
+      color: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cinema-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .cinema-score {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .cinema-score.low {
+      background-color: red;
+    }
+
+    .cinema-score.medium {
+      background-color: grey;
+    }
+
+    .cinema-score.high {
+      background-color: green;
+    }
+
+    .cinema-address {
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .show-times-btn {
+      color: #fff;
+      background-color: #ff0000;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .showtimes {
+      display: none;
+      margin-top: 10px;
+      padding-left: 15px;
+    }
+
+    .showtimes span {
+      background-color: red;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .popular-movie-slider img {
+      width: 100%;
+      border-radius: 8px;
+    }
+  </style>
 </head>
-<header>
-  <nav>
-      <p class="logo">
-        CINEMATICKET
-      </p>      
-    <i class="fa fa-bars" id="menu"></i> 
-    <ul id="menu-box">
-      <div class="marker"></div>
-      <li>home</li>
-      <li>news</li>
-      <li>contact</li>
-      <ul>
-        <li><a href="{% url 'register' %}" class="styled-link">sign up</a></li>
-        <li><a href="{% url 'login' %}" class="styled-link">sign in</a></li>
-      </ul>    
-    </ul>
-  </nav>
-  <div class="popular-movie-slider">
-    <img src="{% static 'assets/images/poster.jpg' %}" class="poster">
-    <div class="popular-movie-slider-content">
-      <p class="release">2017</p>
-      <h2 class="movie-name">Interstellar</h2>
-      <ul class="category">
-        <p>Science fiction</p>
-        <li>drama</li>
-        <li>action</li>
-      </ul>
-      <p class="desc">Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan. It stars Matthew McConaughey, Anne Hathaway, Jessica Chastain, Bill Irwin, Ellen Burstyn, Matt Damon, and Michael Caine...</p>
-      
-      <div class="movie-info">
-        <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
-        <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
-        <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
+
+  <header>
+    <nav class="d-flex justify-content-between align-items-center bg-dark p-3">
+      <div class="logo">
+        CINEMA<span>TICKET</span>
       </div>
-      
-      <div class="movie-btns">
-        <button><i class="fa fa-play"></i> &nbsp; Watch trailer</button>
-        <button class="read-more"><i class="fa fa-circle"></i> <i class="fa fa-circle"></i> <i class="fa fa-circle"></i>&nbsp; Read more</button>
+      <ul>
+        <li><a href="{% url 'main' %}" class="styled-link">Home</a></li>
+        <li><a href="{% url 'news' %}" class="styled-link">News</a></li>
+        <li><a href="{% url 'contact' %}" class="styled-link">Contact</a></li>
+        <li><a href="{% url 'login' %}" class="styled-link">Sign In</a></li>
+        <li><a href="{% url 'register' %}" class="styled-link">Sign Up</a></li>
+      </ul>
+    </nav>
+
+    <div class="popular-movie-slider">
+      <img src="{% static 'assets/images/poster.jpg' %}" class="poster">
+      <div class="popular-movie-slider-content">
+        <p class="release">2017</p>
+        <h2 class="movie-name">Interstellar</h2>
+        <ul class="category">
+          <p>Science fiction</p>
+          <li>drama</li>
+          <li>action</li>
+        </ul>
+        <p class="desc">Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan. It stars Matthew McConaughey, Anne Hathaway, Jessica Chastain, Bill Irwin, Ellen Burstyn, Matt Damon, and Michael Caine...</p>
+        <div class="movie-info">
+          <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
+          <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
+          <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
+        </div>
+        <div class="movie-btns">
+          <button><i class="fa fa-play"></i> &nbsp; Watch trailer</button>
+          <button class="read-more"><i class="fa fa-circle"></i> <i class="fa fa-circle"></i> <i class="fa fa-circle"></i>&nbsp; Read more</button>
+        </div>
+      </div>
+    </div> 
+  </header> 
+
+<body>
+  <div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10">
+        <div class="card p-3 py-4">
+          <div class="row g-3 mt-2">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Enter address, cinema's name, ...">
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-secondary btn-block">Search</button>
+            </div>
+          </div>
+
+          <div class="cinema-list">
+            <div class="cinema-item">
+              <div>
+                <p class="cinema-name">Cinema 1</p>
+                <p class="cinema-address">1234 Cinema St, Movie City</p>
+              </div>
+              <div>
+                <span class="cinema-score low">3.8</span>
+                <button class="show-times-btn" onclick="toggleShowtimes(1)">Show Times</button>
+              </div>
+            </div>
+            <div id="showtimes-1" class="showtimes">
+              <span>12:00 PM</span>
+              <span>3:00 PM</span>
+              <span>6:00 PM</span>
+            </div>
+
+            <div class="cinema-item">
+              <div>
+                <p class="cinema-name">Cinema 2</p>
+                <p class="cinema-address">5678 Movie Ave, Film Town</p>
+              </div>
+              <div>
+                <span class="cinema-score medium">5.0</span>
+                <button class="show-times-btn" onclick="toggleShowtimes(2)">Show Times</button>
+              </div>
+            </div>
+            <div id="showtimes-2" class="showtimes">
+              <span>1:00 PM</span>
+              <span>4:00 PM</span>
+              <span>7:00 PM</span>
+            </div>
+
+            <div class="cinema-item">
+              <div>
+                <p class="cinema-name">Cinema 3</p>
+                <p class="cinema-address">789 Cinema Boulevard, City</p>
+              </div>
+              <div>
+                <span class="cinema-score high">8.2</span>
+                <button class="show-times-btn" onclick="toggleShowtimes(3)">Show Times</button>
+              </div>
+            </div>
+            <div id="showtimes-3" class="showtimes">
+              <span>2:00 PM</span>
+              <span>5:00 PM</span>
+              <span>8:00 PM</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div> 
-</header>
-<body style="background-color: black">
+  </div>
+
+  <script>
+    function toggleShowtimes(cinemaId) {
+      const showtimesElement = document.getElementById('showtimes-' + cinemaId);
+      if (showtimesElement.style.display === 'none' || showtimesElement.style.display === '') {
+        showtimesElement.style.display = 'block';
+      } else {
+        showtimesElement.style.display = 'none';
+      }
+    }
+  </script>
 </body>
+
 <script src="{% static 'assets/js/main.js' %}"></script>
 </html>

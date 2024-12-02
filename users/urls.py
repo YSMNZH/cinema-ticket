@@ -7,6 +7,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.update_profile, name='update_profile'),
-    path('forgot-password/', views.request_password_reset, name='forgot_password'),
+    path('forgot-password/', views.request_password_reset, name='forgot-password'),
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
 ]

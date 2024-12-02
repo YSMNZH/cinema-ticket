@@ -1,0 +1,56 @@
+<form method="get" action="">
+    <div class="filters-box">
+        <div class="all-filters">
+            <label for="genre-select">Genre:</label>
+            <select id="genre-select" name="genre">
+                <option value="">Select a genre</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Romance">Romance</option>
+                <option value="Drama">Drama</option>
+            </select>
+        </div>
+        <div class="all-filters">
+            <label for="year-select">Year:</label>
+            <select id="year-select" name="year">
+                <option value="">Select a year</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+            </select>
+        </div>
+        <div class="all-filters">
+            <label for="score-select">Score:</label>
+            <select id="score-select" name="score">
+                <option value="">Select a score range</option>
+                <option value="7-8">7 - 8</option>
+                <option value="8-9">8 - 9</option>
+                <option value="9-10">9 - 10</option>
+            </select>
+        </div>
+        <div class="search-filters">
+            <input type="text" name="query" placeholder="Search by movie, cinema, director">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</form>
+<section class="container my-5">
+    <h2 class="text-center mb-4 text-white">Available Movies</h2>
+    <div class="row justify-content-center">
+        {% for movie in movies %}
+        <div class="col-md-3">
+            <div class="movie-card">
+                <img src="{% static movie.poster %}" alt="{{ movie.title }}">
+                <div class="movie-info">
+                    <h4>{{ movie.title }}</h4>
+                    <p><strong>Genre:</strong> {{ movie.genre }}</p>
+                    <p><strong>Duration:</strong> {{ movie.duration_minutes }} min</p>
+                    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+                    <p><strong>IMDB Rating:</strong> {{ movie.imdb_rating }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No movies available at the moment.</p>
+        {% endfor %}
+    </div>
+</section>

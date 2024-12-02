@@ -142,7 +142,7 @@ sup {
 }
 
 a {
-  color: #9c27b0;
+  color: #000;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
@@ -563,7 +563,7 @@ sup {
 }
 
 a {
-  color: #9c27b0;
+  color: #000;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
@@ -3463,7 +3463,7 @@ fieldset:disabled a.btn {
 
 .btn-link {
   font-weight: 400;
-  color: #9c27b0;
+  color: #000;
   background-color: transparent;
 }
 
@@ -9446,7 +9446,7 @@ a.text-dark:focus {
 
 .btn.btn-primary {
   color: #fff;
-  background-color: #9c27b0;
+  background-color: #000;
   border-color: #9c27b0;
   box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
 }
@@ -9494,7 +9494,7 @@ a.text-dark:focus {
 
 .open>.btn.btn-primary.dropdown-toggle.bmd-btn-icon {
   color: inherit;
-  background-color: #9c27b0;
+  background-color: #000;
 }
 
 .open>.btn.btn-primary.dropdown-toggle.bmd-btn-icon:hover {
@@ -16886,7 +16886,7 @@ legend {
 }
 
 a {
-  color: #9c27b0;
+  color: #000;
 }
 
 a:hover,
@@ -20916,7 +20916,7 @@ fieldset[disabled][disabled] .dark-edition .form-control,
 
 .dark-edition .is-focused [class^='bmd-label'],
 .dark-edition .is-focused [class*=' bmd-label'] {
-  color: #9c27b0;
+  color: #000;
 }
 
 .dark-edition .is-focused .bmd-label-placeholder {

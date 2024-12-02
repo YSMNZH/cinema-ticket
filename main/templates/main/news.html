@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="en"><head>
-	<% load static %>
+  {% load static %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="ALL NEWS">
     <meta name="description" content="">
-    <title>Page 5</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="Page-5.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 7.0.3, nicepage.com">
+    <title>News</title>
+    <link rel="stylesheet" href="{% static 'assets/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'assets/css/news.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'assets/js/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'assets/js/nicepage.js' %}" defer=""></script>
     <meta name="referrer" content="origin">
     
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    
-    
-    
-    
-    
+      
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
@@ -31,7 +26,7 @@
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
   <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-1dd4"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <a href="#" class="u-image u-logo u-image-1">
-          <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
+          <img src="{% static 'assets/images/logo.jpg' %}" class="u-logo-image u-logo-image-1">
         </a>
         <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -42,31 +37,15 @@
             </a>
           </div>
           <div class="u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="./" style="padding: 10px 20px;">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="About.html" style="padding: 10px 20px;">About</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Contact.html" style="padding: 10px 20px;">Contact</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-1.html" style="padding: 10px 20px;">Page 1</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-2.html" style="padding: 10px 20px;">Page 2</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-3.html" style="padding: 10px 20px;">Page 3</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-4.html" style="padding: 10px 20px;">Page 4</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-5.html" style="padding: 10px 20px;">Page 5</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'main' %}" style="padding: 10px 20px;">HOME</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'news' %}" style="padding: 10px 20px;">NEWS</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'contact' %}" style="padding: 10px 20px;">CONTACT</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'login' %}" style="padding: 10px 20px;">SIGN IN</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'register' %}" style="padding: 10px 20px;">SIGN UP</a>
 </li></ul>
           </div>
           <div class="u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-              <div class="u-inner-container-layout u-sidenav-overflow">
-                <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html">Contact</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-1.html">Page 1</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-2.html">Page 2</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-3.html">Page 3</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-4.html">Page 4</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-5.html">Page 5</a>
-</li></ul>
-              </div>
-            </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
@@ -91,7 +70,7 @@
                     <p class="u-text u-text-2"> “Lights, camera, bitch, smile / Even when you wanna die..." The sequel to 2022's 'Smile' may have taken Taylor Swift's lyrics a little too literally. But for its faults, this follow-up works.</p>
                   </div>
                 </div>
-                <img src="images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp' %}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-1" data-image-width="1920" data-image-height="1080">
               </div>
             </div>
             <div class="custom-expanded u-carousel-item u-container-style u-slide">
@@ -102,7 +81,7 @@
                     <p class="u-text u-text-4"> France’s classification body has slapped an -18 ban on ‘Terrifier 3’, which is out in cinemas today. It’s the first ruling of its kind for a horror film in nearly 20 years.</p>
                   </div>
                 </div>
-                <img src="images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-2" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp' %}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-2" data-image-width="1920" data-image-height="1080">
               </div>
             </div>
             <div class="u-carousel-item u-container-style u-slide">
@@ -113,7 +92,7 @@
                     <p class="u-text u-text-6"> Legendary British actress Dame Maggie Smith,&nbsp;who won new fans in the 21st century as Professor Minerva McGonagall in the Harry Potter films and the dowager Countess of Grantham in the hit ITV series Downton Abbey, has died aged 89.</p>
                   </div>
                 </div>
-                <img src="images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-3" data-image-width="828" data-image-height="466">
+                <img src="{% static 'assets/images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp' %}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-3" data-image-width="828" data-image-height="466">
               </div>
             </div>
             <div class="u-carousel-item u-container-style u-slide">
@@ -124,7 +103,7 @@
                     <p class="u-text u-text-8"> Premiering on the Lido this evening, 'Joker: Folie à Deux' is the highly anticipated sequel to 2019's controversial 'Joker'. Stars Lady Gaga and Joaquin Phoenix discuss making it - and why the latter suddenly quit Todd Haynes' gay romance film recently.</p>
                   </div>
                 </div>
-                <img src="images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-4" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp' %}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-4" data-image-width="1920" data-image-height="1080">
               </div>
             </div>
             <div class="u-carousel-item u-container-style u-slide">
@@ -135,7 +114,7 @@
                     <p class="u-text u-text-10"> From props to icons, a new exhibition at Turin's National Cinema Museum is celebrating the crucial designs and items used on Hollywood film sets that help create the magic of movies</p>
                   </div>
                 </div>
-                <img src="images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-5" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp' %}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-round u-radius-20 u-image-5" data-image-width="1920" data-image-height="1080">
               </div>
             </div>
           </div>
@@ -188,7 +167,7 @@
           <div class="u-repeater u-repeater-1">
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
               <div class="u-container-layout u-similar-container u-container-layout-1">
-                <img src="images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-1" data-image-width="1920" data-image-height="1080">
+                <img src=" {% static 'assets/images/1920x1080_cmsv2_b90b52a5-0bd2-5f05-a9ec-c9355abbadc2-8703176.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-1" data-image-width="1920" data-image-height="1080">
                 <h5 class="u-align-center u-text u-text-2"> Venice 2024: Lady Gaga, Joaquin Phoenix and Todd Phillips discuss 'Joker: Folie à Deux'</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-3"> CULTURE NEWS</h4>
                 <p class="u-align-center u-text u-text-4"> Premiering on the Lido this evening, 'Joker: Folie à Deux' is the highly anticipated sequel to 2019's controversial 'Joker'. Stars Lady Gaga and Joaquin Phoenix discuss making it - and why the latter suddenly quit Todd Haynes' gay romance film recently.</p>
@@ -197,7 +176,7 @@
             </div>
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
               <div class="u-container-layout u-similar-container u-container-layout-2">
-                <img src="images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-2" data-image-width="1920" data-image-height="1080">
+                <img src=" {% static 'assets/images/1920x1080_cmsv2_d5bd6f1e-698c-5a2f-983b-7ca22029ca27-8537716.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-2" data-image-width="1920" data-image-height="1080">
                 <h5 class="u-align-center u-text u-text-5"> Turin National Cinema Museum displays iconic objects that make Hollywood movie magic</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-6">ART</h4>
                 <p class="u-align-center u-text u-text-7"> From props to icons, a new exhibition at Turin's National Cinema Museum is celebrating the crucial designs and items used on Hollywood film sets that help create the magic of movies</p>
@@ -206,7 +185,7 @@
             </div>
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-3" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="200">
               <div class="u-container-layout u-similar-container u-container-layout-3">
-                <img src="images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-3" data-image-width="828" data-image-height="466">
+                <img src="{% static 'assets/images/828x466_cmsv2_70dbd718-facf-52c0-85b6-0fcbd454bf06-8758842.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-3" data-image-width="828" data-image-height="466">
                 <h5 class="u-align-center u-text u-text-8"> Celebrated British actress Maggie Smith dies aged 89</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-9"> CULTURE NEWS</h4>
                 <p class="u-align-center u-text u-text-10"> Legendary British actress Dame Maggie Smith,&nbsp;who won new fans in the 21st century as Professor Minerva McGonagall in the Harry Potter films and the dowager Countess of Grantham in the hit ITV series Downton Abbey, has died aged 89.</p>
@@ -215,7 +194,7 @@
             </div>
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-4" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
               <div class="u-container-layout u-similar-container u-container-layout-4">
-                <img src="images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-4" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_60ff6e18-32fc-5f9b-a9a2-61b32e94caa0-8780190.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-4" data-image-width="1920" data-image-height="1080">
                 <h5 class="u-align-center u-text u-text-11"> Non merci! France issues rare ban for horror film 'Terrifier 3'</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-12">CINEMA</h4>
                 <p class="u-align-center u-text u-text-13"> France’s classification body has slapped an -18 ban on ‘Terrifier 3’, which is out in cinemas today. It’s the first ruling of its kind for a horror film in nearly 20 years.</p>
@@ -224,7 +203,7 @@
             </div>
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-5" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
               <div class="u-container-layout u-similar-container u-container-layout-5">
-                <img src="images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-5" data-image-width="1920" data-image-height="1080">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_6e490f97-6b8a-57e0-8284-916057bf3428-8797258.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-5" data-image-width="1920" data-image-height="1080">
                 <h5 class="u-align-center u-text u-text-14"> 'Smile 2' - A bigger, scarier, superior sequel</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-15">CINEMA </h4>
                 <p class="u-align-center u-text u-text-16"> “Lights, camera, bitch, smile / Even when you wanna die..." The sequel to 2022's 'Smile' may have taken Taylor Swift's lyrics a little too literally. But for its faults, this follow-up works.</p>
@@ -233,7 +212,7 @@
             </div>
             <div class="u-container-align-center u-list-item u-radius u-repeater-item u-shape-round u-white u-list-item-6" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="600">
               <div class="u-container-layout u-similar-container u-container-layout-6">
-                <img src="images/beautiful-car-washing-service_231.jpg" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-6" data-image-width="1380" data-image-height="920">
+                <img src="{% static 'assets/images/1920x1080_cmsv2_fb6934a2-5677-5e79-96d1-8df2e56443d4-8858176.webp' %}" alt="" class="u-expanded-width u-image u-image-round u-radius u-image-6" data-image-width="1380" data-image-height="920">
                 <h5 class="u-align-center u-text u-text-17"> Wicked: How cinema re-invented the witch and restored her powers</h5>
                 <h4 class="u-align-center u-text u-text-custom-color-1 u-text-18">CINEMA</h4>
                 <p class="u-align-center u-text u-text-19"> As 'Wicked' prepares to cast its spell over the box office, we look at how portrayals of witches on screen have evolved to become symbols of female empowerment and an embracement of otherness.</p>
@@ -246,17 +225,4 @@
         </a>
       </div>
     </section>
-    
-    
-    
-    
-    <section class="u-backlink u-clearfix u-grey-80">
-      <p class="u-text">
-        <span>This site was created with the </span>
-        <a class="u-link" href="https://nicepage.com/" target="_blank" rel="nofollow">
-          <span>Nicepage</span>
-        </a>
-      </p>
-    </section>
-  
 </body></html>
