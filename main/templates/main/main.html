@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %} 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cinema Ticket</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+  <style>
+    .movie {
+      display: inline-block;
+      text-align: center;
+      margin: 10px;
+    }
+    .movie img {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+    }
+    #show-more {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #730000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .styled-link {
+      text-decoration: none;
+      color: inherit; 
+      font-weight: bold;
+    }
+    .filters-box {
+  display: flex;
+  gap: 1rem;
+}
+
+.all-filters {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+.all-filters label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.all-filters select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.search-filters {
+  margin-top: 1rem;
+}
+
+.search-filters input {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-filters i {
+  margin-left: -25px;
+  cursor: pointer;
+}
+.keyboard {
+  font-size: 15vw;
+  display: inline-block;
+  letter-spacing: -1vw;
+  transition: transform 0.2s;
+}
+
+
+
+@keyframes pressDown1 {
+  30%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown2 {
+  70%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown3 {
+  30%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown4 {
+  40%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown5 {
+  20%,
+  30%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown6 {
+  60%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  65% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown7 {
+  10%,
+  20%,
+  100% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pressDown8 {
+  35%,
+  45%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+}
+
+
+
+.key:nth-child(1) {
+  animation: pressDown1 2s infinite;
+}
+
+.key:nth-child(2) {
+  animation: pressDown2 3s infinite;
+}
+
+.key:nth-child(3) {
+  animation: pressDown3 4s infinite;
+}
+
+.key:nth-child(4) {
+  animation: pressDown4 2.5s infinite;
+}
+
+.key:nth-child(5) {
+  animation: pressDown5 2.5s infinite;
+}
+
+.key:nth-child(6) {
+  animation: pressDown6 3.5s infinite;
+}
+
+.key:nth-child(7) {
+  animation: pressDown7 2.2s infinite;
+}
+
+.key:nth-child(8) {
+  animation: pressDown8 3.2s infinite;
+}
+  </style>
+</head>
+<header>
+  <nav>
+      <div class="logo keyboard">
+        <span class="key">C</span>
+        <span class="key">I</span>
+        <span class="key">N</span>
+        <span class="key">E</span>
+        <span class="key">M</span>
+        <span class="key">A</span>
+        <span class="key">T</span>
+        <span class="key">I</span>
+        <span class="key">C</span>
+        <span class="key">K</span>
+        <span class="key">E</span>
+        <span class="key">T</span>
+      </div>      
+    <i class="fa fa-bars" id="menu"></i> 
+    <ul id="menu-box">
+      <div class="marker"></div>
+      <li>home</li>
+      <li>news</li>
+      <li>contact</li>
+      <ul>
+        <li><a href="{% url 'register' %}" class="styled-link">sign up</a></li>
+        <li><a href="{% url 'login' %}" class="styled-link">sign in</a></li>
+      </ul>    
+    </ul>
+  </nav>
+  
+  <div class="popular-movie-slider">
+    <img src="{% static 'assets/images/poster.jpg' %}" class="poster">
+    
+    <div class="popular-movie-slider-content">
+      <p class="release">2017</p>
+      <h2 class="movie-name">Interstellar</h2>
+      <ul class="category">
+        <p>Science fiction</p>
+        <li>drama</li>
+        <li>action</li>
+      </ul>
+      <p class="desc">Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan. It stars Matthew McConaughey, Anne Hathaway, Jessica Chastain, Bill Irwin, Ellen Burstyn, Matt Damon, and Michael Caine...</p>
+      
+      <div class="movie-info">
+        <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span>164 min.</span></i> 
+        <i class="fa fa-volume-up"> &nbsp;&nbsp;&nbsp;<span>Subtitles</span></i>
+        <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b>9.1/10</b></span></i>
+      </div>
+      
+      <div class="movie-btns">
+        <button><i class="fa fa-play"></i> &nbsp; Watch trailer</button>
+        <button class="read-more"><i class="fa fa-circle"></i> <i class="fa fa-circle"></i> <i class="fa fa-circle"></i>&nbsp; Read more</button>
+      </div>
+    </div>
+  </div> 
+</header>
+
+<section>
+
+  <div class="filter-search-box">
+    <div class="filters-box">
+      <div class="all-filters filters">
+        <label for="genre-select">Genre:</label>
+        <select id="genre-select" name="genre">
+          <option value="" disabled selected>Select a genre</option>
+          <option value="action">Action</option>
+          <option value="comedy">Comedy</option>
+          <option value="romance">Romance</option>
+          <option value="drama">Drama</option>
+        </select>
+      </div>
+      <div class="all-filters filters">
+        <label for="year-select">Year:</label>
+        <select id="year-select" name="year">
+          <option value="" disabled selected>Select a year</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div>
+      <div class="all-filters filters">
+        <label for="score-select">Score:</label>
+        <select id="score-select" name="score">
+          <option value="" disabled selected>Select a score range</option>
+          <option value="5-6">5 - 6</option>
+          <option value="6-7">6 - 7</option>
+          <option value="7-8">7 - 8</option>
+          <option value="8-9">8 - 9</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="movie-card-section">
+    <div class="show">
+      <div class="show-bar">
+        <div class="bar"></div>
+      </div>
+      <div id="movies-container"></div>
+      <button id="show-more" style="display: none;">Show More</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo-box">
+    <p class="logo">
+      cinema<span>ticket</span>
+    </p>
+    <p><i class="fa fa-copyright"></i> 2024-2025, YHN</p>
+  </div>
+  
+  <ul>
+    <li>home</li>
+    <li>news</li>
+    <li>contact</li>
+  </ul>
+
+  <div class="socail-box">
+    <i class="fa fa-telegram"></i>
+    <i class="fa fa-twitter"></i>
+    <i class="fa fa-instagram"></i>
+  </div>
+</footer>
+
+<script>
+  let currentPage = 1;
+
+  function loadMovies() {
+    fetch(`/api/movies?page=${currentPage}`) // Adjust the endpoint to match your backend
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('movies-container');
+        data.movies.forEach(movie => {
+          const movieElement = document.createElement('div');
+          movieElement.className = 'movie';
+          movieElement.innerHTML = `
+            <img src="${movie.image}" alt="${movie.name}">
+            <p>${movie.name}</p>
+          `;
+          container.appendChild(movieElement);
+        });
+
+        // Show or hide the "Show More" button
+        const showMoreButton = document.getElementById('show-more');
+        if (data.has_more) {
+          showMoreButton.style.display = 'block';
+        } else {
+          showMoreButton.style.display = 'none';
+        }
+      })
+      .catch(error => console.error('Error fetching movies:', error));
+  }
+
+  document.getElementById('show-more').addEventListener('click', () => {
+    currentPage++; // Increment the page
+    loadMovies(); // Load more movies
+  });
+
+  // Load the first page on initial load
+  loadMovies();
+</script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+</html>

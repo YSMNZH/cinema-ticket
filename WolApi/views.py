@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+<<<<<<< HEAD
 from .models import Movie, Cinema, Hall, Showtime, Seat, Ticket
 from django.contrib.auth.models import User
 from .serializers import MovieSerializer, CinemaSerializer, HallSerializer, ShowtimeSerializer, SeatSerializer, TicketSerializer
@@ -19,6 +20,11 @@ from django.core.mail import send_mail
 from django.utils.timezone import now, timedelta
 from .models import Users, PasswordResetTokens
 
+=======
+from .models import Movie,Showtime,Seat,Ticket
+from django.contrib.auth.models import User
+from .serializers import MovieSerializer
+>>>>>>> 050a0c8c64b710a433556971b1fb227f5ee59588
 
 class MovieListView(APIView):
     def get(self, request):
@@ -52,6 +58,7 @@ class BookTicketView(APIView):
         except Seat.DoesNotExist:
             return Response({"error": "Seat not found"}, status=status.HTTP_404_NOT_FOUND)
         
+<<<<<<< HEAD
 class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -125,3 +132,6 @@ def reset_password(request, token):
         return JsonResponse({'status': 'success', 'message': 'Password updated successfully.'})
         
     return render(request, 'reset_password_form.html', {'token': token})
+=======
+
+>>>>>>> 050a0c8c64b710a433556971b1fb227f5ee59588

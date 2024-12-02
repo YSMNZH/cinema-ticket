@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+=======
+>>>>>>> 050a0c8c64b710a433556971b1fb227f5ee59588
 import os
 import sys
 
 
 def main():
     """Run administrative tasks."""
+<<<<<<< HEAD
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Wol.settings')
+=======
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinema_ticket.settings')
+>>>>>>> 050a0c8c64b710a433556971b1fb227f5ee59588
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
