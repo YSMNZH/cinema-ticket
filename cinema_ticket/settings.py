@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'main',
-    'WolApi'
+    'main'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +81,7 @@ AUTHENTICATION_BACKENDS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CINEMA_TICKET_DB',  
+        'NAME': 'cinema_ticket_db',  
         'USER': 'root', 
         'PASSWORD': 'Hoom@n1382',   
         'HOST': 'localhost',         
