@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect
 from .forms import ContactForm
 from django.contrib import messages
 from .models import Movie
-
 from django.shortcuts import render
 from .models import Movie
+from main.ticket_generator import generate_ticket_pdf
+import os
+from django.http import FileResponse,HttpResponse
+from django.shortcuts import get_object_or_404
+from .models import Ticket
 
 def main(request):
     movies = Movie.objects.all()
@@ -47,3 +51,36 @@ def movie(request):
 
 def index(request):
     return render(request, 'index.html')
+
+def download_ticket(request, ticket_id):
+    # دریافت بلیت
+    ticket = get_object_or_404(Ticket.objects.select_related('seat__hall__cinema', 'show_time__movie'), id=ticket_id)
+
+    try:
+        if not ticket.is_reserved:
+            return HttpResponse("This ticket has not been reserved yet.", status=400)
+
+        ticket_data = {
+            "Name": ticket.customer_name,
+            "Movie": ticket.show_time.movie.title,
+            "Cinema": ticket.seat.hall.cinema.name,
+            "City": ticket.seat.hall.cinema.city.name,
+            "Hall": ticket.seat.hall.hall_number,
+            "Seat": f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}",
+            "Show Time": ticket.show_time.start_time.strftime("%Y-%m-%d %H:%M"),
+            "Price": f"{ticket.price} IRR"
+        }
+
+        output_path = f"ticket_{ticket.id}.pdf"
+
+        generate_ticket_pdf(ticket_data, output_path=output_path)
+
+        response = FileResponse(open(output_path, "rb"), content_type="application/pdf")
+        response['Content-Disposition'] = f'attachment; filename="ticket_{ticket.id}.pdf"'
+
+        return response
+
+    except Exception as e:
+        return HttpResponse(f"An error occurred: {e}", status=500)
+
+
