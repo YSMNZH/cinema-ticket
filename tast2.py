@@ -16,7 +16,7 @@ movies_data = [
         "release_date": "2014-11-07",
         "duration_minutes": 169,
         "genre": "Science Fiction",
-        "poster": "posters/interstellar",
+        "poster": "posters/interstellar.jpg",
         "imdb_rating": 8.6,
     },
     {
@@ -25,7 +25,7 @@ movies_data = [
         "release_date": "2010-07-16",
         "duration_minutes": 148,
         "genre": "Action, Adventure, Sci-Fi",
-        "poster": "posters/inception",
+        "poster": "posters/inception.jpg",
         "imdb_rating": 8.8,
     },
     {
@@ -34,7 +34,7 @@ movies_data = [
         "release_date": "2008-07-18",
         "duration_minutes": 152,
         "genre": "Action, Crime, Drama",
-        "poster": "posters/thedarkknight",
+        "poster": "posters/dark_knight.jpg",
         "imdb_rating": 9.0,
     },
     {
@@ -43,7 +43,7 @@ movies_data = [
         "release_date": "2019-05-30",
         "duration_minutes": 132,
         "genre": "Drama, Thriller",
-        "poster": "posters/parasite",
+        "poster": "posters/parasite.jpg",
         "imdb_rating": 8.6,
     },
     {
@@ -52,7 +52,7 @@ movies_data = [
         "release_date": "1994-09-23",
         "duration_minutes": 142,
         "genre": "Drama",
-        "poster": "posters/shawshank",
+        "poster": "posters/shawshank.jpg",
         "imdb_rating": 9.3,
     }
 ]

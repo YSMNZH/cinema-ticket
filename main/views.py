@@ -12,11 +12,19 @@ from .models import Ticket
 
 def main(request):
     movies = Movie.objects.all()
+
+    query = request.GET.get('q', '') 
+    if query:
+        movies = Movie.objects.filter(
+            title__icontains=query
+        ) | Movie.objects.filter(
+            description__icontains=query 
+        )
+
     if request.method == "POST":
         genre = request.POST.get('genre', '')
         year = request.POST.get('year', '')
         score = request.POST.get('score', '')
-        print(genre)
 
         if genre:
             movies = movies.filter(genre__icontains=genre)
@@ -28,7 +36,8 @@ def main(request):
                 min_score, max_score = map(float, score_range)
                 movies = movies.filter(imdb_rating__gte=min_score, imdb_rating__lte=max_score)
 
-    return render(request, 'main/main.html', {'movies': movies})
+    return render(request, 'main/main.html', {'movies': movies, 'query': query})
+
 
 def contact(request):
     if request.method == 'POST':
@@ -82,5 +91,17 @@ def download_ticket(request, ticket_id):
 
     except Exception as e:
         return HttpResponse(f"An error occurred: {e}", status=500)
+    
+# def search_view(request):
+#     query = request.GET.get('q', '')
+#     if query:
+#         results = Movie.objects.filter(
+#             title__icontains=query
+#         ) | Movie.objects.filter(
+#             description__icontains=query 
+#         )
+#     else:
+#         results = Movie.objects.none()
+#     return render(request,  'main/search_results.html', {'results': results, 'query': query})
 
 
