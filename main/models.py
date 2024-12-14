@@ -87,3 +87,12 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"Ticket for {self.seat} - {self.show_time}"
+    
+class News(models.Model):
+    title = models.CharField(max_length= 255)
+    text = models.TextField()
+    image_url = models.URLField(max_length=500,blank=True,null=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

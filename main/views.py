@@ -8,7 +8,9 @@ from main.ticket_generator import generate_ticket_pdf
 import os
 from django.http import FileResponse,HttpResponse
 from django.shortcuts import get_object_or_404
-from .models import Ticket
+from .models import Ticket,News
+from django.db.models import Q
+from django.http import JsonResponse
 
 def main(request):
     movies = Movie.objects.all()
@@ -39,6 +41,19 @@ def main(request):
     return render(request, 'main/main.html', {'movies': movies, 'query': query})
 
 
+# def search_movies(request):
+#     query = request.GET.get('q', '')
+#     if query:
+#         movies = Movie.objects.filter(
+#             Q(title__icontains=query) | Q(description__icontains=query)
+#         )
+#     else:
+#         movies = Movie.objects.none()
+    
+#     movies_data = list(movies.values('id', 'title', 'genre', 'duration_minutes', 'release_date', 'imdb_rating', 'poster'))
+#     return JsonResponse({'movies': movies_data})
+
+
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -53,7 +68,8 @@ def contact(request):
     return render(request, 'main/contact.html', {'form': form})
 
 def news(request):
-    return render(request, "main/news.html")
+    my_news = News.objects.all()
+    return render(request, "main/news.html", {"news": my_news})
 
 def movie(request):
     return render(request, "main/movie.html")
