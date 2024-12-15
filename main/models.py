@@ -80,6 +80,7 @@ class Ticket(models.Model):
     show_time = models.ForeignKey(ShowTime, on_delete=models.CASCADE, related_name="tickets")
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_reserved = models.BooleanField(default=False)
+    is_locked = models.BooleanField(default=False)
     customer_name = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:

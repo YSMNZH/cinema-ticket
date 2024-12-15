@@ -77,14 +77,33 @@ def movie(request):
 def index(request):
     return render(request, 'index.html')
 
+from django.db import transaction
+from django.http import HttpResponse, FileResponse
+from django.shortcuts import get_object_or_404
+import os
+
 def download_ticket(request, ticket_id):
-    # دریافت بلیت
-    ticket = get_object_or_404(Ticket.objects.select_related('seat__hall__cinema', 'show_time__movie'), id=ticket_id)
+    ticket = get_object_or_404(
+        Ticket.objects.select_related('seat__hall__cinema', 'show_time__movie'), id=ticket_id
+    )
 
     try:
-        if not ticket.is_reserved:
-            return HttpResponse("This ticket has not been reserved yet.", status=400)
+        # Atomic block to ensure only one user can reserve the ticket
+        with transaction.atomic():
+            # Reload ticket within the transaction to get the latest data
+            ticket = Ticket.objects.select_for_update().get(id=ticket_id)
 
+            if not ticket.is_reserved:
+                return HttpResponse("This ticket has not been reserved yet.", status=400)
+
+            if ticket.is_locked:  # Add an "is_locked" field to Ticket to indicate it's being processed
+                return HttpResponse("This ticket is being processed by another user.", status=409)
+
+            # Lock the ticket for processing
+            ticket.is_locked = True
+            ticket.save()
+
+        # Generate ticket data
         ticket_data = {
             "Name": ticket.customer_name,
             "Movie": ticket.show_time.movie.title,
@@ -96,18 +115,36 @@ def download_ticket(request, ticket_id):
             "Price": f"{ticket.price} IRR"
         }
 
+        # Generate PDF
         output_path = f"ticket_{ticket.id}.pdf"
-
         generate_ticket_pdf(ticket_data, output_path=output_path)
 
+        # Unlock the ticket after successful processing
+        with transaction.atomic():
+            ticket.is_locked = False
+            ticket.save()
+
+        # Serve the PDF
         response = FileResponse(open(output_path, "rb"), content_type="application/pdf")
         response['Content-Disposition'] = f'attachment; filename="ticket_{ticket.id}.pdf"'
+
+        # Optionally clean up the file after serving
+        os.remove(output_path)
 
         return response
 
     except Exception as e:
+        # Handle errors
+        if ticket:
+            with transaction.atomic():
+                ticket.is_locked = False
+                ticket.save()
         return HttpResponse(f"An error occurred: {e}", status=500)
-    
+
+def news_page(request):
+    news_list = News.objects.all().order_by('-create_at') 
+    return render(request, 'news.html', {'news_list': news_list})
+
 # def search_view(request):
 #     query = request.GET.get('q', '')
 #     if query:
