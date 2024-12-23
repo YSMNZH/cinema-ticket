@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Your Ticket...!</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: black;
+      color: white;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .multistep-container {
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+      background: #1a1a1a;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+      padding: 20px;
+    }
+
+    #progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .step {
+      flex: 1;
+      position: relative;
+      padding: 10px;
+      font-size: 16px;
+      color: #888;
+      transition: color 0.3s ease;
+    }
+
+    .step::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      background: #888;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      transition: background 0.3s ease;
+    }
+
+    .step.active {
+      color: #ff0000;
+    }
+
+    .step.active::after {
+      background: #ff0000;
+    }
+
+    #step-content {
+      margin-top: 20px;
+    }
+
+    .cinema-list, .showtime-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .cinema-item, .showtime-item {
+      background: #333;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      flex: 1 1 calc(30% - 20px);
+      max-width: calc(30% - 20px);
+    }
+
+    .cinema-item:hover, .showtime-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+    }
+
+    .cinema-item h3, .showtime-item h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .container {
+      perspective: 1000px;
+      margin-bottom: 30px;
+    }
+
+    .seat {
+      background-color: #666;
+      height: 20px;
+      width: 20px;
+      margin: 5px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .seat.selected {
+      background-color: #ff0000;
+    }
+
+    .seat.occupied {
+      background-color: #b30000;
+      cursor: not-allowed;
+    }
+
+    .seat:not(.occupied):hover {
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    .screen {
+      background-color: #fff;
+      height: 70px;
+      width: 100%;
+      margin: 15px 0;
+      transform: rotateX(-45deg);
+      border-radius: 5px;
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .controls button {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .controls button:hover {
+      background-color: #b30000;
+      color: #fff;
+    }
+
+    .controls button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="multistep-container">
+    <div id="progress-bar">
+      <div class="step active" data-step="1">Movie</div>
+      <div class="step" data-step="2">Cinema</div>
+      <div class="step" data-step="3">Showtime</div>
+      <div class="step" data-step="4">Seats</div>
+    </div>
+
+    <div class="container">
+      <h1>{{ movie.title }}</h1>
+{% if step == 'cinema' %}
+        <div class="cinema-list">
+          {% for cinema in cinemas %}
+            <a href="?step=showtime&cinema_id={{ cinema.id }}" class="cinema-item">
+              <h3>{{ cinema.name }}</h3>
+            </a>
+          {% endfor %}
+        </div>
+
+      {% elif step == 'showtime' %}
+        <div class="showtime-list">
+          {% for showtime in showtimes %}
+            <a href="?step=seats&showtime_id={{ showtime.id }}" class="showtime-item">
+              <h3>{{ showtime.start_time }}</h3>
+            </a>
+          {% endfor %}
+        </div>
+
+      {% elif step == 'seats' %}
+        <div>
+          {% for row in rows %}
+            <div class="row">
+              {% for seat in row %}
+                <div class="seat {% if seat.is_reserved %}occupied{% endif %}"></div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <p class="text">You have selected <span id="count">0</span> seats for a total of $<span id="total">0</span>.</p>
+      {% endif %}
+    </div>
+
+  <div class="controls">
+    {% if step == 'cinema' or step == 'showtime' %}
+      <button id="prev" onclick="goBack()">Previous</button>
+      <button id="next" onclick="goForward()">Next</button>
+    {% elif step == 'seats' %}
+      <button id="prev" onclick="goBack()">Previous</button>
+      <button id="finish" class="finish-btn">Reserve</button>
+    {% endif %}
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const seats = document.querySelectorAll(".seat:not(.occupied)");
+      const count = document.getElementById("count");
+      const total = document.getElementById("total");
+      const finishButton = document.getElementById("finish"); // اضافه شده برای جلوگیری از خطای null
+  
+      const ticketPrice = 10;
+  
+      let selectedSeats = 0;
+  
+      if (seats) {
+        seats.forEach((seat) => {
+          seat.addEventListener("click", () => {
+            seat.classList.toggle("selected");
+            updateSelectedCount();
+          });
+        });
+      }
+  
+      function updateSelectedCount() {
+        selectedSeats = document.querySelectorAll(".seat.selected").length;
+        if (count && total) {
+          count.textContent = selectedSeats;
+          total.textContent = selectedSeats * ticketPrice;
+        }
+      }
+  
+      if (finishButton) {
+        finishButton.addEventListener("click", function () {
+          window.location.href = "{% url 'confirmation' %}";
+        });
+      }
+  
+      const userLoggedIn = "{{ user_logged_in|yesno:'true,false' }}";
+      if (userLoggedIn === "false") {
+        alert("You need to login to reserve tickets!");
+        window.location.href = "{% url 'login' %}";
+      }
+    });
+  </script>
+  
+</body>
+</html>

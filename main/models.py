@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -56,8 +55,8 @@ class Seat(models.Model):
     row_number = models.PositiveIntegerField()
     seat_number = models.CharField(max_length=10)
 
-    class Meta:
-        unique_together = ("hall", "seat_number")
+    # class Meta:
+    #     unique_together = ("hall", "seat_number")
 
     def __str__(self):
         return f"Seat {self.seat_number} in Row {self.row_number}, {self.hall}"

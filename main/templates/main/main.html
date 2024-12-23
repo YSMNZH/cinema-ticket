@@ -235,17 +235,18 @@
   <div class="row justify-content-center g-4" id="movies-container" style="background-color: #1c1c1c; border-radius: 10px; padding: 20px;">
     {% for movie in movies %}
     <div class="col-lg-4 col-md-6 col-sm-12">
-      <!-- کارت فیلم -->
-      <div class="movie-card shadow-lg h-100 rounded overflow-hidden" style="background-color: #2c2c2c; color: #fff;">
-        <img src="{% static movie.poster %}" alt="{{ movie.title }}">
-        <div class="movie-info p-3 text-center">
-          <h5 class="text-warning mb-2">{{ movie.title }}</h5>
-          <p class="mb-1"><strong>Genre:</strong> {{ movie.genre }}</p>
-          <p class="mb-1"><strong>Duration:</strong> {{ movie.duration_minutes }} min</p>
-          <p class="mb-1"><strong>Release Date:</strong> {{ movie.release_date|date:"F d, Y" }}</p>
-          <p class="mb-0"><strong>IMDB Rating:</strong> <span class="text-warning">{{ movie.imdb_rating }}</span></p>
+      <a href="{% url 'reservation' movie.id %}?step=cinema" style="text-decoration: none; color: inherit;">
+        <div class="movie-card shadow-lg h-100 rounded overflow-hidden" style="background-color: #2c2c2c; color: #fff;">
+          <img src="{% static movie.poster %}" alt="{{ movie.title }}">
+          <div class="movie-info p-3 text-center">
+            <h5 class="text-warning mb-2">{{ movie.title }}</h5>
+            <p class="mb-1"><strong>Genre:</strong> {{ movie.genre }}</p>
+            <p class="mb-1"><strong>Duration:</strong> {{ movie.duration_minutes }} min</p>
+            <p class="mb-1"><strong>Release Date:</strong> {{ movie.release_date|date:"F d, Y" }}</p>
+            <p class="mb-0"><strong>IMDB Rating:</strong> <span class="text-warning">{{ movie.imdb_rating }}</span></p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
     {% empty %}
     <div class="col-12">
