@@ -26,7 +26,20 @@
         </tr>
       </thead>
       <tbody id="reservation-data">
-
+        <tr>
+          <td>{{ reservation_details.name }}</td>
+          <td>{{ reservation_details.family_name }}</td>
+          <td>{{ reservation_details.num_tickets }}</td>
+          <td>
+            <ul>
+              {% for seat in reservation_details.seats %}
+                <li>{{ seat }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>{{ reservation_details.cinema }}</td>
+          <td>{{ reservation_details.movie }}</td>
+        </tr>
       </tbody>
     </table>
 
@@ -36,5 +49,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="{% static 'assets/js/confirmation.js' %}"></script>
+  <script id="reservation-data-json" type="application/json">
+    {{ reservation_details|safe }}
+  </script>
 </body>
 </html>

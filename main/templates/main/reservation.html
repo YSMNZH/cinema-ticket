@@ -115,7 +115,7 @@
     }
 
     .seat.selected {
-      background-color: #ff0000;
+      background-color: blue;
     }
 
     .seat.occupied {
@@ -207,15 +207,17 @@
         </div>
 
       {% elif step == 'seats' %}
-        <div>
-          {% for row in rows %}
-            <div class="row">
-              {% for seat in row %}
-                <div class="seat {% if seat.is_reserved %}occupied{% endif %}"></div>
-              {% endfor %}
-            </div>
-          {% endfor %}
-        </div>
+      {% for row in rows %}
+      <div class="row">
+        {% for seat in row %}
+          <div 
+            class="seat {% if seat.id in reserved_seats %}occupied{% endif %}" 
+            data-seat-id="{{ seat.id }}">
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    
         <p class="text">You have selected <span id="count">0</span> seats for a total of $<span id="total">0</span>.</p>
       {% endif %}
     </div>
@@ -232,44 +234,87 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const seats = document.querySelectorAll(".seat:not(.occupied)");
-      const count = document.getElementById("count");
-      const total = document.getElementById("total");
-      const finishButton = document.getElementById("finish"); // اضافه شده برای جلوگیری از خطای null
-  
-      const ticketPrice = 10;
-  
-      let selectedSeats = 0;
-  
-      if (seats) {
-        seats.forEach((seat) => {
-          seat.addEventListener("click", () => {
-            seat.classList.toggle("selected");
-            updateSelectedCount();
-          });
-        });
-      }
-  
-      function updateSelectedCount() {
-        selectedSeats = document.querySelectorAll(".seat.selected").length;
-        if (count && total) {
-          count.textContent = selectedSeats;
-          total.textContent = selectedSeats * ticketPrice;
+  const seats = document.querySelectorAll(".seat:not(.occupied)");
+  const count = document.getElementById("count");
+  const total = document.getElementById("total");
+  const ticketPrice = 10;
+
+  let selectedSeats = [];
+
+  if (seats) {
+    seats.forEach((seat) => {
+      seat.addEventListener("click", () => {
+        if (!seat.classList.contains("occupied")) {
+          seat.classList.toggle("selected");
+          const seatId = seat.dataset.seatId;
+          if (seat.classList.contains("selected")) {
+            selectedSeats.push(seatId);
+          } else {
+            selectedSeats = selectedSeats.filter((id) => id !== seatId);
+          }
+          updateSelectedCount();
+        }
+      });
+    });
+  }
+
+  function updateSelectedCount() {
+    const selectedCount = document.querySelectorAll(".seat.selected").length;
+    if (count && total) {
+      count.textContent = selectedCount;
+      total.textContent = selectedCount * ticketPrice;
+    }
+  }
+
+  const finishButton = document.getElementById("finish");
+if (finishButton) {
+  finishButton.addEventListener("click", () => {
+    if (selectedSeats.length > 0) {
+      fetch(window.location.href, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ seats: selectedSeats }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert("Seats reserved successfully!");
+
+            window.location.href = `/main/confirmation/?show_time_id=${data.show_time_id}`;
+          } else {
+            alert(data.error || "An error occurred.");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      alert("No seats selected!");
+    }
+  });
+}
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
       }
-  
-      if (finishButton) {
-        finishButton.addEventListener("click", function () {
-          window.location.href = "{% url 'confirmation' %}";
-        });
-      }
-  
-      const userLoggedIn = "{{ user_logged_in|yesno:'true,false' }}";
+    }
+    return cookieValue;
+  }
+
+  const userLoggedIn = "{{ user_logged_in|yesno:'true,false' }}";
       if (userLoggedIn === "false") {
         alert("You need to login to reserve tickets!");
         window.location.href = "{% url 'login' %}";
       }
-    });
+});
   </script>
   
 </body>

@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404
 from .models import Ticket,News,ShowTime
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
+from django.db import IntegrityError
 
 def main(request):
     movies = Movie.objects.all()
@@ -153,7 +156,7 @@ from django.views.decorators.cache import never_cache
 def reservation(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     step = request.GET.get('step', 'cinema')
-    cinemas = showtimes = rows = None
+    cinemas = showtimes = rows = reserved_seats = None
     selected_cinema_id = request.GET.get('cinema_id')
     selected_showtime_id = request.GET.get('showtime_id')
 
@@ -166,24 +169,37 @@ def reservation(request, movie_id):
     elif step == 'seats' and selected_showtime_id:
         selected_showtime = get_object_or_404(ShowTime, id=selected_showtime_id)
         seats = Seat.objects.filter(hall=selected_showtime.hall)
+        
         rows = [
             seats.filter(row_number=row).order_by('seat_number') 
             for row in range(1, 11)
         ]
 
+        reserved_seats = Ticket.objects.filter(show_time=selected_showtime, is_reserved=True).values_list('seat_id', flat=True)
+
         if request.method == 'POST':
-            selected_seat_ids = request.POST.getlist('seats')  # صندلی‌های انتخاب‌شده
+            data = json.loads(request.body)
+            selected_seat_ids = data.get('seats', [])
+            if not selected_seat_ids:
+                return JsonResponse({'success': False, 'error': 'No seats selected.'})
+
             for seat_id in selected_seat_ids:
-                seat = Seat.objects.get(id=seat_id)
-                Ticket.objects.create(
-                    user=request.user, 
-                    seat=seat,
-                    show_time=selected_showtime,
-                    price=50000, 
-                    is_reserved=True,
-                )
-            messages.success(request, "Reservation successful!")
-            return redirect('main:confirmation') 
+                ticket = Ticket.objects.filter(seat_id=seat_id, show_time=selected_showtime, is_reserved=True).first()
+                if ticket:
+                    return JsonResponse({'success': False, 'error': f"Seat {ticket.seat.row_number}-{ticket.seat.seat_number} is already reserved."})
+                
+                try:
+                    Ticket.objects.create(
+                        customer_name=request.user.username,
+                        seat_id=seat_id,
+                        show_time=selected_showtime,
+                        price=50000,
+                        is_reserved=True,
+                    )
+                except IntegrityError:
+                    return JsonResponse({'success': False, 'error': "This seat is already reserved."})
+
+            return JsonResponse({'success': True, 'show_time_id': selected_showtime_id})
 
     context = {
         'movie': movie,
@@ -191,9 +207,12 @@ def reservation(request, movie_id):
         'cinemas': cinemas,
         'showtimes': showtimes,
         'rows': rows,
+        'reserved_seats': reserved_seats,
         'user_logged_in': request.user.is_authenticated,
     }
     return render(request, 'main/reservation.html', context)
+
+
 @login_required
 def reservation_movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -217,7 +236,33 @@ def reservation_seats(request, movie_id, cinema_id, showtime_id):
 
 @login_required
 def confirmation(request):
-    return render(request, 'main/confirmation.html')
+    show_time_id = request.GET.get('show_time_id')
+    selected_show_time = get_object_or_404(ShowTime, id=show_time_id)
+    tickets = Ticket.objects.filter(customer_name=request.user.username, show_time=selected_show_time, is_reserved=True)
+
+    if tickets.exists():
+        seats = [f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}" for ticket in tickets]
+        reservation_details = {
+            "name": request.user.name or "N/A",
+            "family_name": request.user.family_name or "N/A",
+            "num_tickets": tickets.count(),
+            "seats": seats,
+            "cinema": selected_show_time.hall.cinema.name,
+            "movie": selected_show_time.movie.title,
+        }
+    else:
+        reservation_details = {
+            "name": "N/A",
+            "family_name": "N/A",
+            "num_tickets": 0,
+            "seats": [],
+            "cinema": "N/A",
+            "movie": "N/A",
+        }
+
+    return render(request, 'main/confirmation.html', {'reservation_details': reservation_details})
+
+
 
 # def search_view(request):
 #     query = request.GET.get('q', '')

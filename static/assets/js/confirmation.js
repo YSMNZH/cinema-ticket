@@ -1,41 +1,31 @@
-function launchConfetti() {
-  const confettiSettings = {
-    particleCount: 100,
-    startVelocity: 30,
-    spread: 360,
-    origin: { x: 0.5, y: 0.5 },
-    colors: ["#ff0000", "#ffffff", "#000000"],
-  };
-
-  setTimeout(() => confetti(confettiSettings), 200);
-  setTimeout(() => confetti(confettiSettings), 400);
-  setTimeout(() => confetti(confettiSettings), 600);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   launchConfetti();
 
-  const reservation = {
-    firstName: "John",
-    lastName: "Doe",
-    tickets: 3,
-    seats: ["A1", "A2", "A3"],
-    cinema: "Cinema 1",
-    movie: "Avengers: Endgame",
-  };
-  const reservationTable = document.getElementById("reservation-data");
-  const row = document.createElement("tr");
+  const reservationDataElement = document.getElementById("reservation-data-json");
 
-  row.innerHTML = `
-    <td>${reservation.firstName}</td>
-    <td>${reservation.lastName}</td>
-    <td>${reservation.tickets}</td>
-    <td>${reservation.seats.join(", ")}</td>
-    <td>${reservation.cinema}</td>
-    <td>${reservation.movie}</td>
-  `;
+  if (reservationDataElement) {
+    try {
+      const reservationDetails = JSON.parse(reservationDataElement.textContent);
 
-  reservationTable.appendChild(row);
+      if (reservationDetails) {
+        const reservationTable = document.getElementById("reservation-data");
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${reservationDetails.name || "N/A"}</td>
+          <td>${reservationDetails.family_name || "N/A"}</td>
+          <td>${reservationDetails.num_tickets || 0}</td>
+          <td>${reservationDetails.seats && reservationDetails.seats.length > 0 ? reservationDetails.seats.join(", ") : "N/A"}</td>
+          <td>${reservationDetails.cinema || "N/A"}</td>
+          <td>${reservationDetails.movie || "N/A"}</td>
+        `;
+
+        reservationTable.appendChild(row);
+      }
+    } catch (error) {
+      console.error("Error parsing reservation details JSON:", error);
+    }
+  }
 
   document.getElementById("download-pdf").addEventListener("click", () => {
     const pdfContent = document.querySelector(".confirmation-container");
@@ -50,3 +40,44 @@ document.addEventListener("DOMContentLoaded", () => {
       .save();
   });
 });
+
+function launchConfetti() {
+  const confettiSettings = {
+    particleCount: 100,
+    startVelocity: 30,
+    spread: 360,
+    origin: { x: 0.5, y: 0.5 },
+    colors: ["#ff0000", "#ffffff", "#000000"],
+  };
+
+  setTimeout(() => confetti(confettiSettings), 200);
+  setTimeout(() => confetti(confettiSettings), 400);
+  setTimeout(() => confetti(confettiSettings), 600);
+}
+const reservationDataElement = document.getElementById("reservation-data-json");
+
+if (reservationDataElement) {
+  try {
+    const reservationDetails = JSON.parse(reservationDataElement.textContent.trim());
+
+    if (reservationDetails) {
+      const reservationTable = document.getElementById("reservation-data");
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${reservationDetails.name || "N/A"}</td>
+        <td>${reservationDetails.family_name || "N/A"}</td>
+        <td>${reservationDetails.num_tickets || 0}</td>
+        <td>${reservationDetails.seats && reservationDetails.seats.length > 0 ? reservationDetails.seats.join(", ") : "N/A"}</td>
+        <td>${reservationDetails.cinema || "N/A"}</td>
+        <td>${reservationDetails.movie || "N/A"}</td>
+      `;
+
+      reservationTable.innerHTML = "";
+      reservationTable.appendChild(row);
+    }
+  } catch (error) {
+    console.error("Error parsing reservation details JSON:", error);
+  }
+}
+

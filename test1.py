@@ -2,9 +2,9 @@ import os
 import django
 from django.db import transaction, IntegrityError
 from datetime import datetime, timedelta, time
+import random
 
-# تنظیم متغیر محیطی برای استفاده از تنظیمات جنگو
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinema_ticket.settings')  # نام پروژه را بررسی کنید
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinema_ticket.settings')
 django.setup()
 
 from main.models import City, Cinema, Hall, Seat, Ticket, ShowTime, Movie
@@ -73,21 +73,33 @@ try:
         for hall in all_halls:
             for row in range(1, 11):
                 for seat_number in range(1, 16):
-                    print(hall, row, seat_number)
                     Seat.objects.get_or_create(hall_id=hall.id, row_number=row, seat_number=seat_number)
 
+        print("Seats created.")
 
+        # Step 4: Adding random showtimes for movies
         movies = Movie.objects.all()
 
+        start_times = [time(hour, 0) for hour in range(14, 23)]  # Possible start times
         showtimes = []
-        start_times = [time(hour, 0) for hour in range(14, 23, 3)]  # ساعات 14، 17، 20، 23
+
         for hall in all_halls:
-            for movie in movies:
-                for start_time in start_times:
-                    show_date = datetime.combine(datetime.now().date() + timedelta(days=1), start_time)
-                    showtimes.append(ShowTime(movie=movie, hall=hall, start_time=show_date))
+            random_movies = random.sample(list(movies), min(len(movies), 5))  # Select random movies for each hall
+
+            assigned_times = set()  # Track assigned times to avoid duplicates
+            for movie in random_movies:
+                while True:
+                    random_time = random.choice(start_times)
+                    if random_time not in assigned_times:
+                        assigned_times.add(random_time)
+                        show_date = datetime.combine(datetime.now().date() + timedelta(days=1), random_time)
+                        showtimes.append(ShowTime(movie=movie, hall=hall, start_time=show_date))
+                        break
         ShowTime.objects.bulk_create(showtimes, ignore_conflicts=True)
 
+        print("Showtimes created.")
+
+        # Step 5: Adding sample tickets
         tickets = []
         sample_seats = Seat.objects.all()[:50] 
         sample_showtime = ShowTime.objects.first()
