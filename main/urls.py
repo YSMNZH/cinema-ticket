@@ -15,4 +15,5 @@ urlpatterns = [
     path('reservation/<int:movie_id>/cinema/<int:cinema_id>/', views.reservation_showtime, name='reservation_showtime'),
     path('reservation/<int:movie_id>/cinema/<int:cinema_id>/showtime/<int:showtime_id>/', views.reservation_seats, name='reservation_seats'),
     path('confirmation/', views.confirmation, name='confirmation'),
+    path('download-ticket/', views.generate_ticket_pdf, name='download_ticket'),
 ]

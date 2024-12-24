@@ -1,36 +1,73 @@
+from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-import os
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+import io
 
-def generate_ticket_pdf(ticket_data, output_path="ticket.pdf"):
-    c = canvas.Canvas(output_path, pagesize=letter)
-    width, height = letter
-
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(200, height - 50, "Cinema Ticket")
-
-    c.setFont("Helvetica", 12)
-    y_position = height - 100
-    line_height = 20
-
-    for key, value in ticket_data.items():
-        c.drawString(50, y_position, f"{key}: {value}")
-        y_position -= line_height
-
-    c.setFont("Helvetica-Oblique", 10)
-    c.drawString(50, 50, "Thank you for using CinemaTicket!")
-
-    c.save()
-    print(f"Ticket saved to {output_path}")
-
-if __name__ == "__main__":
-    ticket_info = {
-        "Customer Name": "John Doe",
-        "Movie": "Interstellar",
-        "Cinema": "Azadi Cinema",
-        "Hall": "3",
-        "Seat": "Row 5, Seat 10",
-        "Show Time": "2024-12-15 18:30",
-        "Price": "500,000 IRR"
+def generate_ticket_pdf(request):
+    ticket_data = {
+        "Name": request.GET.get("name", "N/A"),
+        "Family": request.GET.get("family", "N/A"),
+        "Number of Tickets": request.GET.get("num_tickets", "N/A"),
+        "Seats": request.GET.get("seats", "N/A"),
+        "Cinema": request.GET.get("cinema", "N/A"),
+        "Movie": request.GET.get("movie", "N/A"),
     }
-    generate_ticket_pdf(ticket_info, output_path="ticket.pdf")
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+
+    styles = getSampleStyleSheet()
+    title_style = styles["Title"]
+    title_style.textColor = colors.HexColor("#FF0000")
+
+    header_style = styles["Heading2"]
+    header_style.textColor = colors.HexColor("#333333")
+    header_style.alignment = 1  # Center alignment
+
+    text_style = styles["BodyText"]
+    text_style.fontSize = 12
+
+    elements = []
+    title = Paragraph("🎟 Cinema Ticket 🎟", title_style)
+    elements.append(title)
+    elements.append(Spacer(1, 20))
+
+    table_data = [
+        ["Field", "Details"],  # Header row
+        ["Name", ticket_data["Name"]],
+        ["Family", ticket_data["Family"]],
+        ["Number of Tickets", ticket_data["Number of Tickets"]],
+        ["Seats", ticket_data["Seats"]],
+        ["Cinema", ticket_data["Cinema"]],
+        ["Movie", ticket_data["Movie"]],
+    ]
+
+    table = Table(table_data, colWidths=[150, 300])
+    table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#FF0000")),  # Header row background
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),  # Header row text color
+        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, 0), 12),
+        ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+        ("BACKGROUND", (0, 1), (-1, -1), colors.whitesmoke),
+        ("GRID", (0, 0), (-1, -1), 1, colors.black),
+    ]))
+
+    elements.append(table)
+    elements.append(Spacer(1, 30))
+
+    footer = Paragraph(
+        "Thank you for using <b>CinemaTicket</b>! Enjoy the movie. 🎬",
+        text_style
+    )
+    elements.append(footer)
+
+    doc.build(elements)
+    buffer.seek(0)
+
+    response = HttpResponse(buffer, content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="ticket.pdf"'
+    return response
