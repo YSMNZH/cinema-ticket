@@ -1,11 +1,13 @@
 from django.urls import path
 from . import views
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 # from .views import search_movies
 
 urlpatterns = [
     path('main/', views.main, name='main'),
     path('contact/', views.contact, name='contact'),
+    path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     path('news/', views.news, name='news'),
     path('movie/', views.movie, name='movie'),
     path('', views.index, name='index'),
