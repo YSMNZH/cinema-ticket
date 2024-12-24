@@ -1,7 +1,7 @@
 import os
 import django
 from django.db import transaction, IntegrityError
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 # تنظیم متغیر محیطی برای استفاده از تنظیمات جنگو
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinema_ticket.settings')  # نام پروژه را بررسی کنید
@@ -11,12 +11,21 @@ from main.models import City, Cinema, Hall, Seat, Ticket, ShowTime, Movie
 
 try:
     with transaction.atomic():
+        Ticket.objects.all().delete()
+        ShowTime.objects.all().delete()
+        Seat.objects.all().delete()
+        Hall.objects.all().delete()
+        Cinema.objects.all().delete()
+        City.objects.all().delete()
+        print("All existing data has been deleted.")
+
         # Step 1: Adding cities
         cities_data = ["Tehran", "Mashhad", "Isfahan", "Shiraz", "Tabriz"]
         cities = City.objects.bulk_create(
             [City(name=city_name) for city_name in cities_data],
             ignore_conflicts=True
         )
+        print(1)
 
         # Step 2: Adding cinemas to each city
         cinemas_data = {
@@ -26,6 +35,7 @@ try:
             "Shiraz": ["Saadi Cinema", "City of Sun Cinema"],
             "Tabriz": ["22 Bahman Cinema", "Naji Cinema"]
         }
+        print(2)
 
         cinemas = []
         for city_name, cinema_names in cinemas_data.items():
@@ -33,6 +43,7 @@ try:
             for cinema_name in cinema_names:
                 cinemas.append(Cinema(name=cinema_name, city=city))
         Cinema.objects.bulk_create(cinemas, ignore_conflicts=True)
+        print(3)
 
         # Step 3: Adding halls to each cinema
         halls_data = {
@@ -55,50 +66,43 @@ try:
             for i in range(1, hall_count + 1):
                 halls.append(Hall(cinema=cinema, hall_number=i))
         Hall.objects.bulk_create(halls, ignore_conflicts=True)
+        print(4)
 
-        # Step 4: Adding seats to each hall
         seats = []
         all_halls = Hall.objects.all()
         for hall in all_halls:
-            for row in range(1, 11):  # Assuming 10 rows
-                for number in range(1, 21):  # Assuming 20 seats per row
-                    seats.append(Seat(hall=hall, row_number=row, seat_number=number))
-        Seat.objects.bulk_create(seats, ignore_conflicts=True)
+            for row in range(1, 11):
+                for seat_number in range(1, 16):
+                    print(hall, row, seat_number)
+                    Seat.objects.get_or_create(hall_id=hall.id, row_number=row, seat_number=seat_number)
 
-        # Step 5: Adding movies
-        movies = [
-            Movie(title="Inception", description="A mind-bending thriller", release_date=datetime(2010, 7, 16),
-                  duration_minutes=148, genre="Sci-Fi", imdb_rating=8.8),
-            Movie(title="The Dark Knight", description="Batman vs Joker", release_date=datetime(2008, 7, 18),
-                  duration_minutes=152, genre="Action", imdb_rating=9.0)
-        ]
-        Movie.objects.bulk_create(movies, ignore_conflicts=True)
-        all_movies = Movie.objects.all()
 
-        # Step 6: Adding showtimes
+        movies = Movie.objects.all()
+
         showtimes = []
+        start_times = [time(hour, 0) for hour in range(14, 23, 3)]  # ساعات 14، 17، 20، 23
         for hall in all_halls:
-            for movie in all_movies[:2]:  # Assign first 2 movies to all halls
-                start_time = datetime.now() + timedelta(days=1)  # Show time for tomorrow
-                showtimes.append(ShowTime(movie=movie, hall=hall, start_time=start_time))
+            for movie in movies:
+                for start_time in start_times:
+                    show_date = datetime.combine(datetime.now().date() + timedelta(days=1), start_time)
+                    showtimes.append(ShowTime(movie=movie, hall=hall, start_time=show_date))
         ShowTime.objects.bulk_create(showtimes, ignore_conflicts=True)
 
-        # Step 7: Adding sample tickets
         tickets = []
-        sample_seats = Seat.objects.all()[:50]  # Creating tickets for the first 50 seats as an example
-        sample_showtime = ShowTime.objects.first()  # Assign the first showtime to all tickets
+        sample_seats = Seat.objects.all()[:50] 
+        sample_showtime = ShowTime.objects.first()
         for seat in sample_seats:
             tickets.append(
                 Ticket(
                     seat=seat,
-                    show_time=sample_showtime,  # Must be a ShowTime instance
+                    show_time=sample_showtime,
                     price=50000,
                     is_reserved=False
                 )
             )
         Ticket.objects.bulk_create(tickets, ignore_conflicts=True)
 
-        print("Data successfully added!")
+        print("All data successfully reset and added!")
 
 except IntegrityError as e:
     print(f"An error occurred: {e}")

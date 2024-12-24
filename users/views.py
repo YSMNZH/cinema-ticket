@@ -13,8 +13,40 @@ from django.shortcuts import render
 from .models import CustomUser, PasswordResetToken
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from main.models import Movie
 
 
+def main(request):
+    movies = Movie.objects.all()
+
+    query = request.GET.get('q', '') 
+    if query:
+        movies = Movie.objects.filter(
+            title__icontains=query
+        ) | Movie.objects.filter(
+            description__icontains=query 
+        )
+
+    if request.method == "POST":
+        genre = request.POST.get('genre', '')
+        year = request.POST.get('year', '')
+        score = request.POST.get('score', '')
+
+        if genre:
+            movies = movies.filter(genre__icontains=genre)
+        if year:
+            movies = movies.filter(release_date__year=year)
+        if score:
+            score_range = score.split('-')
+            if len(score_range) == 2:
+                min_score, max_score = map(float, score_range)
+                movies = movies.filter(imdb_rating__gte=min_score, imdb_rating__lte=max_score)
+
+    return render(request, 'main/main.html', {'movies': movies, 'query': query})
+
+from django.views.decorators.cache import never_cache
+
+@never_cache
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -23,7 +55,9 @@ def login(request):
         user = authenticate(request, username=email, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('profile') 
+            request.session['user_name'] = user.name
+            request.session['user_email'] = user.email
+            return redirect('../../main/main') 
         else:
             messages.error(request, 'Invalid credentials')
             return render(request, 'users/login.html')

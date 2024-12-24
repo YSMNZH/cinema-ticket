@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
 from django.contrib import messages
-from .models import Movie
+from .models import Movie,ShowTime,Seat,Cinema,Hall
 from django.shortcuts import render
-from .models import Movie
 from main.ticket_generator import generate_ticket_pdf
 import os
 from django.http import FileResponse,HttpResponse
 from django.shortcuts import get_object_or_404
-from .models import Ticket,News
+from .models import Ticket,News,ShowTime
 from django.db.models import Q
-from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 def main(request):
     movies = Movie.objects.all()
@@ -145,6 +144,81 @@ def news_page(request):
     news_list = News.objects.all().order_by('-create_at') 
     return render(request, 'news.html', {'news_list': news_list})
 
+from django.shortcuts import render, get_object_or_404
+from .models import Movie, Cinema, ShowTime, Seat
+from django.views.decorators.cache import never_cache
+
+@never_cache
+@login_required
+def reservation(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    step = request.GET.get('step', 'cinema')
+    cinemas = showtimes = rows = None
+    selected_cinema_id = request.GET.get('cinema_id')
+    selected_showtime_id = request.GET.get('showtime_id')
+
+    if step == 'cinema':
+        cinemas = Cinema.objects.all()
+
+    elif step == 'showtime' and selected_cinema_id:
+        showtimes = ShowTime.objects.filter(movie=movie, hall__cinema_id=selected_cinema_id)
+
+    elif step == 'seats' and selected_showtime_id:
+        selected_showtime = get_object_or_404(ShowTime, id=selected_showtime_id)
+        seats = Seat.objects.filter(hall=selected_showtime.hall)
+        rows = [
+            seats.filter(row_number=row).order_by('seat_number') 
+            for row in range(1, 11)
+        ]
+
+        if request.method == 'POST':
+            selected_seat_ids = request.POST.getlist('seats')  # صندلی‌های انتخاب‌شده
+            for seat_id in selected_seat_ids:
+                seat = Seat.objects.get(id=seat_id)
+                Ticket.objects.create(
+                    user=request.user, 
+                    seat=seat,
+                    show_time=selected_showtime,
+                    price=50000, 
+                    is_reserved=True,
+                )
+            messages.success(request, "Reservation successful!")
+            return redirect('main:confirmation') 
+
+    context = {
+        'movie': movie,
+        'step': step,
+        'cinemas': cinemas,
+        'showtimes': showtimes,
+        'rows': rows,
+        'user_logged_in': request.user.is_authenticated,
+    }
+    return render(request, 'main/reservation.html', context)
+@login_required
+def reservation_movie(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    return render(request, 'main/reservation.html', {'movie': movie})
+
+@login_required
+def reservation_cinema(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    cinemas = Cinema.objects.all()
+    return render(request, 'main/reservation.html', {'movie': movie, 'cinemas': cinemas, 'step': 2})
+
+@login_required
+def reservation_showtime(request, movie_id, cinema_id):
+    showtimes = ShowTime.objects.filter(movie_id=movie_id, hall__cinema_id=cinema_id)
+    return render(request, 'main/reservation.html', {'showtimes': showtimes, 'step': 3})
+
+@login_required
+def reservation_seats(request, movie_id, cinema_id, showtime_id):
+    seats = Seat.objects.filter(hall__showtime__id=showtime_id)
+    return render(request, 'main/reservation.html', {'seats': seats, 'step': 4})
+
+@login_required
+def confirmation(request):
+    return render(request, 'main/confirmation.html')
+
 # def search_view(request):
 #     query = request.GET.get('q', '')
 #     if query:
@@ -156,5 +230,3 @@ def news_page(request):
 #     else:
 #         results = Movie.objects.none()
 #     return render(request,  'main/search_results.html', {'results': results, 'query': query})
-
-
