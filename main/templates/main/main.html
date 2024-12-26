@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Cinema Ticket</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" type="image/png" href="{% static 'assets/favicon-32x32.png' %}" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -175,6 +176,7 @@
         {% endif %}
       </ul>
     </nav>
+    
   </header>
 <style>
   .search-bar {
@@ -235,6 +237,66 @@
     background-color: #218838;
   }
 </style>
+<div class="slider-container">
+  <div class="slider-control left inactive"></div>
+  <div class="slider-control right"></div>
+  <ul class="slider-pagi"></ul>
+  <div class="slider">
+    <div class="slide slide-0 active">
+      <div class="slide__bg"></div>
+      <div class="slide__content">
+        <svg class="slide__overlay" viewBox="0 0 720 405" preserveAspectRatio="xMaxYMax slice">
+          <path class="slide__overlay-path" d="M0,0 150,0 500,405 0,405" />
+        </svg>
+        <div class="slide__text">
+          <h2 class="slide__text-heading">Project name 1</h2>
+          <p class="slide__text-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia.</p>
+          <a class="slide__text-link">Project link</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide-1 ">
+      <div class="slide__bg"></div>
+      <div class="slide__content">
+        <svg class="slide__overlay" viewBox="0 0 720 405" preserveAspectRatio="xMaxYMax slice">
+          <path class="slide__overlay-path" d="M0,0 150,0 500,405 0,405" />
+        </svg>
+        <div class="slide__text">
+          <h2 class="slide__text-heading">Project name 2</h2>
+          <p class="slide__text-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia.</p>
+          <a class="slide__text-link">Project link</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide-2">
+      <div class="slide__bg"></div>
+      <div class="slide__content">
+        <svg class="slide__overlay" viewBox="0 0 720 405" preserveAspectRatio="xMaxYMax slice">
+          <path class="slide__overlay-path" d="M0,0 150,0 500,405 0,405" />
+        </svg>
+        <div class="slide__text">
+          <h2 class="slide__text-heading">Project name 3</h2>
+          <p class="slide__text-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia.</p>
+          <a class="slide__text-link">Project link</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide-3">
+      <div class="slide__bg"></div>
+      <div class="slide__content">
+        <svg class="slide__overlay" viewBox="0 0 720 405" preserveAspectRatio="xMaxYMax slice">
+          <path class="slide__overlay-path" d="M0,0 150,0 500,405 0,405" />
+        </svg>
+        <div class="slide__text">
+          <h2 class="slide__text-heading">Project name 4</h2>
+          <p class="slide__text-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia.</p>
+          <a class="slide__text-link">Project link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form method="get" action="{% url 'main' %}" id="search-form" class="search-bar">
   <input type="text" id="search-input" name="q" placeholder="Search for movies...",a>
   <button type="submit" id="search-button">Search</button>

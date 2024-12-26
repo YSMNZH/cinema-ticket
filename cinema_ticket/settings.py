@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cinema_ticket_db',  
         'USER': 'root', 
-        'PASSWORD': 'Hoom@n1382',   
+        'PASSWORD': 'a14020205Y',   
         'HOST': 'localhost',         
         'PORT': '3306',               
     }
