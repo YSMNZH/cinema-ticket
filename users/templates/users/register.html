@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <div class="wrapper" style="background-image: url('https://mrwallpaper.com/images/hd/cinema-seatsin-dark-theater-1x6hmptug48yc0cv.jpg');">
+    <div class="wrapper" style="background-image: url('https://i.redd.it/xm7k71pyvgh81.jpg');">
         <div class="inner">
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
@@ -41,8 +41,6 @@
                         </ul>
                     </div>
                 {% endif %}
-
-                <!-- Display field-specific errors -->
                 <div class="form-group">
                     {% for field in form %}
                         {% if field.errors %}
@@ -94,7 +92,6 @@
                 <p class="login-card-footer-text">
                     Already have an account? <a href="{% url 'login' %}" class="text-reset">Login here</a>
                 </p>
-
                 <button type="submit">Register</button>
             </form>
         </div>
