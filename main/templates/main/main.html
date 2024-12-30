@@ -13,6 +13,186 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600");
+
+:root {
+  --bar-scale-y: 0;
+  --sparkle-color: rgb(253 244 215 / 40%);
+}
+
+@keyframes pop-word {
+  to {
+    transform: rotateX(0);
+  }
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bar-scale {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1) translate(4px, 1px) rotate(8deg);
+  }
+
+  100% {
+    transform: scale(0) translate(4px, 1px) rotate(8deg);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    text-shadow: 0 0 8px red;
+  }
+}
+
+body {
+  display: grid;
+  height: 100vh;
+
+  background-color: black;
+  place-items: center;
+}
+
+h1 {
+  color: white;
+  font-family: "Playfair Display", Vidaloka, serif;
+  font-size: 8rem;
+
+  line-height: 0.85;
+  perspective: 500px;
+}
+
+.word {
+  display: block;
+
+  animation: show 0.01s forwards, pop-word 1.5s forwards;
+  animation-timing-function: cubic-bezier(0.14, 1.23, 0.33, 1.16);
+  opacity: 0;
+
+  transform: rotateX(120deg);
+  transform-origin: 50% 100%;
+}
+
+.word:nth-of-type(2) {
+  padding: 0 2rem;
+
+  animation-delay: 1.5s;
+
+  color: gold;
+}
+
+.superscript {
+  position: relative;
+  animation-delay: 3.6s;
+
+  animation-duration: 0.25s;
+  animation-name: shimmer;
+
+  vertical-align: text-top;
+}
+
+/* bars */
+.superscript::before {
+  --bar-width: 25%;
+
+  position: absolute;
+
+  top: 37%;
+  left: 47%;
+  width: 14%;
+  height: 48%;
+
+  animation: bar-scale 0.25s linear 3s 1 forwards;
+
+  background: linear-gradient(
+    to right,
+    white var(--bar-width),
+    transparent var(--bar-width) calc(100% - var(--bar-width)),
+    white calc(100% - var(--bar-width))
+  );
+
+  content: "";
+
+  transform: scaleY(var(--bar-scale-y));
+}
+
+.superscript::after {
+  --size: 10rem;
+
+  position: absolute;
+
+  top: -5%;
+  left: -85%;
+
+  width: var(--size);
+  height: var(--size);
+
+  animation: sparkle 0.4s linear 3.5s 1 forwards;
+
+  background: radial-gradient(
+      circle at center,
+      rgb(252 249 241 / 94%) 0% 7%,
+      transparent 7% 100%
+    ),
+    conic-gradient(
+      transparent 0deg 18deg,
+      var(--sparkle-color) 18deg,
+      transparent 20deg 40deg,
+      var(--sparkle-color) 40deg,
+      transparent 43deg 87deg,
+      var(--sparkle-color) 87deg,
+      transparent 95deg 175deg,
+      var(--sparkle-color) 175deg,
+      transparent 178deg 220deg,
+      var(--sparkle-color) 220deg,
+      transparent 222deg 270deg,
+      var(--sparkle-color) 270deg,
+      transparent 275deg 300deg,
+      var(--sparkle-color) 300deg,
+      transparent 303deg 360deg
+    );
+
+  border-radius: 50%;
+  clip-path: polygon(
+    50% 0,
+    59.13% 26.64%,
+    85.13% -2.35%,
+    100% 50%,
+    50% 100%,
+    0 50%,
+    31.39% 34.86%
+  );
+
+  content: "";
+
+  filter: blur(1px);
+
+  transform: scale(0);
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 5rem;
+  }
+
+  .superscript::after {
+    --size: 10rem;
+  }
+}
+
     body {
       background-color: black;
       background-size: cover;
@@ -205,6 +385,149 @@
   .filter-form button:hover {
     background-color: #218838;
   }
+  * {
+  margin: 0;
+  padding: 0;
+}
+.fullscreen-video-container {
+  position: relative;
+}
+.fullscreen-video-container {
+  height: 100vh; 
+  width: 100vw;
+}
+
+.fullscreen-video-container {
+  overflow: hidden;
+}
+.fullscreen-video-container video {
+  position: absolute;
+}
+
+.fullscreen-video-container video {
+  width: auto;
+  height: auto;
+}
+.fullscreen-video-container video {
+  min-width: 50%;
+  min-height: 50%;
+}
+
+.fullscreen-video-container video {
+  top: 50%;
+  left: 50%;
+}
+.fullscreen-video-container video {
+  transform: translate(-50%,-50%);
+}
+.fullscreen-video-container video {
+  z-index: -1;  
+}
+.fullscreen-video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen-video-content {
+  background-color: rgba(255,255,255,0.8);
+  padding: 30px;
+  border-radius: 5px;
+}
+.fullscreen-video-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+}
+  
+header nav{
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 100px;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:99;
+    width:100%;
+    
+  }
+  
+  
+  header nav .fa{
+    cursor:pointer;
+    display:none;
+  }
+  
+  
+  header nav .fa:hover{
+    color:#DB0000;
+  }
+  
+  .nav{
+    background:#fff;
+    color:#000;
+    transition:background .5s;
+    
+  }
+  
+  .navBlack{
+    background:#000;
+    color:#fff;
+    transition:background .5s;
+    
+  }
+  
+  header nav .logo{
+    font-weight:700;
+    font-size:1.5em;
+  }
+  
+  header nav .logo span{
+    color:#DB0000;
+  }
+  
+  header nav ul .marker{
+    background:#DB0000;
+    width:40px;
+    height:2px;
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    border-radius:20px;
+  }
+  
+  
+  header nav ul{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    text-transform:uppercase;
+    list-style:none;
+    position:relative;
+  }
+  
+  
+  header nav ul li{
+    cursor:pointer;
+  }
+  
+  
+  header nav ul li span{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  
+  header nav ul li img{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    object-fit:cover;
+  }
+  
   </style>
 </head>
 <body>
@@ -228,18 +551,25 @@
             <li><a class="dropdown-item text-white" href="{% url 'logout' %}">Logout</a></li>
           </ul>
         </li>
-        <li><a href="{% url 'login' %}" class="styled-link">Sign In</a></li>
-        <li><a href="{% url 'register' %}" class="styled-link">Sign Up</a></li>
         {% endif %}
       </ul>
     </nav>
+    <div class="fullscreen-video-container">
+      <video autoplay loop muted>
+        <source src="{% static 'assets/movie.mp4' %}" type="video/mp4">
+      </video>
+      <h1>
+        <span class="word">Unlock the Magic of Movies<span class="superscript">...</span> </span>
+        <span class="word">Your Ticket to Adventure!</span>
+      </h1>
+        </div>
   </header>
 <form method="get" action="{% url 'main' %}" id="search-form" class="search-bar">
   <input type="text" id="search-input" name="q" placeholder="Search for movies...",a>
   <button type="submit" id="search-button">Search</button>
 </form>
 
-<div class="container">
+<div class="container" style="color: #000;">
   <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap">
     <div class="form-group mx-2">
       <label for="genre-select" class="d-block text-white">Genre:</label>
@@ -332,29 +662,16 @@
 
   searchInput.addEventListener('input', function() {
     const query = this.value;
-
-    // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
-
-    // Configure it: GET-request for the URL with the query parameter
     xhr.open('GET', `{% url 'main' %}?q=${encodeURIComponent(query)}`, true);
-
-    // Set up a function to handle the response
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        // Parse the returned HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(xhr.responseText, 'text/html');
-
-        // Extract the updated movies container
         const updatedMovies = doc.querySelector('#movies-container').innerHTML;
-
-        // Replace the movies container content
         moviesContainer.innerHTML = updatedMovies;
       }
     };
-
-    // Send the request
     xhr.send();
   });
 </script>
