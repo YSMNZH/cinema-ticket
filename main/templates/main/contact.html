@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/contact/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/contact/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel ="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
     <style>
       .required-label::after {
           content: ' *';
@@ -29,7 +30,7 @@
         <div class="row align-items-stretch no-gutters contact-wrap">
           <div class="col-md-8">
             <div class="form h-100 p-5">
-              <h3>Send us a message</h3>
+              <h3><span>S</span><span>E</span><span>N</span><span>D</span> <span>U</span><span>S</span> <span>M</span><span>E</span><span>S</span><span>S</span><span>A</span><span>G</span><span>E!</span></h3>
               {% if messages %}
                 <ul class="list-group mb-3">
                   {% for message in messages %}
@@ -69,15 +70,15 @@
               <p>Reach out to us anytime for inquiries about tickets, reservations, or support. We’ll get back to you as soon as possible.</p>
               <ul class="list-unstyled">
                 <li class="d-flex mb-2">
-                  <span class="wrap-icon fa fa-map-marker mr-3"></span>
+                  <span class="wrap-icon fa fa-map-marker mr-3" style="font-size:35;color:red"></span>
                   <span>9757 Aspen Lane South Richmond Hill, NY 11419</span>
                 </li>
                 <li class="d-flex mb-2">
-                  <span class="wrap-icon fa fa-phone mr-3"></span>
+                  <span class="wrap-icon fa fa-phone mr-3" style="font-size:35;color:red"></span>
                   <span>+1 (291) 939 9321</span>
                 </li>
                 <li class="d-flex mb-2">
-                  <span class="wrap-icon fa fa-envelope mr-3"></span>
+                  <span class="wrap-icon fa fa-envelope mr-3" style="font-size:35;color:red"></span>
                   <span>info@cinematicket.com</span>
                 </li>
               </ul>

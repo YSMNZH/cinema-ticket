@@ -5,8 +5,40 @@ body {
   position: relative;
   background-image: url('../../images/contact.webp'); 
 }
+h3 {
+	font-size: 12vw;
+	font-family: Nabla;
+}
 
-h1, h2, h3, h4, h5, h6,
+@font-palette-values --Nabla {
+	font-family: Nabla;
+	base-palette: 2;
+}
+
+span {
+	animation: depth 1s ease-in-out alternate infinite;
+	position: relative;
+	display: inline-block;
+	font-variation-settings: "EDPT" 30;
+	font-palette: --Nabla;
+	@for $i from 1 through 12 {
+		&:nth-child(#{$i}) {
+			animation-delay: $i * 0.1s;
+		}
+	}
+}
+
+@keyframes depth {
+	0% {
+		transform: translatex(0) translatey(0);
+	}
+	100% {
+		font-variation-settings: "EDPT" 200;
+		transform: translatex(0.15em) translatey(0.1em);
+	}
+}
+
+h1, h2, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: "Roboto", sans-serif;
   color: #000; }

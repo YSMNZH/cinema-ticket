@@ -17,12 +17,19 @@
       <div class="card login-card">
         <div class="row no-gutters">
           <div class="col-md-5">
+            <div class="back-button">
+              <div class="arrow-wrap">
+                <span class="arrow-part-1"></span>
+                <span class="arrow-part-2"></span>
+                <span class="arrow-part-3"></span>
+              </div>
+            </div>
             <img src="{% static 'assets/images/login.webp' %}" alt="login" class="login-card-img">
           </div>
           <div class="col-md-7">
             <div class="card-body">
               <div class="brand-wrapper">
-                <img src="{% static 'assets/images/logo.jpg' %}" alt="logo" class="logo">
+                <img src="{% static 'assets/images/logo_cinema_ticket.png' %}" alt="logo" class="logo">
               </div>
               <p class="login-card-description">Sign into your account</p>
               <form method="post" action="{% url 'login' %}">
@@ -45,34 +52,59 @@
           </div>
         </div>
       </div>
-      <!-- <div class="card login-card">
-        <img src="assets/images/login.jpg" alt="login" class="login-card-img">
-        <div class="card-body">
-          <h2 class="login-card-title">Login</h2>
-          <p class="login-card-description">Sign in to your account to continue.</p>
-          <form action="#!">
-            <div class="form-group">
-              <label for="email" class="sr-only">Email</label>
-              <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label for="password" class="sr-only">Password</label>
-              <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-prompt-wrapper">
-              <div class="custom-control custom-checkbox login-card-check-box">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Remember me</label>
-              </div>              
-              <a href="#!" class="text-reset">Forgot password?</a>
-            </div>
-            <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login">
-          </form>
-          <p class="login-card-footer-text">Don't have an account? <a href="#!" class="text-reset">Register here</a></p>
-        </div>
-      </div> -->
     </div>
   </main>
+  <footer>
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+<div class="container my-5">
+
+  <footer class="bg-dark text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+</footer>
+  
+</div>
+  </footer>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
