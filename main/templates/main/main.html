@@ -388,11 +388,10 @@ header nav{
   <button type="submit" id="search-button">search</button>
 </form>
 
-<div class="container" style="color: #000;">
-  <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="padding: 20px; border-radius: 15px;">
+  <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
     <div class="form-group mx-2">
-      <label for="genre-select" class="d-block text-white fw-bold mb-2 text-center">Genre:</label>
-      <select id="genre-select" name="genre" class="form-control form-select form-select-lg border-0 shadow-sm text-white" style="background-color: black; border-radius: 50px; padding: 10px;">
+      <label for="genre-select" class="d-block text-white">Genre:</label>
+      <select id="genre-select" name="genre" class="form-control">
         <option value="" {% if not request.GET.genre %}selected{% endif %}>Select a genre</option>
         <option value="Action" {% if request.GET.genre == "Action" %}selected{% endif %}>Action</option>
         <option value="Sci-Fi" {% if request.GET.genre == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
@@ -426,7 +425,7 @@ header nav{
       <button type="submit" class="btn btn-primary mt-4">Filter</button>
     </div>
   </form>
-</div>
+
 <style>
 .movie-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
