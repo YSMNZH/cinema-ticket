@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Registration Form</title>
+    <link rel ="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <style>
         .required-label::after {
-            content: ' *'; /* Adds the asterisk */
-            color: red; /* Makes the asterisk red */
-            font-weight: bold; /* Optional: Makes it bold for emphasis */
+            content: ' *'; 
+            color: red; 
+            font-weight: bold;
         }
         .error-message {
             color: red;
@@ -25,13 +26,11 @@
 </head>
 
 <body>
-    <div class="wrapper" style="background-image: url('https://iredd.it/xm7k71pyvgh81.jpg');">
+    <div class="wrapper" style="background-image: url('https://mrwallpaper.com/images/hd/cinema-seatsin-dark-theater-1x6hmptug48yc0cv.jpg');">
         <div class="inner">
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
                 <h3>Registration Form</h3>
-
-                <!-- Display general form errors -->
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger" role="alert">
                         <ul>
@@ -51,7 +50,6 @@
                     {% endfor %}
                 </div>
 
-                <!-- First and Last Name -->
                 <div class="form-group">
                     <div class="form-wrapper">
                         <label for="name">First Name</label>
@@ -63,31 +61,26 @@
                     </div>
                 </div>
 
-                <!-- Username -->
                 <div class="form-wrapper">
                     <label for="username" class="required-label">Username</label>
                     <input type="text" id="username" class="form-control {% if form.username.errors %}error{% endif %}" name="username" value="{{ form.username.value|default:'' }}" required>
                 </div>
 
-                <!-- Email -->
                 <div class="form-wrapper">
                     <label for="email" class="required-label">Email</label>
                     <input type="email" id="email" class="form-control {% if form.email.errors %}error{% endif %}" name="email" value="{{ form.email.value|default:'' }}" required>
                 </div>
 
-                <!-- Phone Number -->
                 <div class="form-wrapper">
                     <label for="phone_number" class="required-label">Phone Number</label>
                     <input type="tel" id="phone_number" class="form-control {% if form.phone_number.errors %}error{% endif %}" name="phone_number" value="{{ form.phone_number.value|default:'' }}" required>
                 </div>
 
-                <!-- Date of Birth -->
                 <div class="form-wrapper">
                     <label for="date_birth">Date of Birth</label>
                     <input type="date" id="date_birth" class="form-control {% if form.date_birth.errors %}error{% endif %}" name="date_birth" value="{{ form.date_birth.value|default:'' }}" required>
                 </div>
 
-                <!-- Password and Confirm Password -->
                 <div class="form-wrapper">
                     <label for="password" class="required-label">Password</label>
                     <input type="password" id="password" class="form-control {% if form.password.errors %}error{% endif %}" name="password" required>
@@ -97,12 +90,10 @@
                     <input type="password" id="password_confirm" class="form-control {% if form.password_confirm.errors %}error{% endif %}" name="password_confirm" required>
                 </div>
 
-                <!-- Login Link -->
                 <p class="login-card-footer-text">
                     Already have an account? <a href="{% url 'login' %}" class="text-reset">Login here</a>
                 </p>
 
-                <!-- Submit Button -->
                 <button type="submit">Register</button>
             </form>
         </div>
