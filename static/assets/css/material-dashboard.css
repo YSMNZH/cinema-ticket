@@ -5234,9 +5234,9 @@ tbody.collapse.show {
 }
 
 .alert-info {
-  color: #00626e;
-  background-color: #ccf2f6;
-  border-color: #b8ecf3;
+  color: #ff0000;
+  background-color: #000;
+  border-color: #ff0000;
 }
 
 .alert-info hr {
@@ -17287,7 +17287,7 @@ label {
 .card.bg-primary,
 .card.card-rotate.bg-primary .front,
 .card.card-rotate.bg-primary .back {
-  background: linear-gradient(60deg, #ab47bc, #8e24aa);
+  background: linear-gradient(60deg, #000, #000);
 }
 
 .card .card-header-info .card-icon,
@@ -20605,7 +20605,7 @@ Copyright (c) 2015 Daniel Eden
 .dark-edition .card.bg-primary,
 .dark-edition .card.card-rotate.bg-primary .front,
 .dark-edition .card.card-rotate.bg-primary .back {
-  background: linear-gradient(60deg, #7b1fa2, #913f9e);
+  background: linear-gradient(60deg, #000, #000);
 }
 
 .dark-edition .primary-link {
