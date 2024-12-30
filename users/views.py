@@ -14,8 +14,7 @@ from .models import CustomUser, PasswordResetToken
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from main.models import Movie
-
-
+    
 def main(request):
     movies = Movie.objects.all()
 

@@ -13,7 +13,17 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from django.db import IntegrityError
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.http import HttpResponseNotAllowed
 
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('../../main/main')
+    else:
+        return HttpResponseNotAllowed(['POST'])
+    
 def main(request):
     movies = Movie.objects.all()
 

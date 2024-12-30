@@ -27,7 +27,7 @@
 .movie-card {
   text-align: center;
   margin: 15px;
-  padding: 0;
+  padding: 20px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -106,7 +106,7 @@
 
     .user-dropdown button {
       background-color: #004d40;
-      color: white;
+      color: red;
       border: none;
       cursor: pointer;
       font-size: 16px;
@@ -118,14 +118,14 @@
     }
 
     .user-dropdown button:hover {
-      background-color: #00695c;
+      color: red;
     }
 
     .user-dropdown-content {
       display: none;
       position: absolute;
       right: 0;
-      background-color: white;
+      background-color: red;
       min-width: 150px;
       box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
       z-index: 1;
@@ -141,7 +141,7 @@
     }
 
     .user-dropdown-content a:hover {
-      background-color: #eeeeee;
+      background-color: red !important;
     }
 
     .user-dropdown:hover .user-dropdown-content {
@@ -360,20 +360,27 @@ header nav{
         <li><a href="{% url 'main' %}" class="styled-link">Home</a></li>
         <li><a href="{% url 'news' %}" class="styled-link">News</a></li>
         <li><a href="{% url 'contact' %}" class="styled-link">Contact</a></li>
+        {% if user.is.not_authenticated %}
+        <li><a href="{% url 'login' %}" class="styled-link">Sign In</a></li>
+        <li><a href="{% url 'register' %}" class="styled-link">Sign Up</a></li>
+        {% endif %}
         {% if user.is_authenticated %}
         <li class="dropdown">
           <a class="dropdown-toggle styled-link" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="text-white">{{ user.first_name }} {{ user.last_name }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item text-white" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="user-dropdown text-white" href="{% url 'profile' %}">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-white" href="{% url 'logout' %}">Logout</a></li>
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>          
           </ul>
         </li>
         {% endif %}
       </ul>
-    </nav>
+     </nav>
     <div class="fullscreen-video-container">
       <video autoplay loop muted>
         <source src="{% static 'assets/movie.mp4' %}" type="video/mp4">
@@ -422,7 +429,7 @@ header nav{
       </select>
     </div>
     <div class="form-group mx-2">
-      <button type="submit" class="btn btn-primary mt-4" style="background-color: red;">Filter</button>
+      <button type="submit" class="btn btn-primary mt-4" style="background-color: red ;border-color:red;">Filter</button>
     </div>
   </form>
 

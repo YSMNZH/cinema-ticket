@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.urls import path
 from django.contrib.auth.views import LogoutView
+from .views import logout_view 
 # from .views import search_movies
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('reservation/<int:movie_id>/cinema/<int:cinema_id>/showtime/<int:showtime_id>/', views.reservation_seats, name='reservation_seats'),
     path('confirmation/', views.confirmation, name='confirmation'),
     path('download-ticket/', views.generate_ticket_pdf, name='download_ticket'),
+    path('logout/', logout_view, name='logout'),
 ]

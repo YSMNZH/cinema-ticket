@@ -27,9 +27,12 @@ SECRET_KEY = 'django-insecure-0m@f(ff&0_@axxum4w@hyz216q_ir&a+sq9e28pu1bnigo(da@
 DEBUG = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.170', 'localhost', 'cinema12.zapto.org']
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'
+IDPAY_API_KEY = '6a7f99eb-7c20-4412-a972-6dfb7cd253a4'
+
+IDPAY_SANDBOX = True
 
 # Application definition
 
@@ -135,7 +138,6 @@ STATICFILES_DIRS = [BASE_DIR / "static", "main/templates/main/images"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587 

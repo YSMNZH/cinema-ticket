@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Profile</title>
-  <link rel ="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <link rel="stylesheet" href="{% static 'assets/css/material-dashboard.css' %}">
   <style>
@@ -48,6 +48,18 @@
         transform: translateX(25%);
       }
     }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .nav-item.active a {
+      color: red;
+    }
   </style>
 </head>
 
@@ -60,14 +72,14 @@
       <div class="logo"><a class="simple-text logo-normal">CinemaTicket</a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
+          <li class="nav-item active" id="edit-info-tab">
+            <a class="nav-link" href="javascript:void(0)" onclick="showTab('edit-info')">
               <i class="material-icons"></i>
               <p>Edit Information</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li class="nav-item" id="reservation-list-tab">
+            <a class="nav-link" href="javascript:void(0)" onclick="showTab('reservation-list')">
               <i class="material-icons"></i>
               <p>Reservation List</p>
             </a>
@@ -92,7 +104,7 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 tab-content edit-info active" id="edit-info">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">Edit Profile</h4>
@@ -159,10 +171,72 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-12 tab-content reservation-list" id="reservation-list">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Reservation List</h4>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Number of Tickets</th>
+                        <th>Seats</th>
+                        <th>Cinema</th>
+                        <th>Movie</th>
+                        <th>Date of Reservation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>2</td>
+                        <td>A1, A2</td>
+                        <td>Cinema 1</td>
+                        <td>Movie A</td>
+                        <td>2024-12-30</td>
+                      </tr>
+                      <tr>
+                        <td>Jane</td>
+                        <td>Smith</td>
+                        <td>3</td>
+                        <td>B1, B2, B3</td>
+                        <td>Cinema 2</td>
+                        <td>Movie B</td>
+                        <td>2024-12-29</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <script src="{% static 'assets/js/material-dashboard.js' %}"></script>
+      <script>
+        function showTab(tabName) {
+          const allTabs = document.querySelectorAll('.tab-content');
+          allTabs.forEach(tab => tab.classList.remove('active'));
+
+          const activeTab = document.getElementById(tabName);
+          activeTab.classList.add('active');
+
+          // Highlight active tab in sidebar
+          const allNavItems = document.querySelectorAll('.nav-item');
+          allNavItems.forEach(item => item.classList.remove('active'));
+          
+          if(tabName === 'edit-info') {
+            document.getElementById('edit-info-tab').classList.add('active');
+          } else if(tabName === 'reservation-list') {
+            document.getElementById('reservation-list-tab').classList.add('active');
+          }
+        }
+        showTab('edit-info');
+      </script>
     </div>
   </div>
 </body>
