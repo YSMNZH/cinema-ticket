@@ -289,7 +289,6 @@ header nav{
     background:#fff;
     color:#000;
     transition:background .5s;
-    
   }
   
   .navBlack{
@@ -384,8 +383,8 @@ header nav{
         </div>
   </header>
 <form method="get" action="{% url 'main' %}" id="search-form" class="search-bar">
-  <input type="text" id="search-input" name="q" placeholder="search for movies...",a>
-  <button type="submit" id="search-button">search</button>
+  <input type="text" id="search-input" name="q" placeholder="Search for movies...",a>
+  <button type="submit" id="search-button" style="background-color: red;">Search</button>
 </form>
 
   <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
@@ -422,7 +421,7 @@ header nav{
       </select>
     </div>
     <div class="form-group mx-2">
-      <button type="submit" class="btn btn-primary mt-4">Filter</button>
+      <button type="submit" class="btn btn-primary mt-4" style="background-color: red;">Filter</button>
     </div>
   </form>
 
