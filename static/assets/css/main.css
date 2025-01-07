@@ -1,4 +1,3 @@
-/*-----css movie site -----*/
 
 *{
     margin:0;
@@ -7,13 +6,7 @@
     transition:all .2s;
   }
   
-  
-  body{
-    font-family: 'Roboto', sans-serif;
-    overflow:hidden;
-    overflow-y:scroll;
-  }
-  
+
   
   header{
     background:url('https://mrwallpaper.com/images/hd/cinema-seatsin-dark-theater-1x6hmptug48yc0cv.jpg');
