@@ -75,10 +75,11 @@
     }
     nav ul li a {
       text-decoration: none;
-      color: #fff;
+      color: #000000;
     }
     nav ul li a:hover {
-      text-decoration: underline;
+    color: #DB0000;
+    border-radius: 5px;
     }
     .filter-form {
       background: rgba(0, 0, 0, 0.6);
@@ -91,7 +92,6 @@
       margin-right: 10px;
     }
     .navbar {
-      background-color: #004d40;
       color: white;
       padding: 10px 20px;
       display: flex;
@@ -106,7 +106,7 @@
 
     .user-dropdown button {
       background-color: #004d40;
-      color: red;
+      color: #DB0000;
       border: none;
       cursor: pointer;
       font-size: 16px;
@@ -118,14 +118,14 @@
     }
 
     .user-dropdown button:hover {
-      color: red;
+      color: #DB0000;
     }
 
     .user-dropdown-content {
       display: none;
       position: absolute;
       right: 0;
-      background-color: red;
+      background-color: #DB0000;
       min-width: 150px;
       box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
       z-index: 1;
@@ -141,7 +141,7 @@
     }
 
     .user-dropdown-content a:hover {
-      background-color: red !important;
+      background-color: #DB0000 !important;
     }
 
     .user-dropdown:hover .user-dropdown-content {
@@ -347,7 +347,6 @@ header nav{
     border-radius:50%;
     object-fit:cover;
   }
-  
   </style>
 </head>
 <body>
@@ -411,7 +410,7 @@ header nav{
   </header>  
 <form method="get" action="{% url 'main' %}" id="search-form" class="search-bar">
   <input type="text" id="search-input" name="q" placeholder="Search for movies...",a>
-  <button type="submit" id="search-button" style="background-color: red;">Search</button>
+  <button type="submit" id="search-button" style="background-color: #DB0000;">Search</button>
 </form>
 
   <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
@@ -448,7 +447,7 @@ header nav{
       </select>
     </div>
     <div class="form-group mx-2">
-      <button type="submit" class="btn btn-primary mt-4" style="background-color: red ;border-color:red;">Filter</button>
+      <button type="submit" class="btn btn-primary mt-4" style="background-color: #DB0000 ;border-color:#DB0000;">Filter</button>
     </div>
   </form>
 
@@ -525,25 +524,25 @@ header nav{
   <footer class="bg-dark text-center text-white">
   <div class="container p-4 pb-0">
     <section class="mb-4">
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="http://facebook.com" role="button"
         ><i class="fa fa-facebook-f"></i
       ></a>
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="http://x.com" role="button"
         ><i class="fa fa-twitter"></i
       ></a>
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="http://google.com" role="button"
         ><i class="fa fa-google"></i
       ></a>
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="http://instagram.com" role="button"
         ><i class="fa fa-instagram"></i
       ></a>
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="http://github.com" role="button"
         ><i class="fa fa-github"></i
       ></a>
     </section>
-  <div class="text-center p-3" style="background-color: red;">
+  <div class="text-center p-3" style="background-color: #DB0000;">
     © 2024 Copyright:
-    <a class="text-white" href="http://127.0.0.1:8000/main/main/">CINEMATICKET</a>
+    <a class="text-white" href="{% url 'main' %}">CINEMATICKET</a>
   </div>
 </footer>
   
