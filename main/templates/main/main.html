@@ -78,8 +78,7 @@
       color: #000000;
     }
     nav ul li a:hover {
-    color: #DB0000;
-    border-radius: 5px;
+     color: #DB0000 !important;
     }
     .filter-form {
       background: rgba(0, 0, 0, 0.6);
@@ -133,7 +132,7 @@
     }
 
     .user-dropdown-content a {
-      color: black;
+      color: white;
       padding: 12px 16px;
       text-decoration: none;
       display: block;
@@ -195,14 +194,14 @@
   }
 
   .filter-form button {
-    background-color: #28a745;
+    background-color: #000000;
     color: white;
     transition: background-color 0.3s;
     cursor: pointer;
   }
 
   .filter-form button:hover {
-    background-color: #218838;
+    background-color: #DB0000;
   }
   * {
   margin: 0;
@@ -282,7 +281,7 @@ header nav{
   
   
   header nav .fa:hover{
-    color:#DB0000;
+    background-color:#DB0000 !important;
   }
   
   .nav{
@@ -379,18 +378,17 @@ header nav{
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ user.first_name }} {{ user.last_name }}
+                {{ user.name}} {{ user.family_name }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item text-white" href="{% url 'profile' %}">Profile</a></li>
+                <li><a class="user-dropdown" href="{% url 'profile' %}">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <form action="{% url 'logout' %}" method="post">
+                  <a href="#" class="user-dropdown" onclick="document.getElementById('logout-form').submit(); return false;">Logout</a>
+                  <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                     {% csrf_token %}
-                    <button class="dropdown-item text-white" type="submit">Logout</button>
                   </form>
+                </li>                
                 </li>
               </ul>
             </li>
@@ -413,43 +411,100 @@ header nav{
   <button type="submit" id="search-button" style="background-color: #DB0000;">Search</button>
 </form>
 
-  <form method="post" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
-    <div class="form-group mx-2">
-      <label for="genre-select" class="d-block text-white">Genre:</label>
-      <select id="genre-select" name="genre" class="form-control">
-        <option value="" {% if not request.GET.genre %}selected{% endif %}>Select a genre</option>
-        <option value="Action" {% if request.GET.genre == "Action" %}selected{% endif %}>Action</option>
-        <option value="Sci-Fi" {% if request.GET.genre == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
-        <option value="Drama" {% if request.GET.genre == "Drama" %}selected{% endif %}>Drama</option>
-        <option value="Thriller" {% if request.GET.genre == "Thriller" %}selected{% endif %}>Thriller</option>
-        <option value="Comedy" {% if request.GET.genre == "Comedy" %}selected{% endif %}>Comedy</option>
-      </select>
-    </div>
-    <div class="form-group mx-2">
-      <label for="year-select" class="d-block text-white">Year:</label>
-      <select id="year-select" name="year" class="form-control">
-        <option value="" {% if not request.GET.year %}selected{% endif %}>Select a year</option>
-        <option value="2023" {% if request.GET.year == "2023" %}selected{% endif %}>2023</option>
-        <option value="2024" {% if request.GET.year == "2024" %}selected{% endif %}>2024</option>
-        <option value="2010" {% if request.GET.year == "2010" %}selected{% endif %}>2010</option>
-        <option value="2008" {% if request.GET.year == "2008" %}selected{% endif %}>2008</option>
-      </select>
-    </div>
-    <div class="form-group mx-2">
-      <label for="score-select" class="d-block text-white">Score:</label>
-      <select id="score-select" name="score" class="form-control">
-        <option value="" {% if not request.GET.score %}selected{% endif %}>Select a score range</option>
-        <option value="5-6" {% if request.GET.score == "5-6" %}selected{% endif %}>5-6</option>
-        <option value="6-7" {% if request.GET.score == "6-7" %}selected{% endif %}>6-7</option>
-        <option value="7-8" {% if request.GET.score == "7-8" %}selected{% endif %}>7-8</option>
-        <option value="8-9" {% if request.GET.score == "8-9" %}selected{% endif %}>8-9</option>
-        <option value="9-10" {% if request.GET.score == "9-10" %}selected{% endif %}>9-10</option>
-      </select>
-    </div>
-    <div class="form-group mx-2">
-      <button type="submit" class="btn btn-primary mt-4" style="background-color: #DB0000 ;border-color:#DB0000;">Filter</button>
-    </div>
-  </form>
+<form method="GET" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
+  <div class="form-group mx-2 position-relative">
+    <button type="button" class="btn btn-secondary mt-4" id="dropdown-button" style="background-color: #DB0000; border-color: #DB0000;">
+      <i class="fa fa-filter"></i> Sort By
+    </button>
+    <ul class="dropdown-menu-custom" id="dropdown-menu" style="display: none;">
+      <li><button type="submit" name="sort" value="highest" class="dropdown-item-custom">Highest Rated</button></li>
+      <li><button type="submit" name="sort" value="lowest" class="dropdown-item-custom">Lowest Rated</button></li>
+      <li><button type="submit" name="sort" value="newest" class="dropdown-item-custom">Newest</button></li>
+      <li><button type="submit" name="sort" value="oldest" class="dropdown-item-custom">Oldest</button></li>
+    </ul>
+  </div>
+
+  <div class="form-group mx-2">
+    <label for="genre-select" class="d-block text-white">Genre:</label>
+    <select id="genre-select" name="genre" class="form-control">
+      <option value="" {% if not request.GET.genre %}selected{% endif %}>Select a genre</option>
+      <option value="Action" {% if request.GET.genre == "Action" %}selected{% endif %}>Action</option>
+      <option value="Sci-Fi" {% if request.GET.genre == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
+      <option value="Drama" {% if request.GET.genre == "Drama" %}selected{% endif %}>Drama</option>
+      <option value="Thriller" {% if request.GET.genre == "Thriller" %}selected{% endif %}>Thriller</option>
+      <option value="Comedy" {% if request.GET.genre == "Comedy" %}selected{% endif %}>Comedy</option>
+    </select>
+  </div>
+
+  <div class="form-group mx-2">
+    <label for="year-select" class="d-block text-white">Year:</label>
+    <select id="year-select" name="year" class="form-control">
+      <option value="" {% if not request.GET.year %}selected{% endif %}>Select a year</option>
+      <option value="2023" {% if request.GET.year == "2023" %}selected{% endif %}>2023</option>
+      <option value="2024" {% if request.GET.year == "2024" %}selected{% endif %}>2024</option>
+      <option value="2010" {% if request.GET.year == "2010" %}selected{% endif %}>2010</option>
+      <option value="2008" {% if request.GET.year == "2008" %}selected{% endif %}>2008</option>
+    </select>
+  </div>
+
+  <div class="form-group mx-2">
+    <label for="score-select" class="d-block text-white">Score:</label>
+    <select id="score-select" name="score" class="form-control">
+      <option value="" {% if not request.GET.score %}selected{% endif %}>Select a score range</option>
+      <option value="5-6" {% if request.GET.score == "5-6" %}selected{% endif %}>5-6</option>
+      <option value="6-7" {% if request.GET.score == "6-7" %}selected{% endif %}>6-7</option>
+      <option value="7-8" {% if request.GET.score == "7-8" %}selected{% endif %}>7-8</option>
+      <option value="8-9" {% if request.GET.score == "8-9" %}selected{% endif %}>8-9</option>
+      <option value="9-10" {% if request.GET.score == "9-10" %}selected{% endif %}>9-10</option>
+    </select>
+  </div>
+  <div class="form-group mx-2">
+    <button type="submit" class="btn btn-primary mt-4" style="background-color: #DB0000; border-color: #DB0000;">Filter</button>
+  </div>
+</form>
+
+<style>
+  .dropdown-menu-custom {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0;
+    list-style: none;
+    z-index: 1000;
+  }
+  .dropdown-item-custom {
+    color: #fff;
+    background-color: #333;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .dropdown-item-custom:hover {
+    background-color: #444;
+  }
+</style>
+
+<script>
+  const dropdownButton = document.getElementById('dropdown-button');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  dropdownButton.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.style.display = 'none';
+    }
+  });
+</script>
+
 
 <style>
 .movie-card {

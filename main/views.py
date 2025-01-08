@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from django.db import IntegrityError
+
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.http import HttpResponseNotAllowed
@@ -22,36 +23,48 @@ def logout_view(request):
         logout(request)
         return redirect('../../main/main')
     else:
-        return HttpResponseNotAllowed(['POST'])
-    
+        return HttpResponseNotAllowed(['POST'])  
+
 def main(request):
+    # Fetch all movies initially
     movies = Movie.objects.all()
 
-    query = request.GET.get('q', '') 
+    # Search query (if any)
+    query = request.GET.get('q', '')
     if query:
-        movies = Movie.objects.filter(
-            title__icontains=query
-        ) | Movie.objects.filter(
-            description__icontains=query 
-        )
+        movies = movies.filter(Q(title__icontains=query) | Q(description__icontains=query))
 
-    if request.method == "POST":
-        genre = request.POST.get('genre', '')
-        year = request.POST.get('year', '')
-        score = request.POST.get('score', '')
+    # Genre filter
+    genre = request.GET.get('genre', '')
+    if genre:
+        movies = movies.filter(genre__icontains=genre)
 
-        if genre:
-            movies = movies.filter(genre__icontains=genre)
-        if year:
-            movies = movies.filter(release_date__year=year)
-        if score:
-            score_range = score.split('-')
-            if len(score_range) == 2:
-                min_score, max_score = map(float, score_range)
-                movies = movies.filter(imdb_rating__gte=min_score, imdb_rating__lte=max_score)
+    # Year filter
+    year = request.GET.get('year', '')
+    if year:
+        movies = movies.filter(release_date__year=year)
 
+    # Score filter
+    score = request.GET.get('score', '')
+    if score:
+        score_range = score.split('-')
+        if len(score_range) == 2:
+            min_score, max_score = map(float, score_range)
+            movies = movies.filter(imdb_rating__gte=min_score, imdb_rating__lte=max_score)
+
+    # Sorting logic
+    sort_option = request.GET.get('sort', '')
+    if sort_option == 'highest':
+        movies = movies.order_by('-imdb_rating')
+    elif sort_option == 'lowest':
+        movies = movies.order_by('imdb_rating')
+    elif sort_option == 'newest':
+        movies = movies.order_by('-release_date')
+    elif sort_option == 'oldest':
+        movies = movies.order_by('release_date')
+
+    # Pass the filtered and sorted movies to the template
     return render(request, 'main/main.html', {'movies': movies, 'query': query})
-
 
 # def search_movies(request):
 #     query = request.GET.get('q', '')
@@ -285,3 +298,141 @@ def confirmation(request):
 #     else:
 #         results = Movie.objects.none()
 #     return render(request,  'main/search_results.html', {'results': results, 'query': query})
+
+
+# from django.shortcuts import render, get_object_or_404, redirect
+# from .models import Idpay
+# from django.views.decorators.csrf import csrf_exempt
+# from decouple import config
+# from idpay.api import IDPayAPI
+
+# import requests
+# import json
+# import uuid
+
+
+# def payment_init():
+#     base_url = config('BASE_URL', default='http://127.0.0.1:8000/', cast=str)
+#     api_key = config('IDPAY_API_KEY', default='', cast=str)
+#     sandbox = config('IDPAY_SANDBOX', default=True, cast=bool)
+
+#     return IDPayAPI(api_key, base_url, sandbox)
+
+# def home(request):
+#     payments = Idpay.objects.all()
+#     return render(request, 'home.html', {'payments': payments})
+
+# def payment_start(request):
+#     if request.method == 'POST':
+
+#         order_id = uuid.uuid1()
+#         amount = request.POST.get('amount')
+
+#         payer = {
+#             'name': request.POST.get('name'),
+#             'phone': request.POST.get('phone'),
+#             'mail': request.POST.get('mail'),
+#             'desc': request.POST.get('desc'),
+#         }
+
+
+#         record = Idpay(order_id=order_id, amount=int(amount))
+#         record.save()
+
+#         idpay_payment = payment_init()
+#         result = idpay_payment.payment(str(order_id), amount, 'payment/return', payer)
+
+#         if 'id' in result:
+#             record.status = 1
+#             record.payment_id = result['id']
+#             record.save()
+
+#             return redirect(result['link'])
+
+#         else:
+#             txt = result['message']
+#     else:
+#         txt = "Bad Request"
+
+#     return render(request, 'error.html', {'txt': txt})
+
+
+# @csrf_exempt
+# def payment_return(request):
+#     if request.method == 'POST':
+
+#         pid = request.POST.get('id')
+#         status = request.POST.get('status')
+#         pidtrack = request.POST.get('track_id')
+#         order_id = request.POST.get('order_id')
+#         amount = request.POST.get('amount')
+#         card = request.POST.get('card_no')
+#         date = request.POST.get('date')
+
+#         if Idpay.objects.filter(order_id=order_id, payment_id=pid, amount=amount, status=1).count() == 1:
+
+#             idpay_payment = payment_init()
+
+#             payment = Idpay.objects.get(payment_id=pid, amount=amount)
+#             payment.status = status
+#             payment.date = str(date)
+#             payment.card_number = card
+#             payment.idpay_track_id = pidtrack
+#             payment.save()
+
+#             if str(status) == '10':
+#                 result = idpay_payment.verify(pid, payment.order_id)
+
+#                 if 'status' in result:
+
+#                     payment.status = result['status']
+#                     payment.bank_track_id = result['payment']['track_id']
+#                     payment.save()
+
+#                     return render(request, 'error.html', {'txt': result['message']})
+
+#                 else:
+#                     txt = result['message']
+
+#             else:
+#                 txt = "Error Code : " + str(status) + "   |   " + "Description : " + idpay_payment.get_status(status)
+
+#         else:
+#             txt = "Order Not Found"
+
+#     else:
+#         txt = "Bad Request"
+
+#     return render(request, 'error.html', {'txt': txt})
+
+
+# def payment_check(request, pk):
+
+#     payment = Idpay.objects.get(pk=pk)
+
+#     idpay_payment = payment_init()
+#     result = idpay_payment.inquiry(payment.payment_id, payment.order_id)
+
+#     if 'status' in result:
+
+#         payment.status = result['status']
+#         payment.idpay_track_id = result['track_id']
+#         payment.bank_track_id = result['payment']['track_id']
+#         payment.card_number = result['payment']['card_no']
+#         payment.date = str(result['date'])
+#         payment.save()
+
+#     return render(request, 'error.html', {'txt': result['message']})
+
+
+# def requirement(request):
+#     txt = "pip install idpay"
+
+#     return render(request, 'error.html', {'txt': txt})
+
+
+# def about_me(request):
+#     txt = 'IDPay'
+
+#     return render(request, 'error.html', {'txt': txt})
+

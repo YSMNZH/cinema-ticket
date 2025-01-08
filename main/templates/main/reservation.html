@@ -15,551 +15,58 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
-  <style>
-.multistep-container {
-  width: 90%;
-  max-width: 800px;
-  text-align: center;
-  background: #1a1a1a;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
-  padding: 20px;
-}
-
-
-    #progress-bar {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
-
-    .step {
-      flex: 1;
-      position: relative;
-      padding: 10px;
-      font-size: 16px;
-      color: #888;
-      transition: color 0.3s ease;
-    }
-
-    .step::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 4px;
-      background: #888;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      transition: background 0.3s ease;
-    }
-
-    .step.active {
-      color: #ff0000;
-    }
-
-    .step.active::after {
-      background: #ff0000;
-    }
-
-    #step-content {
-      margin-top: 20px;
-    }
-
-    .cinema-list, .showtime-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .cinema-item, .showtime-item {
-      background: #333;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      text-align: center;
-      color: #fff;
-      text-decoration: none;
-      flex: 1 1 calc(30% - 20px);
-      max-width: calc(30% - 20px);
-    }
-
-    .cinema-item:hover, .showtime-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
-    }
-
-    .cinema-item h3, .showtime-item h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .container {
-      perspective: 1000px;
-      margin-bottom: 30px;
-    }
-
-    .seat {
-      background-color: #666;
-      height: 20px;
-      width: 20px;
-      margin: 5px;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .seat.selected {
-      background-color: blue;
-    }
-
-    .seat.occupied {
-      background-color: #b30000;
-      cursor: not-allowed;
-    }
-
-    .seat:not(.occupied):hover {
-      cursor: pointer;
-      transform: scale(1.2);
-    }
-
-    .screen {
-      background-color: #fff;
-      height: 70px;
-      width: 100%;
-      margin: 15px 0;
-      transform: rotateX(-45deg);
-      border-radius: 5px;
-    }
-
-    .text {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .controls {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .controls button {
-      background-color: #ff0000;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .controls button:hover {
-      background-color: #b30000;
-      color: #fff;
-    }
-
-    .controls button:disabled {
-      background-color: gray;
-      cursor: not-allowed;
-    }
-    @font-face {
-  font-family: "Mona Sans";
-  src: url("https://assets.codepen.io/64/Mona-Sans.woff2")
-      format("woff2 supports variations"),
-    url("https://assets.codepen.io/64/Mona-Sans.woff2")
-      format("woff2-variations");
-  font-weight: 100 1000;
-}
-
-@layer properties {
-  @property --bg-position {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 100;
-  }
-  @property --after-blur {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0;
-  }
-  @property --after-opacity {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-  }
-  @property --before-opacity {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0.3;
-  }
-  @property --btn-offset {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-  }
-  @property --btn-scale {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-  }
-}
-
-:root {
-  --debug: 0;
-
-  /* colors */
-  --body-bg: hsl(0, 0%, 6%);
-  --btn-bg: hsl(0, 0%, 0%);
-  --btn-border-width: 1.5;
-  --btn-offset: 1;
-  --btn-scale: 1;
-  --after-bg: linear-gradient(
-    to right,
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0),
-    rgb(0 0 0)
-  );
-  --after-blur: 10;
-  --after-opacity: 1;
-  --after-pos-y: 10;
-  
-  --before-opacity: 0.3;
-
-  /* positions */
-  --bg-position: 100;
-
-  --color-white: hsl(0, 0%, 100%);
-  --color-cyan: hsl(180, 100%, 50%);
-  --color-blue: hsl(240, 100%, 50%);
-  --color-purple: hsl(270, 100%, 50%);
-  --color-pink: hsl(330, 40%, 70%);
-  --color-red: hsl(0, 100%, 50%);
-  --color-yellow: hsl(60, 100%, 50%);
-  --color-lime: hsl(90, 100%, 75%);
-
-  --color-orange: oklch(69.1% 0.223 36.85);
-}
-
-@supports (color: color(display-p3 0 0 0)) {
-  :root {
-    --color-white: color(display-p3 1 1 1);
-    --color-cyan: color(display-p3 0 1 1);
-    --color-blue: color(display-p3 0 0 1);
-    --color-purple: color(display-p3 0.5 0 1);
-    --color-pink: color(display-p3 1 0.4 0.7);
-    --color-red: color(display-p3 1 0 0);
-    --color-yellow: color(display-p3 1 1 0);
-    --color-lime: color(display-p3 0.75 1 0);
-
-    --color-orange: color(display-p3 0.96 0.39 0.2);
-  }
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  outline: calc(var(--debug) * 1px) dotted red;
-  outline-offset: -1px;
-}
-
-html,
-body,
-main {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  background: var(--body-bg);
-  font-family: "Mona Sans", sans-serif;
-  padding: 0 6em;
-}
-
-main {
-  display: grid;
-  place-items: center;
-
-  & button {
-    all: unset;
-    background: transparent;
-    border-width: 0;
-    transform: scale(var(--btn-scale));
-    transition: 
-        --bg-position 3s ease, 
-        --after-blur 0.3s ease,
-        --before-opacity 0.3s ease,
-        --btn-offset 0.3s ease,
-        --btn-scale 0.2s cubic-bezier(.76,-0.25,.51,1.13);
-
-    > div {
-      display: block;
-      padding: 0.8em 1.2em;
-      background: var(--btn-bg);
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      font-size: 22px;
-      position: relative;
-      
-      cursor: pointer;
-
-      &:not(:hover) {
-        transition: --after-blur 0.3s ease;
-      }
-
-      > span {
-        background: linear-gradient(
-            to right,
-            var(--color-white),
-            var(--color-white),
-            var(--color-cyan),
-            var(--color-blue),
-            var(--color-purple),
-            var(--color-pink),
-            var(--color-red),
-            var(--color-yellow),
-            var(--color-lime),
-            var(--color-white),
-            var(--color-white)
-          )
-          no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: 0.15ch;
-        font-weight: 600;
-      }
-
-      &:after {
-        display: block;
-        position: absolute;
-        content: "";
-        width: 100%;
-        height: 100%;
-        background: var(--after-bg) no-repeat calc(var(--bg-position) * 1%) 0% /
-          900%;
-        transform: translateY(calc(var(--after-pos-y) * 1px));
-        left: 0;
-        top: 0;
-        z-index: -2;
-        filter: blur(calc(var(--after-blur) * 1px));
-        opacity: var(--after-opacity);
-      }
-
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        width: calc(100% + calc(calc(var(--btn-border-width) * 2) * 1px));
-        height: calc(100% + calc(calc(var(--btn-border-width) * 2) * 1px));
-        background: linear-gradient(
-            to right,
-            var(--color-white),
-            var(--color-white),
-            var(--color-cyan),
-            var(--color-blue),
-            var(--color-purple),
-            var(--color-pink),
-            var(--color-red),
-            var(--color-yellow),
-            var(--color-lime),
-            var(--color-white),
-            var(--color-white)
-          )
-          no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
-        border-radius: 9px;
-        z-index: -1;
-        top: calc(var(--btn-border-width) * -1px);
-        left: calc(var(--btn-border-width) * -1px);
-        opacity: var(--before-opacity);
-      }
-    }
-
-    &:hover {
-      --btn-scale: 1.05;
-      --bg-position: 0;
-      --after-bg: linear-gradient(
-          to right,
-          var(--color-white),
-          var(--color-white),
-          var(--color-cyan),
-          var(--color-blue),
-          var(--color-purple),
-          var(--color-pink),
-          var(--color-red),
-          var(--color-yellow),
-          var(--color-lime),
-          var(--color-white),
-          var(--color-white)
-        );
-        --after-blur: 30;
-        --after-opacity: 0.3;
-        --after-pos-y: 0;
-        --before-opacity: 1;      
-        --btn-offset: 5;
-      
-      &:active {
-        --btn-scale: 0.98;
-        --after-blur: 15;
-      }
-    }
-  }
-}
-
-    body {
-      background-color: #000;
-      color: #fff;
-    }
-
-    .advanced {
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .btn-secondary,
-    .btn-secondary:focus,
-    .btn-secondary:active {
-      color: #fff;
-      background-color: red !important;
-      border-color: black !important;
-      box-shadow: none;
-    }
-
-    .form-control:focus {
-      box-shadow: none;
-      border: 1px solid #00838f;
-    }
-
-    .cinema-list {
-      background-color: #222;
-      margin-top: 30px;
-      border-radius: 8px;
-      padding: 20px;
-    }
-
-    .cinema-item {
-      background-color: #333;
-      color: #fff;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cinema-name {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .cinema-score {
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
-
-    .cinema-score.low {
-      background-color: red;
-    }
-
-    .cinema-score.medium {
-      background-color: grey;
-    }
-
-    .cinema-score.high {
-      background-color: green;
-    }
-
-    .cinema-address {
-      color: #bbb;
-      font-size: 14px;
-    }
-
-    .show-times-btn {
-      color: #fff;
-      background-color: #ff0000;
-      padding: 8px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      border: none;
-    }
-
-    .showtimes {
-      display: none;
-      margin-top: 10px;
-      padding-left: 15px;
-    }
-
-    .showtimes span {
-      background-color: red;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 15px;
-      margin-right: 10px;
-      margin-bottom: 10px;
-      display: inline-block;
-    }
-
-    .popular-movie-slider img {
-      width: 100%;
-      border-radius: 8px;
-    }
-  </style>
-</head>
-
+</head> 
 <header>
-  <nav class="d-flex justify-content-between align-items-center bg-dark p-3">
-    <div class="logo">
-      CINEMA<span>TICKET</span>
-    </div>
-    <ul>
-      <li><a href="{% url 'main' %}" class="styled-link">Home</a></li>
-      <li><a href="{% url 'news' %}" class="styled-link">News</a></li>
-      <li><a href="{% url 'contact' %}" class="styled-link">Contact</a></li>
-      {% if user.is_authenticated %}
-      <li class="dropdown">
-        <a class="dropdown-toggle styled-link" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="text-white">{{ user.first_name }} {{ user.last_name }}</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item text-white" href="{% url 'profile' %}">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-white" href="{% url 'logout' %}">Logout</a></li>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand logo" href="{% url 'main' %}">CINEMA<span>TICKET</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'news' %}">News</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          </li>
+          {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+          </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.name}} {{ user.family_name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="navbarDropdown">
+              <li><a class="user-dropdown" href="{% url 'profile' %}">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a href="#" class="user-dropdown" onclick="document.getElementById('logout-form').submit(); return false;">Logout</a>
+                <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                  {% csrf_token %}
+                </form>
+              </li>                
+              </li>
+            </ul>
+          </li>
+          {% endif %}
         </ul>
-      </li>
-      {% endif %}
-    </ul>
+      </div>
+    </div>
   </nav>
     <div class="popular-movie-slider">
       <img src="{% static movie.poster %}" alt="{{ movie.title }}" class="poster">
       <div class="popular-movie-slider-content">
-        <p class="release">{{ movie.elease_date }}</p>
         <h2 class="movie-name">{{ movie.title }}</h2>
         <ul class="category">
           <p class="fa fa-tags">&nbsp;&nbsp;&nbsp;<span>{{ movie.genre }}</span></p>
@@ -574,7 +81,7 @@ main {
     </div> 
   </header> 
 
-<body>
+  <body>
   <div class="multistep-container">
     <div id="progress-bar">
       <div class="step active" data-step="1">Movie</div>
@@ -584,7 +91,7 @@ main {
     </div>
 
     <div class="container">
-{% if step == 'cinema' %}
+      {% if step == 'cinema' %}
         <div class="cinema-list">
           {% for cinema in cinemas %}
             <a href="?step=showtime&cinema_id={{ cinema.id }}" class="cinema-item">
@@ -603,126 +110,650 @@ main {
         </div>
 
       {% elif step == 'seats' %}
-      {% for row in rows %}
-      <div class="row">
-        {% for seat in row %}
-          <div 
-            class="seat {% if seat.id in reserved_seats %}occupied{% endif %}" 
-            data-seat-id="{{ seat.id }}">
+        {% for row in rows %}
+          <div class="row">
+            {% for seat in row %}
+              <div class="seat {% if seat.id in reserved_seats %}occupied{% endif %}" data-seat-id="{{ seat.id }}"></div>
+            {% endfor %}
           </div>
         {% endfor %}
-      </div>
-    {% endfor %}
-    
+        
         <p class="text">You have selected <span id="count">0</span> seats for a total of $<span id="total">0</span>.</p>
       {% endif %}
     </div>
 
-  <div class="controls">
-    {% if step == 'cinema' or step == 'showtime' %}
-      <button id="prev" onclick="goBack()">Previous</button>
-      <button id="next" onclick="goForward()">Next</button>
-    {% elif step == 'seats' %}
-      <button id="prev" onclick="goBack()">Previous</button>
-      <button id="finish" class="finish-btn">Reserve</button>
-    {% endif %}
-  </div>
+    <div class="controls">
+      {% if step == 'cinema' or step == 'showtime' %}
+        <button id="prev" onclick="goBack()">Previous</button>
+        <button id="next" onclick="goForward()">Next</button>
+      {% elif step == 'seats' %}
+        <button id="prev" onclick="goBack()">Previous</button>
+        <button id="finish" class="finish-btn">Reserve</button>
+      {% endif %}
+    </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-  const seats = document.querySelectorAll(".seat:not(.occupied)");
-  const count = document.getElementById("count");
-  const total = document.getElementById("total");
-  const ticketPrice = 10;
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const seats = document.querySelectorAll(".seat:not(.occupied)");
+        const count = document.getElementById("count");
+        const total = document.getElementById("total");
+        const ticketPrice = 10;
+        let selectedSeats = [];
 
-  let selectedSeats = [];
+        seats.forEach((seat) => {
+          seat.addEventListener("click", () => {
+            if (!seat.classList.contains("occupied")) {
+              seat.classList.toggle("selected");
+              const seatId = seat.dataset.seatId;
 
-  if (seats) {
-    seats.forEach((seat) => {
-      seat.addEventListener("click", () => {
-        if (!seat.classList.contains("occupied")) {
-          seat.classList.toggle("selected");
-          const seatId = seat.dataset.seatId;
-          if (seat.classList.contains("selected")) {
-            selectedSeats.push(seatId);
-          } else {
-            selectedSeats = selectedSeats.filter((id) => id !== seatId);
+              if (seat.classList.contains("selected")) {
+                selectedSeats.push(seatId);
+              } else {
+                selectedSeats = selectedSeats.filter((id) => id !== seatId);
+              }
+              updateSelectedCount();
+            }
+          });
+        });
+
+        function updateSelectedCount() {
+          const selectedCount = document.querySelectorAll(".seat.selected").length;
+          count.textContent = selectedCount;
+          total.textContent = selectedCount * ticketPrice;
+        }
+
+        const finishButton = document.getElementById("finish");
+        if (finishButton) {
+          finishButton.addEventListener("click", () => {
+            if (selectedSeats.length > 0) {
+              fetch(window.location.href, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify({ seats: selectedSeats }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.success) {
+                    alert("Seats reserved successfully!");
+                    window.location.href = `/main/confirmation/?show_time_id=${data.show_time_id}`;
+                  } else {
+                    alert(data.error || "An error occurred.");
+                  }
+                })
+                .catch((error) => console.error("Error:", error));
+            } else {
+              alert("No seats selected!");
+            }
+          });
+        }
+
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
           }
-          updateSelectedCount();
+          return cookieValue;
+        }
+
+        const userLoggedIn = "{{ user_logged_in|yesno:'true,false' }}";
+        if (userLoggedIn === "false") {
+          alert("You need to login to reserve tickets!");
+          window.location.href = "{% url 'login' %}";
         }
       });
-    });
-  }
+    </script>
 
-  function updateSelectedCount() {
-    const selectedCount = document.querySelectorAll(".seat.selected").length;
-    if (count && total) {
-      count.textContent = selectedCount;
-      total.textContent = selectedCount * ticketPrice;
-    }
-  }
-
-  const finishButton = document.getElementById("finish");
-if (finishButton) {
-  finishButton.addEventListener("click", () => {
-    if (selectedSeats.length > 0) {
-      fetch(window.location.href, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: JSON.stringify({ seats: selectedSeats }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            alert("Seats reserved successfully!");
-
-            window.location.href = `/main/confirmation/?show_time_id=${data.show_time_id}`;
-          } else {
-            alert(data.error || "An error occurred.");
-          }
-        })
-        .catch((error) => console.error("Error:", error));
-    } else {
-      alert("No seats selected!");
-    }
-  });
-}
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
+    <script>
+      function toggleShowtimes(cinemaId) {
+        const showtimesElement = document.getElementById('showtimes-' + cinemaId);
+        if (showtimesElement.style.display === 'none' || showtimesElement.style.display === '') {
+          showtimesElement.style.display = 'block';
+        } else {
+          showtimesElement.style.display = 'none';
         }
       }
-    }
-    return cookieValue;
+    </script>
+  </div>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+      <footer class="bg-dark text-center text-white">
+      <div class="container p-4 pb-0">
+        <section class="mb-4">
+          <a class="btn btn-outline-light btn-floating m-1" href="http://facebook.com" role="button"><i class="fa fa-facebook-f"></i></a>
+          <a class="btn btn-outline-light btn-floating m-1" href="http://x.com" role="button"><i class="fa fa-twitter"></i></a>
+          <a class="btn btn-outline-light btn-floating m-1" href="http://google.com" role="button"><i class="fa fa-google"></i></a>
+          <a class="btn btn-outline-light btn-floating m-1" href="http://instagram.com" role="button"><i class="fa fa-instagram"></i></a>
+          <a class="btn btn-outline-light btn-floating m-1" href="http://github.com" role="button"><i class="fa fa-github"></i></a>
+        </section>
+      </div>
+
+      <div class="text-center p-3" style="background-color: #DB0000;">
+        © 2024 Copyright:
+        <a class="text-white" href="{% url 'main' %}">CINEMATICKET</a>
+      </div>
+    </footer>
+</body>
+</html>
+<style>
+.multistep-container {
+width: 90%;
+max-width: 800px;
+text-align: center;
+background: #1a1a1a;
+border-radius: 10px;
+box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+padding: 20px;
+}
+
+
+  #progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
   }
 
-  const userLoggedIn = "{{ user_logged_in|yesno:'true,false' }}";
-      if (userLoggedIn === "false") {
-        alert("You need to login to reserve tickets!");
-        window.location.href = "{% url 'login' %}";
-      }
-});
-  </script>
-  <script>
-    function toggleShowtimes(cinemaId) {
-      const showtimesElement = document.getElementById('showtimes-' + cinemaId);
-      if (showtimesElement.style.display === 'none' || showtimesElement.style.display === '') {
-        showtimesElement.style.display = 'block';
-      } else {
-        showtimesElement.style.display = 'none';
-      }
-    }
-  </script>
-</body>
+  .step {
+    flex: 1;
+    position: relative;
+    padding: 10px;
+    font-size: 16px;
+    color: #888;
+    transition: color 0.3s ease;
+  }
 
-<script src="{% static 'assets/js/main.js' %}"></script>
-</html>
+  .step::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: #888;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: background 0.3s ease;
+  }
+
+  .step.active {
+    color: #ff0000;
+  }
+
+  .step.active::after {
+    background: #ff0000;
+  }
+
+  #step-content {
+    margin-top: 20px;
+  }
+
+  .cinema-list, .showtime-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .cinema-item, .showtime-item {
+    background: #333;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    flex: 1 1 calc(30% - 20px);
+    max-width: calc(30% - 20px);
+  }
+
+  .cinema-item:hover, .showtime-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+  }
+
+  .cinema-item h3, .showtime-item h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .container {
+    perspective: 1000px;
+    margin-bottom: 30px;
+  }
+
+  .seat {
+    background-color: #666;
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .seat.selected {
+    background-color: blue;
+  }
+
+  .seat.occupied {
+    background-color: #b30000;
+    cursor: not-allowed;
+  }
+
+  .seat:not(.occupied):hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+
+  .screen {
+    background-color: #fff;
+    height: 70px;
+    width: 100%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    border-radius: 5px;
+  }
+
+  .text {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .controls button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .controls button:hover {
+    background-color: #b30000;
+    color: #fff;
+  }
+
+  .controls button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  @font-face {
+font-family: "Mona Sans";
+src: url("https://assets.codepen.io/64/Mona-Sans.woff2")
+    format("woff2 supports variations"),
+  url("https://assets.codepen.io/64/Mona-Sans.woff2")
+    format("woff2-variations");
+font-weight: 100 1000;
+}
+
+@layer properties {
+@property --bg-position {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 100;
+}
+@property --after-blur {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --after-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --before-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.3;
+}
+@property --btn-offset {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --btn-scale {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+}
+
+:root {
+--debug: 0;
+--body-bg: hsl(0, 0%, 6%);
+--btn-bg: hsl(0, 0%, 0%);
+--btn-border-width: 1.5;
+--btn-offset: 1;
+--btn-scale: 1;
+--after-bg: linear-gradient(
+  to right,
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0),
+  rgb(0 0 0)
+);
+--after-blur: 10;
+--after-opacity: 1;
+--after-pos-y: 10;
+
+--before-opacity: 0.3;
+
+/* positions */
+--bg-position: 100;
+
+--color-white: hsl(0, 0%, 100%);
+--color-cyan: hsl(180, 100%, 50%);
+--color-blue: hsl(240, 100%, 50%);
+--color-purple: hsl(270, 100%, 50%);
+--color-pink: hsl(330, 40%, 70%);
+--color-red: hsl(0, 100%, 50%);
+--color-yellow: hsl(60, 100%, 50%);
+--color-lime: hsl(90, 100%, 75%);
+
+--color-orange: oklch(69.1% 0.223 36.85);
+}
+
+@supports (color: color(display-p3 0 0 0)) {
+:root {
+  --color-white: color(display-p3 1 1 1);
+  --color-cyan: color(display-p3 0 1 1);
+  --color-blue: color(display-p3 0 0 1);
+  --color-purple: color(display-p3 0.5 0 1);
+  --color-pink: color(display-p3 1 0.4 0.7);
+  --color-red: color(display-p3 1 0 0);
+  --color-yellow: color(display-p3 1 1 0);
+  --color-lime: color(display-p3 0.75 1 0);
+
+  --color-orange: color(display-p3 0.96 0.39 0.2);
+}
+}
+
+*,
+*:before,
+*:after {
+box-sizing: border-box;
+outline: calc(var(--debug) * 1px) dotted red;
+outline-offset: -1px;
+}
+
+html,
+body,
+main {
+width: 100%;
+height: 100%;
+padding: 0;
+margin: 0;
+}
+
+body {
+background: var(--body-bg);
+font-family: "Mona Sans", sans-serif;
+padding: 0 6em;
+}
+
+main {
+display: grid;
+place-items: center;
+
+& button {
+  all: unset;
+  background: transparent;
+  border-width: 0;
+  transform: scale(var(--btn-scale));
+  transition: 
+      --bg-position 3s ease, 
+      --after-blur 0.3s ease,
+      --before-opacity 0.3s ease,
+      --btn-offset 0.3s ease,
+      --btn-scale 0.2s cubic-bezier(.76,-0.25,.51,1.13);
+
+  > div {
+    display: block;
+    padding: 0.8em 1.2em;
+    background: var(--btn-bg);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 22px;
+    position: relative;
+    
+    cursor: pointer;
+
+    &:not(:hover) {
+      transition: --after-blur 0.3s ease;
+    }
+
+    > span {
+      background: linear-gradient(
+          to right,
+          var(--color-white),
+          var(--color-white),
+          var(--color-cyan),
+          var(--color-blue),
+          var(--color-purple),
+          var(--color-pink),
+          var(--color-red),
+          var(--color-yellow),
+          var(--color-lime),
+          var(--color-white),
+          var(--color-white)
+        )
+        no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.15ch;
+      font-weight: 600;
+    }
+
+    &:after {
+      display: block;
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: var(--after-bg) no-repeat calc(var(--bg-position) * 1%) 0% /
+        900%;
+      transform: translateY(calc(var(--after-pos-y) * 1px));
+      left: 0;
+      top: 0;
+      z-index: -2;
+      filter: blur(calc(var(--after-blur) * 1px));
+      opacity: var(--after-opacity);
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: calc(100% + calc(calc(var(--btn-border-width) * 2) * 1px));
+      height: calc(100% + calc(calc(var(--btn-border-width) * 2) * 1px));
+      background: linear-gradient(
+          to right,
+          var(--color-white),
+          var(--color-white),
+          var(--color-cyan),
+          var(--color-blue),
+          var(--color-purple),
+          var(--color-pink),
+          var(--color-red),
+          var(--color-yellow),
+          var(--color-lime),
+          var(--color-white),
+          var(--color-white)
+        )
+        no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
+      border-radius: 9px;
+      z-index: -1;
+      top: calc(var(--btn-border-width) * -1px);
+      left: calc(var(--btn-border-width) * -1px);
+      opacity: var(--before-opacity);
+    }
+  }
+
+  &:hover {
+    --btn-scale: 1.05;
+    --bg-position: 0;
+    --after-bg: linear-gradient(
+        to right,
+        var(--color-white),
+        var(--color-white),
+        var(--color-cyan),
+        var(--color-blue),
+        var(--color-purple),
+        var(--color-pink),
+        var(--color-red),
+        var(--color-yellow),
+        var(--color-lime),
+        var(--color-white),
+        var(--color-white)
+      );
+      --after-blur: 30;
+      --after-opacity: 0.3;
+      --after-pos-y: 0;
+      --before-opacity: 1;      
+      --btn-offset: 5;
+    
+    &:active {
+      --btn-scale: 0.98;
+      --after-blur: 15;
+    }
+  }
+}
+}
+
+  body {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .advanced {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .btn-secondary,
+  .btn-secondary:focus,
+  .btn-secondary:active {
+    color: #fff;
+    background-color: red !important;
+    border-color: black !important;
+    box-shadow: none;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border: 1px solid #00838f;
+  }
+
+  .cinema-list {
+    background-color: #222;
+    margin-top: 30px;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .cinema-item {
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cinema-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .cinema-score {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+
+  .cinema-score.low {
+    background-color: red;
+  }
+
+  .cinema-score.medium {
+    background-color: grey;
+  }
+
+  .cinema-score.high {
+    background-color: green;
+  }
+
+  .cinema-address {
+    color: #bbb;
+    font-size: 14px;
+  }
+
+  .show-times-btn {
+    color: #fff;
+    background-color: #ff0000;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .showtimes {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+
+  .showtimes span {
+    background-color: red;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .popular-movie-slider img {
+    width: 100%;
+    border-radius: 8px;
+  }
+</style>
