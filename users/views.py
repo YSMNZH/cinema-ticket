@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
-from django.contrib import messages
 from .models import CustomUser 
 from django.contrib.auth import login as auth_login
 from django.shortcuts import render, redirect
@@ -15,6 +14,9 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from main.models import Movie
 from main.models import ShowTime,Ticket
+import pytz
+from django.views.decorators.cache import never_cache
+
 
 def main(request):
     movies = Movie.objects.all()
@@ -44,7 +46,6 @@ def main(request):
 
     return render(request, 'main/main.html', {'movies': movies, 'query': query})
 
-from django.views.decorators.cache import never_cache
 
 @never_cache
 def login(request):
@@ -83,41 +84,17 @@ def register(request):
 
     return render(request, 'users/register.html', {'form': form})
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.utils import timezone
-
+iran_tz = pytz.timezone('Asia/Tehran')
 
 @login_required
 def profile(request):
-    if request.method == 'POST' and 'update_profile' in request.POST:
-        user = request.user
-        user.name = request.POST.get('name', user.name)
-        user.family_name = request.POST.get('family_name', user.family_name)
-        user.email = request.POST.get('email', user.email)
-        user.phone_number = request.POST.get('phone_number', user.phone_number)
-        user.date_birth = request.POST.get('date_birth', user.date_birth)
-
-        password = request.POST.get('password', None)
-        if password:
-            user.set_password(password)
-
-        try:
-            user.save()
-            messages.success(request, 'Your profile has been updated successfully!')
-        except Exception as e:
-            messages.error(request, f"Error updating profile: {e}")
-
-        return redirect('profile')  
-
     reservation_details = []
 
     show_time_id = request.GET.get('show_time_id')
 
     if show_time_id:
         selected_show_time = get_object_or_404(ShowTime, id=show_time_id)
-
+        
         tickets = Ticket.objects.filter(
             customer_name=request.user.username,
             show_time=selected_show_time,
@@ -127,6 +104,12 @@ def profile(request):
         if tickets.exists():
             seats = [f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}" for ticket in tickets]
 
+            show_time_iran = selected_show_time.start_time.astimezone(iran_tz)
+            formatted_show_time = show_time_iran.strftime('%Y-%m-%d %H:%M:%S')
+
+            reservation_iran = tickets.first().reservation_date.astimezone(iran_tz)
+            formatted_reservation_date = reservation_iran.strftime('%Y-%m-%d %H:%M:%S')
+
             reservation_details.append({
                 "name": request.user.name or "N/A",
                 "family_name": request.user.family_name or "N/A",
@@ -134,25 +117,30 @@ def profile(request):
                 "seats": seats,
                 "cinema": selected_show_time.hall.cinema.name,
                 "movie": selected_show_time.movie.title,
-                "reservation_date": selected_show_time.date_time.strftime('%Y-%m-%d %H:%M:%S'),  # Use the raw datetime
+                "movie_time": formatted_show_time,  
+                "reservation_date": formatted_reservation_date,  
             })
-
     else:
         tickets = Ticket.objects.filter(
             customer_name=request.user.username,
             is_reserved=True
         )
-        
+
         showtimes_seen = set()
-        
+
         for ticket in tickets:
             show_time = ticket.show_time
-            
             if show_time.id not in showtimes_seen:
                 showtimes_seen.add(show_time.id)
-                
+
                 seats = [f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}" for ticket in tickets if ticket.show_time == show_time]
-                
+
+                show_time_iran = show_time.start_time.astimezone(iran_tz)
+                formatted_show_time = show_time_iran.strftime('%Y-%m-%d %H:%M:%S')
+
+                reservation_iran = ticket.reservation_date.astimezone(iran_tz)
+                formatted_reservation_date = reservation_iran.strftime('%Y-%m-%d %H:%M:%S')
+
                 reservation_details.append({
                     "name": request.user.name or "N/A",
                     "family_name": request.user.family_name or "N/A",
@@ -160,13 +148,14 @@ def profile(request):
                     "seats": seats,
                     "cinema": show_time.hall.cinema.name,
                     "movie": show_time.movie.title,
-                    "reservation_date": ticket.reservation_date.strftime('%Y-%m-%d %H:%M:%S'), 
+                    "movie_time": formatted_show_time,
+                    "reservation_date": formatted_reservation_date,
                 })
 
     return render(request, 'users/profile.html', {
         'reservation_details': reservation_details,
         'show_time_id': show_time_id,
-        'user': request.user  
+        'user': request.user
     })
 
 def request_password_reset(request):

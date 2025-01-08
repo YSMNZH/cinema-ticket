@@ -181,32 +181,26 @@
                         <th>Seats</th>
                         <th>Cinema</th>
                         <th>Movie</th>
+                        <th>ShowTime</th>
                         <th>Date of Reservation</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {% if reservation_details %}
-                        {% for reservation in reservation_details %}
-                          <tr>
-                            <td>{{ reservation.name }}</td>
-                            <td>{{ reservation.family_name }}</td>
-                            <td>{{ reservation.num_tickets }}</td>
-                            <td>
-                              <ul>
-                                {% for seat in reservation.seats %}
-                                  <li>{{ seat }}</li>
-                                {% endfor %}
-                              </ul>
-                            </td>
-                            <td>{{ reservation.cinema }}</td>
-                            <td>{{ reservation.movie }}</td>
-                            <td>{{ reservation.reservation_date }}</td>
-                          </tr>
-                        {% endfor %}
-                      {% else %}
-                        <tr><td colspan="7">You Have No Reservations.</td></tr>
-                      {% endif %}
-                    </tbody>
+                      {% for reservation in reservation_details %}
+                      <tr>
+                          <td>{{ reservation.name }}</td>
+                          <td>{{ reservation.family_name }}</td>
+                          <td>{{ reservation.num_tickets }}</td>
+                          <td>{{ reservation.seats }}</td>
+                          <td>{{ reservation.cinema }}</td>
+                          <td>{{ reservation.movie }}</td>
+                          <td>{{ reservation.movie_time }}</td>  
+                          <td>{{ reservation.reservation_date }}</td>  
+                          <td>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
                   </table>                  
                   {% else %}
                     <p>You Have No Reservations.</p>
