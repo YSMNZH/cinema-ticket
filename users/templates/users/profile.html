@@ -84,12 +84,6 @@
               <p>Reservation List</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="material-icons"></i>
-              <p>Wallet</p>
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -119,7 +113,7 @@
                   </div>
                   {% endif %}
 
-                  <form method="POST" action="{% url 'update_profile' %}">
+                  <form method="POST" action="{% url 'profile' %}">
                     {% csrf_token %}
                     <div class="row">
                       <div class="col-md-6">
@@ -177,6 +171,7 @@
                   <h4 class="card-title">Reservation List</h4>
                 </div>
                 <div class="card-body">
+                  {% if reservation_details %}
                   <table class="table">
                     <thead>
                       <tr>
@@ -190,29 +185,35 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>2</td>
-                        <td>A1, A2</td>
-                        <td>Cinema 1</td>
-                        <td>Movie A</td>
-                        <td>2024-12-30</td>
-                      </tr>
-                      <tr>
-                        <td>Jane</td>
-                        <td>Smith</td>
-                        <td>3</td>
-                        <td>B1, B2, B3</td>
-                        <td>Cinema 2</td>
-                        <td>Movie B</td>
-                        <td>2024-12-29</td>
-                      </tr>
+                      {% if reservation_details %}
+                        {% for reservation in reservation_details %}
+                          <tr>
+                            <td>{{ reservation.name }}</td>
+                            <td>{{ reservation.family_name }}</td>
+                            <td>{{ reservation.num_tickets }}</td>
+                            <td>
+                              <ul>
+                                {% for seat in reservation.seats %}
+                                  <li>{{ seat }}</li>
+                                {% endfor %}
+                              </ul>
+                            </td>
+                            <td>{{ reservation.cinema }}</td>
+                            <td>{{ reservation.movie }}</td>
+                            <td>{{ reservation.reservation_date }}</td>
+                          </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr><td colspan="7">You Have No Reservations.</td></tr>
+                      {% endif %}
                     </tbody>
-                  </table>
+                  </table>                  
+                  {% else %}
+                    <p>You Have No Reservations.</p>
+                  {% endif %}
                 </div>
               </div>
-            </div>
+            </div>             
           </div>
         </div>
       </div>
@@ -225,7 +226,6 @@
           const activeTab = document.getElementById(tabName);
           activeTab.classList.add('active');
 
-          // Highlight active tab in sidebar
           const allNavItems = document.querySelectorAll('.nav-item');
           allNavItems.forEach(item => item.classList.remove('active'));
           

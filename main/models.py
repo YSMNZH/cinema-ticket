@@ -81,7 +81,7 @@ class Ticket(models.Model):
     is_reserved = models.BooleanField(default=False)
     is_locked = models.BooleanField(default=False)
     customer_name = models.CharField(max_length=100, null=True, blank=True)
-
+    reservation_date = models.DateTimeField(auto_now_add=True)  # This will record the date of reservation automatically
     class Meta:
         unique_together = ("seat", "show_time")
 

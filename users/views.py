@@ -14,7 +14,8 @@ from .models import CustomUser, PasswordResetToken
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from main.models import Movie
-    
+from main.models import ShowTime,Ticket
+
 def main(request):
     movies = Movie.objects.all()
 
@@ -82,12 +83,15 @@ def register(request):
 
     return render(request, 'users/register.html', {'form': form})
 
-def profile(request):
-    return render(request, 'users/profile.html')
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils import timezone
+
 
 @login_required
-def update_profile(request):
-    if request.method == 'POST':
+def profile(request):
+    if request.method == 'POST' and 'update_profile' in request.POST:
         user = request.user
         user.name = request.POST.get('name', user.name)
         user.family_name = request.POST.get('family_name', user.family_name)
@@ -107,7 +111,63 @@ def update_profile(request):
 
         return redirect('profile')  
 
-    return render(request, 'users/profile.html')
+    reservation_details = []
+
+    show_time_id = request.GET.get('show_time_id')
+
+    if show_time_id:
+        selected_show_time = get_object_or_404(ShowTime, id=show_time_id)
+
+        tickets = Ticket.objects.filter(
+            customer_name=request.user.username,
+            show_time=selected_show_time,
+            is_reserved=True
+        )
+
+        if tickets.exists():
+            seats = [f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}" for ticket in tickets]
+
+            reservation_details.append({
+                "name": request.user.name or "N/A",
+                "family_name": request.user.family_name or "N/A",
+                "num_tickets": tickets.count(),
+                "seats": seats,
+                "cinema": selected_show_time.hall.cinema.name,
+                "movie": selected_show_time.movie.title,
+                "reservation_date": selected_show_time.date_time.strftime('%Y-%m-%d %H:%M:%S'),  # Use the raw datetime
+            })
+
+    else:
+        tickets = Ticket.objects.filter(
+            customer_name=request.user.username,
+            is_reserved=True
+        )
+        
+        showtimes_seen = set()
+        
+        for ticket in tickets:
+            show_time = ticket.show_time
+            
+            if show_time.id not in showtimes_seen:
+                showtimes_seen.add(show_time.id)
+                
+                seats = [f"Row {ticket.seat.row_number}, Seat {ticket.seat.seat_number}" for ticket in tickets if ticket.show_time == show_time]
+                
+                reservation_details.append({
+                    "name": request.user.name or "N/A",
+                    "family_name": request.user.family_name or "N/A",
+                    "num_tickets": tickets.filter(show_time=show_time).count(),
+                    "seats": seats,
+                    "cinema": show_time.hall.cinema.name,
+                    "movie": show_time.movie.title,
+                    "reservation_date": ticket.reservation_date.strftime('%Y-%m-%d %H:%M:%S'), 
+                })
+
+    return render(request, 'users/profile.html', {
+        'reservation_details': reservation_details,
+        'show_time_id': show_time_id,
+        'user': request.user  
+    })
 
 def request_password_reset(request):
     if request.method == 'POST':
