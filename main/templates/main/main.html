@@ -75,7 +75,7 @@
     }
     nav ul li a {
       text-decoration: none;
-      color: #000000;
+      color: #ffffff;
     }
     nav ul li a:hover {
      color: #DB0000 !important;
@@ -101,6 +101,7 @@
     .navbar .user-dropdown {
       position: relative;
       display: inline-block;
+      text-align: center !important;
     }
 
     .user-dropdown button {
@@ -124,11 +125,13 @@
       display: none;
       position: absolute;
       right: 0;
+      color: #ccc;
       background-color: #DB0000;
       min-width: 150px;
       box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
       z-index: 1;
       border-radius: 5px;
+      text-align: center !important;
     }
 
     .user-dropdown-content a {
@@ -137,6 +140,7 @@
       text-decoration: none;
       display: block;
       border-radius: 5px;
+      text-align: center !important;
     }
 
     .user-dropdown-content a:hover {
@@ -209,55 +213,59 @@
 }
 .fullscreen-video-container {
   position: relative;
-}
-.fullscreen-video-container {
   height: 100vh; 
-  width: 100vw;
-}
-
-.fullscreen-video-container {
+  width: 100%;
   overflow: hidden;
-}
-.fullscreen-video-container video {
-  position: absolute;
-}
-
-.fullscreen-video-container video {
-  width: auto;
-  height: auto;
-}
-.fullscreen-video-container video {
-  min-width: 50%;
-  min-height: 50%;
-}
-
-.fullscreen-video-container video {
-  top: 50%;
-  left: 50%;
-}
-.fullscreen-video-container video {
-  transform: translate(-50%,-50%);
-}
-.fullscreen-video-container video {
-  z-index: -1;  
-}
-.fullscreen-video-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.fullscreen-video-content {
-  background-color: rgba(255, 13, 0, 0.8);
-  padding: 30px;
-  border-radius: 5px;
+.fullscreen-video-container video {
+  width: 90vw; 
+  height: auto;
+  object-fit: cover;
+  position: relative;
 }
+
+.fullscreen-video-content {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(255, 13, 0, 0.8);
+  padding: 20px 40px;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 80%;
+  width: auto;
+}
+
 .fullscreen-video-content h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: black;
   font-family: cursive;
+  margin: 0;
+  white-space: nowrap; 
 }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .fullscreen-video-content h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fullscreen-video-content h1 {
+    font-size: 1.8rem;
+    padding: 15px;
+  }
+}
+
   
 header nav{
     color:#fff;
@@ -381,14 +389,17 @@ header nav{
                 {{ user.name}} {{ user.family_name }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="navbarDropdown">
-                <li><a class="user-dropdown" href="{% url 'profile' %}">Profile</a></li>
+                <li style="display: flex; justify-content: center; align-items: center;">
+                  <a class="user-dropdown" href="{% url 'profile' %}" style="text-align: center;">Profile</a>
+                </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                  <a href="#" class="user-dropdown" onclick="document.getElementById('logout-form').submit(); return false;">Logout</a>
-                  <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
-                    {% csrf_token %}
-                  </form>
-                </li>                
+                  <li style="display: flex; justify-content: center; align-items: center;">
+                    <a href="#" class="user-dropdown" onclick="document.getElementById('logout-form').submit(); return false;" style="text-align: center;">Logout</a>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                      {% csrf_token %}
+                    </form>
+                  </li>                  
                 </li>
               </ul>
             </li>
@@ -411,7 +422,7 @@ header nav{
   <button type="submit" id="search-button" style="background-color: #DB0000;">Search</button>
 </form>
 
-<form method="GET" action="." class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
+<form method="GET" action="." id="filter-form" class="filter-form d-flex justify-content-center align-items-center flex-wrap" style="background-color: #000;">
   <div class="form-group mx-2 position-relative">
     <button type="button" class="btn btn-secondary mt-4" id="dropdown-button" style="background-color: #DB0000; border-color: #DB0000;">
       <i class="fa fa-filter"></i> Sort By
@@ -427,7 +438,7 @@ header nav{
   <div class="form-group mx-2">
     <label for="genre-select" class="d-block text-white">Genre:</label>
     <select id="genre-select" name="genre" class="form-control">
-      <option value="" {% if not request.GET.genre %}selected{% endif %}>Select a genre</option>
+      <option value="" {% if not request.GET.genre %}selected{% endif %}>Select a Genre</option>
       <option value="Action" {% if request.GET.genre == "Action" %}selected{% endif %}>Action</option>
       <option value="Sci-Fi" {% if request.GET.genre == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
       <option value="Drama" {% if request.GET.genre == "Drama" %}selected{% endif %}>Drama</option>
@@ -439,7 +450,7 @@ header nav{
   <div class="form-group mx-2">
     <label for="year-select" class="d-block text-white">Year:</label>
     <select id="year-select" name="year" class="form-control">
-      <option value="" {% if not request.GET.year %}selected{% endif %}>Select a year</option>
+      <option value="" {% if not request.GET.year %}selected{% endif %}>Select a Year</option>
       <option value="2023" {% if request.GET.year == "2023" %}selected{% endif %}>2023</option>
       <option value="2024" {% if request.GET.year == "2024" %}selected{% endif %}>2024</option>
       <option value="2010" {% if request.GET.year == "2010" %}selected{% endif %}>2010</option>
@@ -450,7 +461,7 @@ header nav{
   <div class="form-group mx-2">
     <label for="score-select" class="d-block text-white">Score:</label>
     <select id="score-select" name="score" class="form-control">
-      <option value="" {% if not request.GET.score %}selected{% endif %}>Select a score range</option>
+      <option value="" {% if not request.GET.score %}selected{% endif %}>Select a Score Range</option>
       <option value="5-6" {% if request.GET.score == "5-6" %}selected{% endif %}>5-6</option>
       <option value="6-7" {% if request.GET.score == "6-7" %}selected{% endif %}>6-7</option>
       <option value="7-8" {% if request.GET.score == "7-8" %}selected{% endif %}>7-8</option>
@@ -603,3 +614,35 @@ header nav{
   
 </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#filter-form').on('submit', function(e) {
+      e.preventDefault(); 
+
+      $.ajax({
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        type: 'GET',
+        success: function(data) {
+          $('#movies-container').html($(data).find('#movies-container').html());
+        }
+      });
+    });
+
+    $('#dropdown-menu button').on('click', function(e) {
+      e.preventDefault();  
+      let sortValue = $(this).attr('value');  
+      let formData = $('#filter-form').serialize() + '&sort=' + sortValue;
+      $.ajax({
+        url: $('#filter-form').attr('action'),
+        data: formData,
+        type: 'GET',
+        success: function(data) {
+          $('#movies-container').html($(data).find('#movies-container').html());
+        }
+      });
+    });
+  });
+</script>
+

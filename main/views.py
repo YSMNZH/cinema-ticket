@@ -26,25 +26,20 @@ def logout_view(request):
         return HttpResponseNotAllowed(['POST'])  
 
 def main(request):
-    # Fetch all movies initially
     movies = Movie.objects.all()
 
-    # Search query (if any)
     query = request.GET.get('q', '')
     if query:
         movies = movies.filter(Q(title__icontains=query) | Q(description__icontains=query))
 
-    # Genre filter
     genre = request.GET.get('genre', '')
     if genre:
         movies = movies.filter(genre__icontains=genre)
 
-    # Year filter
     year = request.GET.get('year', '')
     if year:
         movies = movies.filter(release_date__year=year)
 
-    # Score filter
     score = request.GET.get('score', '')
     if score:
         score_range = score.split('-')
@@ -52,7 +47,6 @@ def main(request):
             min_score, max_score = map(float, score_range)
             movies = movies.filter(imdb_rating__gte=min_score, imdb_rating__lte=max_score)
 
-    # Sorting logic
     sort_option = request.GET.get('sort', '')
     if sort_option == 'highest':
         movies = movies.order_by('-imdb_rating')
@@ -63,7 +57,6 @@ def main(request):
     elif sort_option == 'oldest':
         movies = movies.order_by('release_date')
 
-    # Pass the filtered and sorted movies to the template
     return render(request, 'main/main.html', {'movies': movies, 'query': query})
 
 # def search_movies(request):
