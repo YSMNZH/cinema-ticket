@@ -58,21 +58,12 @@ def main(request):
         movies = movies.order_by('-release_date')
     elif sort_option == 'oldest':
         movies = movies.order_by('release_date')
+    elif sort_option == 'longest':
+        movies = movies.order_by('-duration_minutes')
+    elif sort_option == 'shortest':
+        movies = movies.order_by('duration_minutes')
 
     return render(request, 'main/main.html', {'movies': movies, 'query': query})
-
-# def search_movies(request):
-#     query = request.GET.get('q', '')
-#     if query:
-#         movies = Movie.objects.filter(
-#             Q(title__icontains=query) | Q(description__icontains=query)
-#         )
-#     else:
-#         movies = Movie.objects.none()
-    
-#     movies_data = list(movies.values('id', 'title', 'genre', 'duration_minutes', 'release_date', 'imdb_rating', 'poster'))
-#     return JsonResponse({'movies': movies_data})
-
 
 def contact(request):
     if request.method == 'POST':
@@ -238,7 +229,7 @@ def reservation(request, movie_id):
         'rows': rows,
         'reserved_seats': reserved_seats,
         'user_logged_in': request.user.is_authenticated,
-        'avg_rating': movie.avg_rating(),  # Display average rating
+        'avg_rating': movie.avg_rating(),  
     }
     return render(request, 'main/reservation.html', context)
 

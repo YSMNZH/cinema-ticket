@@ -432,6 +432,8 @@ header nav{
       <li><button type="submit" name="sort" value="lowest" class="dropdown-item-custom">Lowest Rated</button></li>
       <li><button type="submit" name="sort" value="newest" class="dropdown-item-custom">Newest</button></li>
       <li><button type="submit" name="sort" value="oldest" class="dropdown-item-custom">Oldest</button></li>
+      <li><button type="submit" name="sort" value="longest" class="dropdown-item-custom">Longest</button></li>
+      <li><button type="submit" name="sort" value="shortest" class="dropdown-item-custom">Shortest</button></li>
     </ul>
   </div>
 
@@ -551,7 +553,7 @@ header nav{
             <p class="mb-1"><strong>Duration:</strong> {{ movie.duration_minutes }} min</p>
             <p class="mb-1"><strong>Release Date:</strong> {{ movie.release_date|date:"F d, Y" }}</p>
             <p class="mb-0"><strong>IMDB Rating:</strong> <span class="text-warning">{{ movie.imdb_rating }}</span></p>
-            <p class="mb-0"><strong>User Average Rating:</strong> <span class="text-warning">{{ movie.avg_rating }}</span></p>
+            <p class="mb-0"><strong>Users Average Rating:</strong> <span class="text-warning">{{ movie.avg_rating }}</span></p>
           </div>
         </div>
       </a>

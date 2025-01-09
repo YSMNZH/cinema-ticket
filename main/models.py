@@ -24,7 +24,7 @@ class Movie(models.Model):
         return self.title
     def avg_rating(self):
         ratings = self.comments.all().values_list('user_rating', flat=True)
-        return sum(ratings) / len(ratings) if ratings else 0
+        return round(sum(ratings) / len(ratings),2) if ratings else 0
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, related_name='comments', on_delete=models.CASCADE)
