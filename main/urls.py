@@ -11,7 +11,6 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     path('news/', views.news, name='news'),
     path('movie/', views.movie, name='movie'),
-    path('', views.index, name='index'),
     path('reservation/<int:movie_id>/', views.reservation, name='reservation'),
     path('reservation/<int:movie_id>/', views.reservation_movie, name='reservation_movie'),
     path('reservation/<int:movie_id>/cinema/', views.reservation_cinema, name='reservation_cinema'),
@@ -20,4 +19,5 @@ urlpatterns = [
     path('confirmation/', views.confirmation, name='confirmation'),
     path('download-ticket/', views.generate_ticket_pdf, name='download_ticket'),
     path('logout/', logout_view, name='logout'),
+    path('', views.main, name='home')
 ]

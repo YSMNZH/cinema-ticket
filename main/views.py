@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
 from django.contrib import messages
-from .models import Movie,ShowTime,Seat,Cinema,Hall
+from .models import Movie,ShowTime,Seat,Cinema,Hall,Comment
 from django.shortcuts import render
 from main.ticket_generator import generate_ticket_pdf
 import os
@@ -17,11 +17,13 @@ from django.db import IntegrityError
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.http import HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_protect
 
+@csrf_protect  
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('../../main/main')
+        return redirect('home')
     else:
         return HttpResponseNotAllowed(['POST'])  
 
@@ -167,7 +169,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Movie, Cinema, ShowTime, Seat
 from django.views.decorators.cache import never_cache
 
-@never_cache
+
 @login_required
 def reservation(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -176,6 +178,17 @@ def reservation(request, movie_id):
     selected_cinema_id = request.GET.get('cinema_id')
     selected_showtime_id = request.GET.get('showtime_id')
 
+    if request.method == 'POST' and 'comment' in request.POST:
+        comment_text = request.POST.get('comment')
+        user_rating = int(request.POST.get('user_rating', 3))  
+        Comment.objects.create(
+            movie=movie,
+            user=request.user,
+            comment=comment_text,
+            user_rating=user_rating
+        )
+        return redirect('reservation', movie_id=movie.id)
+    
     if step == 'cinema':
         cinemas = Cinema.objects.all()
 
@@ -225,6 +238,7 @@ def reservation(request, movie_id):
         'rows': rows,
         'reserved_seats': reserved_seats,
         'user_logged_in': request.user.is_authenticated,
+        'avg_rating': movie.avg_rating(),  # Display average rating
     }
     return render(request, 'main/reservation.html', context)
 

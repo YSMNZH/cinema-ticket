@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import CustomUser
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -22,6 +22,18 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+    def avg_rating(self):
+        ratings = self.comments.all().values_list('user_rating', flat=True)
+        return sum(ratings) / len(ratings) if ratings else 0
+
+class Comment(models.Model):
+    movie = models.ForeignKey(Movie, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user_rating = models.IntegerField()
+    comment = models.TextField()
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name} - {self.user_rating} stars'
 
 
 class City(models.Model):
